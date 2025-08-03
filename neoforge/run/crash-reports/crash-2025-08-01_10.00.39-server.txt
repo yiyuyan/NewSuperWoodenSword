@@ -1,0 +1,130 @@
+---- Minecraft Crash Report ----
+// Don't be sad, have a hug! <3
+
+Time: 2025-08-01 10:00:39
+Description: Exception ticking world
+
+java.lang.NullPointerException: Cannot invoke "net.minecraft.network.syncher.SynchedEntityData.get(net.minecraft.network.syncher.EntityDataAccessor)" because "this.entityData" is null
+	at TRANSFORMER/minecraft@1.21/net.minecraft.world.entity.monster.EnderMan.getCarriedBlock(EnderMan.java:382) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.world.entity.monster.EnderMan.requiresCustomPersistence(EnderMan.java:435) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.world.level.NaturalSpawner.createState(NaturalSpawner.java:69) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,xf:fml:neoforge:neoforge_method_redirector}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.level.ServerChunkCache.tickChunks(ServerChunkCache.java:354) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.level.ServerChunkCache.tick(ServerChunkCache.java:324) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.level.ServerLevel.tick(ServerLevel.java:382) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1052) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:932) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:113) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:713) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at TRANSFORMER/minecraft@1.21/net.minecraft.world.entity.monster.EnderMan.getCarriedBlock(EnderMan.java:382) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.world.entity.monster.EnderMan.requiresCustomPersistence(EnderMan.java:435) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.world.level.NaturalSpawner.createState(NaturalSpawner.java:69) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,xf:fml:neoforge:neoforge_method_redirector}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.level.ServerChunkCache.tickChunks(ServerChunkCache.java:354) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.level.ServerChunkCache.tick(ServerChunkCache.java:324) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayer['Dev'/63, l='ServerLevel[New World]', x=-516.37, y=80.74, z=78.86]]
+	Chunk stats: 2601
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (-544,64,-16), Section: (at 0,0,0 in -34,4,-1; chunk contains blocks -544,-64,-16 to -529,319,-1), Region: (-2,-1; contains chunks -64,-32 to -33,-1, blocks -1024,-64,-512 to -513,319,-1)
+	Level time: 3525 game time, 6475 day time
+	Level name: New World
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Commands: true
+	Level weather: Rain time: 45019 (now: false), thunder time: 18046 (now: false)
+	Known server brands: neoforge
+	Removed feature flags: 
+	Level was modded: true
+	Level storage version: 0x04ABD - Anvil
+	Loaded entity count: 1579
+Stacktrace:
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.level.ServerLevel.fillReportDetails(ServerLevel.java:1742) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:932) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:113) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:713) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.0.167-minecraft-merged.jar%23184!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:sws.mixins.json:MinecraftMixin from mod sws,pl:mixin:A}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21
+	Minecraft Version ID: 1.21
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 21.0.2, Oracle Corporation
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 640373752 bytes (610 MiB) / 1509949440 bytes (1440 MiB) up to 4280287232 bytes (4082 MiB)
+	CPUs: 8
+	Processor Vendor: GenuineIntel
+	Processor Name: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
+	Identifier: Intel64 Family 6 Model 158 Stepping 9
+	Microarchitecture: Kaby Lake
+	Frequency (GHz): 3.60
+	Number of physical packages: 1
+	Number of physical CPUs: 4
+	Number of logical CPUs: 8
+	Graphics card #0 name: NVIDIA GeForce GTX 750 Ti
+	Graphics card #0 vendor: NVIDIA
+	Graphics card #0 VRAM (MiB): 2048.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 31.0.15.3758
+	Memory slot #0 capacity (MiB): 4096.00
+	Memory slot #0 clockSpeed (GHz): 2.40
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MiB): 4096.00
+	Memory slot #1 clockSpeed (GHz): 2.40
+	Memory slot #1 type: DDR4
+	Memory slot #2 capacity (MiB): 8192.00
+	Memory slot #2 clockSpeed (GHz): 2.40
+	Memory slot #2 type: DDR4
+	Virtual memory max (MiB): 22979.61
+	Virtual memory used (MiB): 16248.13
+	Swap memory total (MiB): 6656.00
+	Swap memory used (MiB): 491.12
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 189422.66, total: 238157.16
+	Space in storage for workdir (MiB): available: 144223.84, total: 238593.00
+	JVM Flags: 0 total; 
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['Dev'/63, l='ServerLevel[New World]', x=-516.37, y=80.74, z=78.86]]
+	Active Data Packs: vanilla, mod_data, mod/thetitansneo, mod/neoforge, mod/sws (incompatible)
+	Available Data Packs: bundle, trade_rebalance, vanilla, mod/neoforge, mod/sws (incompatible), mod/thetitansneo, mod_data
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Experimental
+	World Seed: -2811144618470529496
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'neoforge'; Server brand changed to 'neoforge'
+	Launched Version: 21.0.167
+	ModLauncher: 11.0.4+main.d2e20e43
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher services: 
+		sponge-mixin-0.14.0+mixin.0.8.6.jar mixin PLUGINSERVICE 
+		loader-4.0.23.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.23.jar runtime_enum_extender PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.23.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.4.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.4.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		neoforge-21.0.167-minecraft-merged.jar            |Minecraft                     |minecraft                     |1.21                |Manifest: NOSIGNATURE
+		TheTitansNeo-1.21-1.0.2.jar                       |TheTitansNeo                  |thetitansneo                  |1.0.2               |Manifest: NOSIGNATURE
+		neoforge-21.0.167-minecraft-merged.jar            |NeoForge                      |neoforge                      |21.0.167            |Manifest: NOSIGNATURE
+		main                                              |SuperWoodenSword              |sws                           |1.0                 |Manifest: NOSIGNATURE
+	Crash Report UUID: 8dbdc419-47e8-443f-aa48-bb766cb4ac32
+	FML: 4.0.23
+	NeoForge: 21.0.167

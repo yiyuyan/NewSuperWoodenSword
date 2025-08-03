@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/handheld_parry",
+	"textures": {
+		"layer0": "sws:item/super_wooden_sword"
+	}
+}

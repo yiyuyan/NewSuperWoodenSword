@@ -1,0 +1,50 @@
+/effect give @s minecraft:glowing
+/effect give @s minecraft:night_vision infinite
+/effect clear
+/time set day
+/effect give @s minecraft:regeneration infinite
+/effect clear
+/effect give @s minecraft:regeneration infinite
+/effect clear
+/effect give @s minecraft:regeneration 11
+/give @s minecraft:command_block
+/gamerule commandBlockOutput false
+/tp ~ ~30 ~
+/tp ~ ~25 ~
+/tp ~ ~30 ~
+/tp ~ ~25 ~
+/tp ~ ~30 ~
+/tp ~ ~25 ~
+/tp ~ ~40 ~
+/tp ~ ~25 ~
+/tp ~ ~30 ~
+/tp ~ ~40 ~
+/tp ~ ~40 ~100
+/time set midnight
+/summon minecraft:zombie
+/summon minecraft:creeper
+/summon thetitansneo:cave_spider_titan
+/tp ~ ~50 ~
+/summon minecraft:blaze
+/summon thetitansneo:blaze_titan
+/summon minecraft:wither
+/tp ~ ~50 ~
+/xp set @a 0 levels
+/xp set @a 0 points
+/summon thetitansneo:creeper_titan
+/xp set @a 0 points
+/xp set @a 0 levels
+/summon thetitansneo:ender_colossus
+/xp set @a 0 levels
+/xp set @a 0 points
+/xp set @a 0 levels
+/xp set @a 0 points
+/summon minecraft:zombie_villager
+/summon minecraft:experience_orb
+/summon minecraft:experience_bottle
+/xp set @a 0 points
+/xp set @a 0 levels
+/summon minecraft:zombie
+/xp set @a 0 levels
+/xp set @a 0 points
+/kick @s

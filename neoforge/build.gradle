@@ -1,0 +1,59 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev'
+}
+base {
+    archivesName = "${mod_name}-neoforge-${minecraft_version}"
+}
+
+repositories {
+    maven{
+        url = "https://cursemaven.com"
+    }
+    mavenLocal()
+}
+
+neoForge {
+    version = neoforge_version
+    // Automatically enable neoforge AccessTransformers if the file exists
+    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.add(at.absolutePath)
+    }
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
+        }
+        client {
+            client()
+        }
+        data {
+            data()
+        }
+        server {
+            server()
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    implementation files("lib/utils.jar")
+    //implementation "com.sword.block:sword_block-neoforge:1.0.8"
+    //jarJar(group: 'com.sword.block', name: 'sword_block-neoforge', version: '[1.0.8,)')
+}
+
+/*tasks.jarJar{
+
+}*/
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }

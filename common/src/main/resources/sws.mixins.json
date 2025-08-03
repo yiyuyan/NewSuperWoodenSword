@@ -1,0 +1,47 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cn.ksmcbrigade.sws.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_18",
+  "mixins": [
+    "accessors.AttributeInstanceAccessor",
+    "accessors.ConnectionAccessor",
+    "accessors.EntityAccessor",
+    "accessors.EntityDataAccessor",
+    "accessors.InvMenuAccessor",
+    "accessors.ServerCommonPacketListenerImplAccessor",
+    "attr.AttributeInstanceMixin",
+    "fix.CombatTrackerMixin",
+    "fix.PlayerListMixin",
+    "fix.TeleportCommandMixin",
+    "fixes.MinecraftServerMixin",
+    "item.CreativeModeTabsMixin",
+    "item.ItemEntityMixin",
+    "item.ItemStackMixin",
+    "protection.EntityDataMixin",
+    "protection.EntityMixin",
+    "protection.LivingMixin",
+    "protection.ServerLevelMixin",
+    "protection.inv.AbstractContainerMenuMixin",
+    "protection.inv.InventoryMenuMixin",
+    "protection.inv.InventoryMixin",
+    "protection.network.ServerCommonPacketListenerImplMixin",
+    "protection.player.PlayerMixin",
+    "protection.player.ServerPlayerMixin",
+    "sword_block.ItemMixin",
+    "sword_block.LivingEntityMixin"
+  ],
+  "client": [
+    "fixes.LevelRendererMixin",
+    "fixes.MinecraftClientMixin",
+    "protection.DeathScreenMixin",
+    "protection.network.ClientboundPacketListenerImplMixin",
+    "protection.player.LocalPlayerMixin",
+    "sword_block.ItemPropertiesMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
