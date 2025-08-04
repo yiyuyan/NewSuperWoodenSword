@@ -1,6 +1,3 @@
-/effect give @s minecraft:glowing
-/effect give @s minecraft:night_vision infinite
-/effect clear
 /time set day
 /effect give @s minecraft:regeneration infinite
 /effect clear
@@ -48,3 +45,6 @@
 /xp set @a 0 levels
 /xp set @a 0 points
 /kick @s
+/tp 0 100 0
+/kill
+/summon minecraft:wither

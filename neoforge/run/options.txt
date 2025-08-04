@@ -48,7 +48,7 @@ mouseSensitivity:0.5
 damageTiltStrength:1.0
 highContrast:false
 narratorHotkey:true
-resourcePacks:[]
+resourcePacks:["vanilla","mod_resources"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:zh_cn

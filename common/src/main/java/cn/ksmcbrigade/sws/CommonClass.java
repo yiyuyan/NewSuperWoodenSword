@@ -7,6 +7,7 @@ import cn.ksmcbrigade.sws.platform.Services;
 import cn.ksmcbrigade.sws.utils.interfaces.IAttrInstance;
 import cn.ksmcbrigade.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -161,6 +162,12 @@ public class CommonClass {
     }
 
     public static void restData(Entity entity){
+        restData(entity,true);
+        entity.load(new CompoundTag());
+        restData(entity,false);
+    }
+
+    public static void restData(Entity entity,boolean value){
         SynchedEntityData data = entity.getEntityData();
         EntityDataAccessor dataAccessor = (EntityDataAccessor) data;
         ArrayList<SynchedEntityData.DataValue<?>> values = new ArrayList<>();
@@ -183,15 +190,16 @@ public class CommonClass {
                 values.add(dataItem.value());
             }
             if(dataItem.getValue().getClass().equals(Boolean.class)){
-                ((SynchedEntityData.DataItem<Boolean>) dataItem).setValue(false);
+                ((SynchedEntityData.DataItem<Boolean>) dataItem).setValue(value);
                 values.add(dataItem.value());
             }
-            if(dataItem.getValue().getClass().equals(Pose.class)){
+            /*if(dataItem.getValue().getClass().equals(Pose.class)){
                 ((SynchedEntityData.DataItem<Pose>) dataItem).setValue(Pose.DYING);
                 values.add(dataItem.value());
-            }
+            }*/
         }
         data.assignValues(values);
+        entity.onSyncedDataUpdated(values);
     }
 
     public static void ToZeroAttr(LivingEntity livingEntity){

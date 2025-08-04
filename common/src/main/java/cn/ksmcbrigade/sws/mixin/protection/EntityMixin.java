@@ -58,7 +58,7 @@ public abstract class EntityMixin implements ILivingEntity {
     @Inject(method = {"setId","setAirSupply","setInvulnerable"
             ,"setOnGround","setTicksFrozen","setUUID",
             "setRemoved","kill","discard","remove","thunderHit","onExplosionHit",
-    "onClientRemoval","setInvisible"},at = @At("HEAD"),cancellable = true)
+    "onClientRemoval","setInvisible","load"},at = @At("HEAD"),cancellable = true)
     public void set(CallbackInfo ci){
         if((CommonClass.has((Entity) ((Object) this)))){
             ci.cancel();
