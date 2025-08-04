@@ -3,6 +3,7 @@ package cn.ksmcbrigade.sws.mixin.protection.player;
 import cn.ksmcbrigade.sws.CommonClass;
 import cn.ksmcbrigade.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import cn.ksmcbrigade.sws.platform.Services;
+import cn.ksmcbrigade.sws.utils.ItemUtils;
 import cn.ksmcbrigade.sws.utils.interfaces.IItemEntity;
 import cn.ksmcbrigade.sws.utils.interfaces.ILivingEntity;
 import cn.ksmcbrigade.sws.utils.KIckUtils;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -70,6 +72,11 @@ public abstract class ServerPlayerMixin extends Player {
                     "By SuperWoodenSword\n" +
                     ":)")));
         }
+    }
+
+    @ModifyVariable(method = "drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At(value = "HEAD"), argsOnly = true)
+    public ItemStack drop(ItemStack value){
+        return ItemUtils.markSword(value);
     }
 
     @Inject(method = "drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;",at = @At(value = "RETURN"),cancellable = true)
