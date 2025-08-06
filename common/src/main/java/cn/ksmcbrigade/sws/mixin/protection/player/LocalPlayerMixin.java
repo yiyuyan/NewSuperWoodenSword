@@ -53,7 +53,7 @@ public abstract class LocalPlayerMixin extends Player {
             this.removeAllEffects();
             CommonClass.restData(player);
             if(!(Minecraft.getInstance().screen instanceof DeathScreen) && !(Minecraft.getInstance().screen instanceof ClientOnlyDeathScreen)){
-                Minecraft.getInstance().setScreen(new ClientOnlyDeathScreen(Component.literal("You're dead by the Super Wooden Sword"),false));
+                Minecraft.getInstance().setScreen(new ClientOnlyDeathScreen(Component.literal("You're died by the Super Wooden Sword"),false));
                 //Minecraft.getInstance().screen = new ClientOnlyDeathScreen(Component.literal("You're dead by the Super Wooden Sword"),false);
             }
             //((ILivingEntity) player).playerUnZero();

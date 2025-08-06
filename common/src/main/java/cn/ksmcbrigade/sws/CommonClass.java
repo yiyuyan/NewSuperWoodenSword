@@ -168,7 +168,7 @@ public class CommonClass {
                 EntityAccessor accessor = (EntityAccessor) entity;
                 if(!(entity instanceof Player)){
                     accessor.setUUID(UUID.randomUUID());
-                    accessor.setStringUUID(null);
+                    //accessor.setStringUUID(null);
                 }
 
         /*for (Entity.RemovalReason value : Entity.RemovalReason.values()) {
