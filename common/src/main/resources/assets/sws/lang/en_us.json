@@ -1,5 +1,9 @@
 {
   "item.sws.super_wooden_sword": "Wooden Sword",
   "item.sws.dec.w": "Infi",
-  "item.sws.dec.s": "nity "
+  "item.sws.dec.s": "nity ",
+  "advancements.sws.sws.title": "The real killer",
+  "advancements.sws.sws.description": "Got the best sword of all the artifact mods,the super wooden sword.",
+  "advancements.sws.root.title": "SuperWoodenSword",
+  "advancements.sws.root.description": "The best sword of all the artifact mods."
 }

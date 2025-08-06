@@ -1,6 +1,7 @@
 package cn.ksmcbrigade.sws.mixin.protection.player;
 
 import cn.ksmcbrigade.sws.CommonClass;
+import cn.ksmcbrigade.sws.client.ClientOnlyDeathScreen;
 import cn.ksmcbrigade.sws.utils.interfaces.ILivingEntity;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
@@ -24,12 +25,17 @@ public abstract class LocalPlayerMixin extends Player {
         super(pLevel, pPos, pYRot, pGameProfile);
     }
 
-    @Redirect(method = "handleConfusionTransitionEffect",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
+    @Redirect(method = "handleNetherPortalClient",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
     public void screen_yes(Minecraft instance, Screen old){
-        if(!CommonClass.has(this)) instance.setScreen(old);
+        if(!CommonClass.has(this) && !(old instanceof ClientOnlyDeathScreen)) instance.setScreen(old);
     }
 
-    @Redirect(method = "handleConfusionTransitionEffect",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;closeContainer()V"))
+    @Redirect(method = "clientSideCloseContainer",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
+    public void screen_yes_died(Minecraft instance, Screen old){
+        if(!CommonClass.has(this) && !(old instanceof ClientOnlyDeathScreen)) instance.setScreen(old);
+    }
+
+    @Redirect(method = "handleNetherPortalClient",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;closeContainer()V"))
     public void screen_yes(LocalPlayer instance){
         if(!CommonClass.has(this)) instance.closeContainer();
     }
@@ -46,14 +52,17 @@ public abstract class LocalPlayerMixin extends Player {
             this.setInvulnerable(false);
             this.removeAllEffects();
             CommonClass.restData(player);
-            Minecraft.getInstance().setScreen(new DeathScreen(Component.literal("You're dead by the Super Wooden Sword"),false));
-            ((ILivingEntity) player).playerUnZero();
-            Minecraft.getInstance().reloadResourcePacks();
-            if(Minecraft.getInstance().getConnection()!=null){
-                Minecraft.getInstance().getConnection().getConnection().disconnect(Component.literal("Reconnect,please.\n" +
-                        "By SuperWoodenSword\n" +
-                        ":)"));
+            if(!(Minecraft.getInstance().screen instanceof DeathScreen) && !(Minecraft.getInstance().screen instanceof ClientOnlyDeathScreen)){
+                Minecraft.getInstance().setScreen(new ClientOnlyDeathScreen(Component.literal("You're dead by the Super Wooden Sword"),false));
+                //Minecraft.getInstance().screen = new ClientOnlyDeathScreen(Component.literal("You're dead by the Super Wooden Sword"),false);
             }
+            //((ILivingEntity) player).playerUnZero();
+            //Minecraft.getInstance().reloadResourcePacks();
+            //if(Minecraft.getInstance().getConnection()!=null){
+                /*Minecraft.getInstance().getConnection().getConnection().disconnect(Component.literal("Reconnect,please.\n" +
+                        "By SuperWoodenSword\n" +
+                        ":)"));*/
+           // }
         }
     }
 }

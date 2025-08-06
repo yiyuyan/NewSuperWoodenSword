@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 
-    @Shadow public abstract ItemStack getWeaponItem();
+    //@Shadow public abstract ItemStack getWeaponItem();
 
     protected PlayerMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -62,7 +62,7 @@ public abstract class PlayerMixin extends LivingEntity {
         if(!CommonClass.has(player) && ((ILivingEntity)player).zero()){
             Services.PLATFORM.stopEvents();
             CommonClass.attack(player,false,false);
-            ((ILivingEntity)player).playerUnZero();
+            //((ILivingEntity)player).playerUnZero();
         }
     }
 
@@ -91,7 +91,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
     @Inject(method = "attack",at = @At("HEAD"))
     public void attack(Entity pTarget, CallbackInfo ci){
-        if(this.getWeaponItem().getItem() instanceof SuperWoodenSword){
+        if(this.getMainHandItem().getItem() instanceof SuperWoodenSword){
             CommonClass.attack(pTarget,false,false);
         }
     }

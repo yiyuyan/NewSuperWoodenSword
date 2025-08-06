@@ -3,7 +3,6 @@ package cn.ksmcbrigade.sws.mixin.protection;
 import cn.ksmcbrigade.sws.CommonClass;
 import cn.ksmcbrigade.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.SyncedDataHolder;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Final;
@@ -15,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SynchedEntityData.class)
 public class EntityDataMixin {
-    @Shadow @Final private SyncedDataHolder entity;
+
+    @Shadow @Final private Entity entity;
 
     @Inject(method = {"set(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;Z)V"},at = @At("HEAD"),cancellable = true)
     public <T> void set(EntityDataAccessor<T> pKey, T pValue, boolean pForce, CallbackInfo ci){
@@ -26,7 +26,7 @@ public class EntityDataMixin {
             }
             ((ILivingEntity)this.entity).setCannotModify();
         }*/
-        if (CommonClass.has(((Entity) this.entity)) &&
+        if (CommonClass.has(this.entity) &&
                 !(pValue instanceof Byte && ((ILivingEntity) this.entity).allowModifyByte())) {
             ((ILivingEntity) this.entity).setCannotModify();
             ci.cancel();

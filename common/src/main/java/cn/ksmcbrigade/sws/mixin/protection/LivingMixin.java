@@ -21,7 +21,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingMixin implements ILivingEntity {
@@ -42,11 +42,11 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Shadow protected abstract void dropEquipment();
 
-    @Shadow protected abstract void dropExperience(@Nullable Entity p_342525_);
+    //Shadow protected abstract void dropExperience(@Nullable Entity p_342525_);
 
     @Shadow protected abstract void dropFromLootTable(DamageSource p_21021_, boolean p_21022_);
 
-    @Shadow @Nullable public abstract AttributeInstance getAttribute(Holder<Attribute> p_332356_);
+    //@Shadow @Nullable public abstract AttributeInstance getAttribute(Holder<Attribute> p_332356_);
 
     @Shadow public abstract void die(DamageSource p_21014_);
 
@@ -65,7 +65,14 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Shadow public abstract boolean isAlive();
 
-    @Shadow protected abstract void refreshDirtyAttributes();
+    //@Shadow protected abstract void refreshDirtyAttributes();
+
+    @Shadow
+    public abstract AttributeInstance getAttribute(Attribute attribute);
+
+    @Shadow protected abstract void dropExperience();
+
+    @Shadow protected abstract void tickDeath();
 
     @Unique
     private boolean zero = false;
@@ -81,7 +88,7 @@ public abstract class LivingMixin implements ILivingEntity {
         "removeFrost","removeEffectParticles","onEffectRemoved",
     "onSyncedDataUpdated","readAdditionalSaveData","addAdditionalSaveData",
             "die","remove","kill","setNoActionTime",
-    "hurtArmor","hurtHelmet","hurtCurrentlyUsedShield","internalSetAbsorptionAmount",
+    "hurtArmor","hurtHelmet","hurtCurrentlyUsedShield",
     "dropAllDeathLoot","dropEquipment","dropExperience","dropFromLootTable",
             "heal","actuallyHurt","animateHurt","push"},at = @At("HEAD"),cancellable = true)
     public void set(CallbackInfo ci){
@@ -90,7 +97,7 @@ public abstract class LivingMixin implements ILivingEntity {
         }
     }
 
-    @Inject(method = {"isAlive","isInvulnerableTo","canBreatheUnderwater"},at = @At("HEAD"), cancellable = true)
+    @Inject(method = {"isAlive","canBreatheUnderwater"},at = @At("HEAD"), cancellable = true)
     public void is(CallbackInfoReturnable<Boolean> cir){
         if((CommonClass.has((Entity) ((Object) this)))){
             cir.setReturnValue(true);
@@ -109,15 +116,15 @@ public abstract class LivingMixin implements ILivingEntity {
     }
 
     @Inject(method = "getAttribute",at = @At("RETURN"),cancellable = true)
-    public void attr(Holder<Attribute> pAttribute, CallbackInfoReturnable<AttributeInstance> cir){
-        if((CommonClass.has((Entity) ((Object) this)))){
+    public void attr(Attribute attribute, CallbackInfoReturnable<AttributeInstance> cir){
+        if((CommonClass.has((Entity) ((Object) this))) && cir.getReturnValue()!=null){
             cir.setReturnValue(new UAttributeInstance(cir.getReturnValue()));
         }
     }
 
     @Inject(method = "die",at = @At("TAIL"))
     public void die(DamageSource pDamageSource, CallbackInfo ci){
-        this.playerUnZero();
+        //this.playerUnZero();
     }
 
     @Inject(method = {"isDeadOrDying","isPushable",
@@ -138,7 +145,7 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",at = @At("HEAD"),cancellable = true)
     public void addEffect(MobEffectInstance pEffectInstance, Entity pEntity, CallbackInfoReturnable<Boolean> cir){
-        if(CommonClass.has((Entity) ((Object) this)) && !pEffectInstance.getEffect().value().getCategory().equals(MobEffectCategory.BENEFICIAL)){
+        if(CommonClass.has((Entity) ((Object) this)) && !pEffectInstance.getEffect().getCategory().equals(MobEffectCategory.BENEFICIAL)){
             cir.setReturnValue(false);
             cir.cancel();
         }
@@ -146,7 +153,7 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Inject(method = "canBeAffected",at = @At("HEAD"),cancellable = true)
     public void addEffect(MobEffectInstance pEffectInstance, CallbackInfoReturnable<Boolean> cir){
-        if(CommonClass.has((Entity) ((Object) this)) && !pEffectInstance.getEffect().value().getCategory().equals(MobEffectCategory.BENEFICIAL)){
+        if(CommonClass.has((Entity) ((Object) this)) && !pEffectInstance.getEffect().getCategory().equals(MobEffectCategory.BENEFICIAL)){
             cir.setReturnValue(false);
             cir.cancel();
         }
@@ -154,12 +161,19 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Inject(method = {"getHealth"},at = @At("RETURN"),cancellable = true)
     public void heal(CallbackInfoReturnable<Float> cir){
-        if(zero) cir.setReturnValue(0f);
+        if(!CommonClass.has((Entity) ((Object) this)) && zero) cir.setReturnValue(0f);
     }
 
     @Inject(method = "getAbsorptionAmount",at = @At("RETURN"),cancellable = true)
     public void AB(CallbackInfoReturnable<Float> cir){
-        if(zero) cir.setReturnValue(0f);
+        if(!CommonClass.has((Entity) ((Object) this)) && zero) cir.setReturnValue(0f);
+    }
+
+    @Inject(method = "tickDeath",at = @At("HEAD"),cancellable = true)
+    public void death(CallbackInfo ci){
+        if(CommonClass.has((Entity) ((Object) this))){
+            ci.cancel();
+        }
     }
 
     @Inject(method = "tick",at = @At("HEAD"),cancellable = true)
@@ -171,16 +185,19 @@ public abstract class LivingMixin implements ILivingEntity {
             this.removeAllEffects();
             LivingEntity o = (LivingEntity) ((Object) this);
             try {
-                if(!(o instanceof Player))this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(0F);
+                if(!(o instanceof Player)){
+                    Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(0F);
+                    CommonClass.restData(o);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            CommonClass.restData(o);
             o.setInvulnerable(false);
             o.invulnerableTime = 0;
             o.getEntityData().set(DATA_HEALTH_ID,0f);
             this.die(o.damageSources().outOfBorder());
-            this.playerUnZero();
+            this.tickDeath();
+            //this.playerUnZero();
             /*new Thread(()->{
                 if(!removing){
                     removing = true;
@@ -197,8 +214,18 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Override
     @Unique
-    public void setZero(){
+    public void setZeroOnly() {
         this.zero = true;
+    }
+
+    @Override
+    @Unique
+    public void setZero() {
+        this.setZeroOnly();
+        LivingEntity entity = (LivingEntity)((Object) this);
+        if(entity instanceof Player player){
+            player.sendSystemMessage(Component.literal(true+"sws-sync-zero"));
+        }
     }
 
     @Override
@@ -206,7 +233,7 @@ public abstract class LivingMixin implements ILivingEntity {
     public void dropLoot(){
         LivingEntity o = (LivingEntity) ((Object) this);
         this.dropEquipment();
-        this.dropExperience((LivingEntity)((Object) this));
+        this.dropExperience();
         if(o.getServer()!=null)this.dropFromLootTable(o.damageSources().outOfBorder(),true);
     }
 
@@ -226,6 +253,12 @@ public abstract class LivingMixin implements ILivingEntity {
     @Unique
     public boolean zero() {
         return this.zero;
+    }
+
+    @Unique
+    @Override
+    public void tickDeathHandle(){
+        this.tickDeath();
     }
 
     @Override
@@ -250,7 +283,7 @@ public abstract class LivingMixin implements ILivingEntity {
                     e.printStackTrace();
                 }
             }
-            player.getAttributes().assignBaseValues(player.getAttributes());
+            player.getAttributes().assignValues(player.getAttributes());
             ((ILivingEntity) player).updateAttr();
             //player.respawn();
             Constants.LOG.info("un zero one player {}",entity.getUUID());
@@ -265,6 +298,6 @@ public abstract class LivingMixin implements ILivingEntity {
     @Unique
     @Override
     public void updateAttr(){
-        this.refreshDirtyAttributes();
+        //this.refreshDirtyAttributes();
     }
 }

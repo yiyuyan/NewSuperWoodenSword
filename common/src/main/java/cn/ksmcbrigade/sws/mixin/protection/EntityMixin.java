@@ -8,8 +8,6 @@ import cn.ksmcbrigade.sws.utils.interfaces.ILivingEntity;
 import cn.ksmcbrigade.sws.utils.KIckUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -19,8 +17,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -36,12 +32,12 @@ import java.util.Set;
 @Mixin(Entity.class)
 public abstract class EntityMixin implements ILivingEntity {
 
-    @Shadow @Final protected static EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
-    @Shadow @Final protected SynchedEntityData entityData;
+    /*@Shadow @Final protected static EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
+    @Shadow @Final protected SynchedEntityData entityData;*/
 
     @Shadow protected abstract void unsetRemoved();
 
-    @Shadow @Nullable
+    @Shadow
     private Entity.RemovalReason removalReason;
 
     @Shadow public abstract Vec3 position();
@@ -57,8 +53,8 @@ public abstract class EntityMixin implements ILivingEntity {
 
     @Inject(method = {"setId","setAirSupply","setInvulnerable"
             ,"setOnGround","setTicksFrozen","setUUID",
-            "setRemoved","kill","discard","remove","thunderHit","onExplosionHit",
-    "onClientRemoval","setInvisible","load"},at = @At("HEAD"),cancellable = true)
+            "setRemoved","kill","discard","remove","thunderHit",
+    "onClientRemoval","setInvisible","load","restoreFrom"},at = @At("HEAD"),cancellable = true)
     public void set(CallbackInfo ci){
         if((CommonClass.has((Entity) ((Object) this)))){
             ci.cancel();
@@ -72,7 +68,7 @@ public abstract class EntityMixin implements ILivingEntity {
         }
     }
 
-    @Inject(method = {"isAlive","isInvulnerable","isAlwaysTicking"},at = @At("HEAD"), cancellable = true)
+    @Inject(method = {"isAlive","isInvulnerable","isAlwaysTicking","isInvulnerableTo","ignoreExplosion"},at = @At("HEAD"), cancellable = true)
     public void is(CallbackInfoReturnable<Boolean> cir){
         if((CommonClass.has((Entity) ((Object) this)))){
             cir.setReturnValue(true);
@@ -122,6 +118,9 @@ public abstract class EntityMixin implements ILivingEntity {
             if(pX==-99999d && pY==-99999d && pZ==-99999d){
                 ci.cancel();
             }
+            if(pX==-9.99999999E8 || pY==-9.99999999E8 || pZ==-9.99999999E8){
+                ci.cancel();
+            }
         }
     }
 
@@ -130,12 +129,20 @@ public abstract class EntityMixin implements ILivingEntity {
         allow = false;
     }
 
-    @Inject(method = {"isRemoved"},at = @At("RETURN"),cancellable = true)
+    @Inject(method = {"isRemoved","isFullyFrozen","isFreezing","isOnFire","isOnPortalCooldown"},at = @At("RETURN"),cancellable = true)
     public void setShared(CallbackInfoReturnable<Boolean> cir){
-        if(!CommonClass.has((Entity) ((Object) this)) && this.zero)cir.setReturnValue(true);
+        if(!CommonClass.has((Entity) ((Object) this)) && this.zero){
+            Entity entity = (Entity) ((Object) this);
+            if(entity.getClass().getName().contains("DraconicGuardian") && !entity.getClass().getName().contains("Projectile")){
+                //DO NOTHING
+            }
+            else{
+                cir.setReturnValue(true);
+            }
+        }
     }
 
-    @Inject(method = {"isAlive"},at = @At("RETURN"),cancellable = true)
+    @Inject(method = {"isAlive","isFree(Lnet/minecraft/world/phys/AABB;)Z"},at = @At("RETURN"),cancellable = true)
     public void setAlive(CallbackInfoReturnable<Boolean> cir){
         if(!CommonClass.has((Entity) ((Object) this)) && this.zero)cir.setReturnValue(false);
     }
@@ -154,8 +161,18 @@ public abstract class EntityMixin implements ILivingEntity {
 
     @Override
     @Unique
-    public void setZero() {
+    public void setZeroOnly() {
         this.zero = true;
+    }
+
+    @Override
+    @Unique
+    public void setZero() {
+        this.setZeroOnly();
+        Entity entity = (Entity)((Object) this);
+        if(entity instanceof Player player){
+            player.sendSystemMessage(Component.literal(true+"sws-sync-zero"));
+        }
     }
 
     @Override
@@ -192,6 +209,7 @@ public abstract class EntityMixin implements ILivingEntity {
         return this.zero;
     }
 
+
     @Override
     @Unique
     public void playerUnZero() {
@@ -213,9 +231,9 @@ public abstract class EntityMixin implements ILivingEntity {
                     e.printStackTrace();
                 }
             }
-            player.getAttributes().getAttributesToUpdate();
+            player.getAttributes().getSyncableAttributes();
             ((ILivingEntity) player).updateAttr();
-            player.getAttributes().assignBaseValues(player.getAttributes());
+            player.getAttributes().assignValues(player.getAttributes());
             //player.respawn();
 
             Constants.LOG.info("un zero one player {}",entity.getUUID());
@@ -244,5 +262,11 @@ public abstract class EntityMixin implements ILivingEntity {
     @Override
     public void setTpAllow(boolean allow){
         this.allowTp = allow;
+    }
+
+    @Unique
+    @Override
+    public void tickDeathHandle(){
+
     }
 }

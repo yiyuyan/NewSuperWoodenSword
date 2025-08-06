@@ -1,5 +1,9 @@
 {
   "item.sws.super_wooden_sword": "木剑",
   "item.sws.dec.w": "无",
-  "item.sws.dec.s": "限 "
+  "item.sws.dec.s": "限 ",
+  "advancements.sws.sws.title": "杀手",
+  "advancements.sws.sws.description": "获得目前为止最强力的神器，超级小木剑，真正的神器",
+  "advancements.sws.root.title": "超级小木剑",
+  "advancements.sws.root.description": "目前为止最强力的神器，真正的神器"
 }

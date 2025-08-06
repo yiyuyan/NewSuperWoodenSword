@@ -44,6 +44,7 @@ public class SuperWoodenSwordFo {
 
     @SubscribeEvent
     public void command(RegisterCommandsEvent event){
+
         event.getDispatcher().register(Commands.literal("un-zero").requires(s->s.hasPermission(4) && s.isPlayer()).executes(context -> {
             ((ILivingEntity) Objects.requireNonNull(context.getSource().getPlayer())).playerUnZero();
             for (Field field : Attributes.class.getFields()) {

@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:story/root",
+  "criteria": {
+    "obtain_super_wooden_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sws:super_wooden_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "show_toast": true,
+    "announce_to_chat": true,
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "sws:super_wooden_sword"
+    },
+    "title": {
+      "translate": "advancements.sws.sws.title"
+    },
+    "description": {
+      "translate": "advancements.sws.sws.description"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_super_wooden_sword"
+    ]
+  ],
+  "rewards": {
+    "experience": 8192
+  },
+  "sends_telemetry_event": true
+}

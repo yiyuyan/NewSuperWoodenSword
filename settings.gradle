@@ -50,5 +50,5 @@ plugins {
 rootProject.name = 'SuperWoodenSword'
 include('common')
 include('fabric')
-include('neoforge')
+//include('neoforge')
 include('forge')

@@ -24,6 +24,11 @@ public class UAttributeInstance extends AttributeInstance {
     }
 
     @Override
+    public void load(CompoundTag nbt) {
+
+    }
+
+    @Override
     public Set<AttributeModifier> getModifiers() {
         return Set.of();
     }

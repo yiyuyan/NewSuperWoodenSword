@@ -26,7 +26,7 @@ public class ItemMixin {
 	}
 
 	@Inject(at = @At(value = "HEAD"), method = "getUseDuration", cancellable = true)
-	public void onGetMaxUseTime(ItemStack stack, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
+	public void onGetMaxUseTime(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
 		if(stack.getItem() instanceof SuperWoodenSword || stack.getItem() instanceof SwordItem) {
 			cir.setReturnValue(72000);
 		}

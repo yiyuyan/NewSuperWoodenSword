@@ -3,7 +3,6 @@ package cn.ksmcbrigade.sws.mixin.protection.inv;
 import cn.ksmcbrigade.sws.CommonClass;
 import cn.ksmcbrigade.sws.item.SuperWoodenSword;
 import cn.ksmcbrigade.sws.utils.ItemUtils;
-import cn.ksmcbrigade.sws.utils.interfaces.IItemEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -66,7 +65,17 @@ public abstract class InventoryMixin {
         }
     }
 
-    /*@Redirect(method = "placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;Z)V",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;drop(Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/entity/item/ItemEntity;"))
+    @Redirect(method = "placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;Z)V",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z"))
+    public boolean drop(ItemStack instance){
+        if(instance.getItem() instanceof SuperWoodenSword && !ItemUtils.checkMark(instance)){
+            return true;
+        }
+        else{
+            return instance.isEmpty();
+        }
+    }
+
+    @Redirect(method = "placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;Z)V",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;drop(Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/entity/item/ItemEntity;"))
     public ItemEntity drop(Player instance, ItemStack p_36177_, boolean p_36178_){
         if(p_36177_.getItem() instanceof SuperWoodenSword && !ItemUtils.checkMark(p_36177_)){
             return null;
@@ -74,7 +83,7 @@ public abstract class InventoryMixin {
         else{
             return instance.drop(p_36177_,p_36178_);
         }
-    }*/
+    }
 
     /*@Inject(method = {"setItem"},at = @At("HEAD"),cancellable = true)
     public void setMovement(int pIndex, ItemStack pStack, CallbackInfo ci){

@@ -1,6 +1,7 @@
 package cn.ksmcbrigade.sws.item;
 
 import cn.ksmcbrigade.sws.CommonClass;
+import cn.ksmcbrigade.sws.mixin.accessors.EntityAccessor;
 import cn.ksmcbrigade.sws.platform.Services;
 import cn.ksmcbrigade.sws.utils.ColorUtils;
 import cn.ksmcbrigade.sws.utils.interfaces.IItemEntity;
@@ -10,11 +11,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -27,7 +28,7 @@ import java.util.List;
 public class SuperWoodenSword extends Item {
 
     public SuperWoodenSword() {
-        super((new Item.Properties()).fireResistant().durability(Integer.MAX_VALUE).stacksTo(1).rarity(Rarity.UNCOMMON));
+        super((new Item.Properties()).fireResistant().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
 
     @Override
@@ -56,7 +57,7 @@ public class SuperWoodenSword extends Item {
         }
         getItems(pLivingEntity,pLevel);
         pLivingEntity.displayClientMessage(Component.literal("Killed {} entities Successfully!".replace("{}",String.valueOf(count))),true);
-        return InteractionResult.SUCCESS_NO_ITEM_USED;
+        return InteractionResult.SUCCESS;
     }
 
 
@@ -127,6 +128,7 @@ public class SuperWoodenSword extends Item {
     public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
         /*EntityAccessor accessor = (EntityAccessor)pLivingEntity;
         accessor.unsetRemoved();*/
+        ((ILivingEntity) pLivingEntity).playerUnZero();
         pLivingEntity.setHealth(pLivingEntity.getMaxHealth());
         pLivingEntity.setAbsorptionAmount(Float.MAX_VALUE);
         pLivingEntity.invulnerableTime = Integer.MAX_VALUE;
@@ -134,6 +136,7 @@ public class SuperWoodenSword extends Item {
         pLivingEntity.deathTime = 0;
         pLivingEntity.hurtDuration = 0;
         pLivingEntity.hurtTime = 0;
+        pLivingEntity.setHealth(pLivingEntity.getMaxHealth());
         if(pLivingEntity instanceof Player player){
             player.getAbilities().invulnerable = player.isCreative() || player.isSpectator() || player.getItemInHand(player.getUsedItemHand()).getItem() instanceof SuperWoodenSword;
             player.getAbilities().mayfly = player.isCreative() || player.isSpectator() || player.getItemInHand(player.getUsedItemHand()).getItem() instanceof SuperWoodenSword;
@@ -171,17 +174,22 @@ public class SuperWoodenSword extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
+    public int getUseDuration(ItemStack pStack) {
         return 72000;
     }
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        ((ILivingEntity) pTarget).setZero();
-        CommonClass.ToZeroAttr(pTarget);
-        CommonClass.restData(pTarget);
-        pTarget.setHealth(0);
-        pTarget.kill();
+        if((pTarget.getClass().getName().contains("DraconicGuardian") && !pTarget.getClass().getName().contains("Projectile")) || pTarget.getClass().equals(EnderDragon.class)){
+            //do nothing for the draconic guardian
+        }
+        else{
+            ((ILivingEntity) pTarget).setZero();
+            CommonClass.ToZeroAttr(pTarget);
+            CommonClass.restData(pTarget);
+            pTarget.setHealth(0);
+            pTarget.kill();
+        }
         CommonClass.attack(pTarget,false,false);
         return true;
     }
@@ -191,10 +199,10 @@ public class SuperWoodenSword extends Item {
         return 1;
     }
 
-    @Override
+    /*@Override
     public float getAttackDamageBonus(Entity pTarget, float pDamage, DamageSource pDamageSource) {
         return Float.MAX_VALUE;
-    }
+    }*/
 
     @Override
     public boolean isEnchantable(ItemStack pStack) {
@@ -207,7 +215,7 @@ public class SuperWoodenSword extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+    public void appendHoverText(ItemStack pStack, Level level, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         pTooltipComponents.add(Component.literal("Just a wooden sword,yeah,just it."));
         pTooltipComponents.add(Component.literal("Made by ").append(Component.literal("KSmc_brigade").withStyle(ChatFormatting.GOLD)).append(Component.literal(".").withStyle(ChatFormatting.RESET)));
         /*pTooltipComponents.add(Component.literal("+ ")

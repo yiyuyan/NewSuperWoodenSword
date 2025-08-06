@@ -3,7 +3,6 @@ package cn.ksmcbrigade.sws.mixin.protection.network;
 import cn.ksmcbrigade.sws.CommonClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.network.ClientboundPacketListener;
 import net.minecraft.network.protocol.game.ClientboundPlayerCombatKillPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

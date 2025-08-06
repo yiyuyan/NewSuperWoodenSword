@@ -41,7 +41,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public void stopEvents() {
-        MinecraftForge.EVENT_BUS.shutdown();
+        //MinecraftForge.EVENT_BUS.shutdown();
         if(MinecraftForge.EVENT_BUS instanceof EventBus eventBus){
             try {
                 Field field = eventBus.getClass().getDeclaredField("shutdown");

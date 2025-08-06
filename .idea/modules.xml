@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/SuperWoodenSword.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/SuperWoodenSword.neoforge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.test.iml" />
     </modules>
   </component>
 </project>

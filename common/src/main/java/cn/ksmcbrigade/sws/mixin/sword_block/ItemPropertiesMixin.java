@@ -46,9 +46,9 @@ public abstract class ItemPropertiesMixin {
 
         items.forEach((item) -> {
             if (item instanceof SwordItem || item instanceof SuperWoodenSword) {
-                register (item, ResourceLocation.withDefaultNamespace("parrying"), (stack, world, entity, i) -> (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) ? 1.0F: 0.0F);
+                register (item, new ResourceLocation("parrying"), (stack, world, entity, i) -> (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) ? 1.0F: 0.0F);
             }
         });
-        register(Services.PLATFORM.getItem().getItem(),ResourceLocation.withDefaultNamespace("parrying"), (stack, world, entity, i) -> (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) ? 1.0F: 0.0F);
+        register(Services.PLATFORM.getItem().getItem(),new ResourceLocation("parrying"), (stack, world, entity, i) -> (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) ? 1.0F: 0.0F);
     }
 }

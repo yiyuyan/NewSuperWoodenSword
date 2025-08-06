@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "cn.ksmcbrigade.sws.mixin",
   "refmap": "${mod_id}.refmap.json",
-  "compatibilityLevel": "JAVA_18",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "accessors.AttributeInstanceAccessor",
     "accessors.ConnectionAccessor",
@@ -35,6 +35,9 @@
   "client": [
     "fixes.LevelRendererMixin",
     "fixes.MinecraftClientMixin",
+    "network.ChatComponentMixin",
+    "network.ChatListenerMixin",
+    "network.ClientPacketListenerMixin",
     "protection.DeathScreenMixin",
     "protection.network.ClientboundPacketListenerImplMixin",
     "protection.player.LocalPlayerMixin",

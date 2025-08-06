@@ -23,7 +23,7 @@ public class CombatTrackerMixin {
     @Inject(method = "getDeathMessage",at = @At("HEAD"),cancellable = true)
     public void deathFix(CallbackInfoReturnable<Component> cir){
         if(!CommonClass.has(this.mob) && mob instanceof Player player && ((ILivingEntity)player).zero()){
-            ((ILivingEntity)player).playerUnZero();
+            //((ILivingEntity)player).playerUnZero();
             if(player instanceof ServerPlayer serverPlayer){
                 KIckUtils.disconnect(((ServerCommonPacketListenerImplAccessor) serverPlayer.connection).getConnection(),serverPlayer.server,Component.literal("You're Died,reconnect,please.\n" +
                         "By SuperWoodenSword\n" +

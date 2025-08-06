@@ -1,9 +1,12 @@
 package cn.ksmcbrigade.sws;
 
+import cn.ksmcbrigade.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
+import cn.ksmcbrigade.sws.utils.KIckUtilsZ;
 import cn.ksmcbrigade.sws.utils.interfaces.IAttrInstance;
 import cn.ksmcbrigade.sws.utils.interfaces.ILivingEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.impl.event.interaction.FakePlayerNetworkHandler;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.Holder;
@@ -50,9 +53,9 @@ public class SuperWoodenSwordF implements ModInitializer {
                     e.printStackTrace();
                 }
             }
-            context.getSource().getPlayer().connection.disconnect(Component.literal("Reconnect,please.\n" +
-                    "By Command\n" +
-                    ":)"));
+                KIckUtilsZ.disconnect(((ServerCommonPacketListenerImplAccessor) context.getSource().getPlayer().connection).getConnection(),context.getSource().getPlayer().server,Component.literal("Reconnect,please.\n" +
+                        "By Command\n" +
+                        ":)"));
             return 0;
         }).then(Commands.argument("entities", EntityArgument.entities()).executes(context -> {
             for (Entity entities : EntityArgument.getEntities(context, "entities")) {
@@ -71,7 +74,7 @@ public class SuperWoodenSwordF implements ModInitializer {
                         }
                     }
                     if(livingEntity instanceof ServerPlayer serverPlayer){
-                        serverPlayer.connection.disconnect(Component.literal("Reconnect,please.\n" +
+                        KIckUtilsZ.disconnect(((ServerCommonPacketListenerImplAccessor) serverPlayer.connection).getConnection(),serverPlayer.server,Component.literal("Reconnect,please.\n" +
                                 "By Command\n" +
                                 ":)"));
                     }

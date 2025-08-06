@@ -11,7 +11,9 @@ public interface ILivingEntity {
     void setCannotModify();
     boolean zero();
     void playerUnZero();
+    void setZeroOnly();
     void unsetRemoved_i();
     void updateAttr();
     void setTpAllow(boolean allow);
+    void tickDeathHandle();
 }
