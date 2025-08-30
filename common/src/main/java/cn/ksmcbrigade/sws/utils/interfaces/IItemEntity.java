@@ -1,6 +1,0 @@
-package cn.ksmcbrigade.sws.utils.interfaces;
-
-public interface IItemEntity {
-    void setCanBeKilled();
-    boolean canBeKilled();
-}

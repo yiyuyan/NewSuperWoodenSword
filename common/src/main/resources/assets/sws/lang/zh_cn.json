@@ -5,5 +5,7 @@
   "advancements.sws.sws.title": "杀手",
   "advancements.sws.sws.description": "获得目前为止最强力的神器，超级小木剑，真正的神器",
   "advancements.sws.root.title": "超级小木剑",
-  "advancements.sws.root.description": "目前为止最强力的神器，真正的神器"
+  "advancements.sws.root.description": "目前为止最强力的神器，真正的神器",
+  "gui.d": "死",
+  "gui.o": "结束"
 }

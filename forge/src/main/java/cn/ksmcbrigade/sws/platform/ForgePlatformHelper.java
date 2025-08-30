@@ -1,8 +1,8 @@
 package cn.ksmcbrigade.sws.platform;
 
-import cn.ksmcbrigade.sws.Constants;
+import net.minecraft.sws.Constants;
 import cn.ksmcbrigade.sws.SuperWoodenSwordFo;
-import cn.ksmcbrigade.sws.platform.services.IPlatformHelper;
+import net.minecraft.sws.platform.services.IPlatformHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,7 +48,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
                 field.setAccessible(true);
                 field.set(eventBus,true);
                 //Constants.LOG.info("Stopped the event bus.");
-            } catch (NoSuchFieldException | IllegalAccessException e) {
+            } catch (NoSuchFieldException e) {
+                Constants.LOG.error("Can't stop the event bus. {}",MinecraftForge.EVENT_BUS);
+            }
+            catch (IllegalAccessException e){
                 Constants.LOG.error("Can't stop the event bus.",e);
             }
         }

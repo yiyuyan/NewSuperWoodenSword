@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "cn.ksmcbrigade.sws.mixin",
+  "package": "net.minecraft.sws.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
@@ -10,7 +10,10 @@
     "accessors.EntityAccessor",
     "accessors.EntityDataAccessor",
     "accessors.InvMenuAccessor",
+    "accessors.PlayerAccessor",
     "accessors.ServerCommonPacketListenerImplAccessor",
+    "attack.ItemMixin",
+    "attack.ServerPlayerGameModeMixin",
     "attr.AttributeInstanceMixin",
     "fix.CombatTrackerMixin",
     "fix.PlayerListMixin",
@@ -27,6 +30,7 @@
     "protection.inv.InventoryMenuMixin",
     "protection.inv.InventoryMixin",
     "protection.network.ServerCommonPacketListenerImplMixin",
+    "protection.player.EntityLookupMixin",
     "protection.player.PlayerMixin",
     "protection.player.ServerPlayerMixin",
     "sword_block.ItemMixin",
@@ -41,6 +45,7 @@
     "protection.DeathScreenMixin",
     "protection.network.ClientboundPacketListenerImplMixin",
     "protection.player.LocalPlayerMixin",
+    "protection.render.GuiGraphicsMixin",
     "sword_block.ItemPropertiesMixin"
   ],
   "server": [],

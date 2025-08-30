@@ -1,8 +1,7 @@
 package cn.ksmcbrigade.sws.platform;
 
 import cn.ksmcbrigade.sws.SuperWoodenSwordF;
-import cn.ksmcbrigade.sws.item.SuperWoodenSword;
-import cn.ksmcbrigade.sws.platform.services.IPlatformHelper;
+import net.minecraft.sws.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
