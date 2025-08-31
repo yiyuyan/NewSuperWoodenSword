@@ -16,6 +16,7 @@ import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.entity.EntityInLevelCallback;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -93,6 +94,14 @@ public abstract class EntityMixin implements ILivingEntity {
             else{
                 ci.cancel();
             }
+        }
+
+    }
+
+    @Inject(method = {"setLevelCallback"},at = @At("HEAD"), cancellable = true)
+    public void isShiftDown(EntityInLevelCallback levelCallback, CallbackInfo ci){
+        if(CommonClass.has((Entity) ((Object) this)) && levelCallback.equals(EntityInLevelCallback.NULL)){
+            ci.cancel();
         }
 
     }

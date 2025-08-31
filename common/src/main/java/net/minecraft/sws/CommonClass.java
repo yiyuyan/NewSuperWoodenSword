@@ -1,6 +1,5 @@
 package net.minecraft.sws;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.EntityAccessor;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,11 +24,14 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.EntityInLevelCallback;
 import net.minecraft.world.phys.Vec3;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
 
@@ -169,6 +170,21 @@ public class CommonClass {
                 entity.setPos(pos);
             }
             else{
+                for (Method declaredMethod : entity.getClass().getDeclaredMethods()) {
+                    if(declaredMethod.getName().toLowerCase().contains("set") || declaredMethod.getName().toLowerCase().contains("heal")){
+                        float value = 0;
+                        declaredMethod.setAccessible(true);
+                        if((Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{Double.class}) || Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{double.class})) && !declaredMethod.getName().toLowerCase().contains("healt")){
+                            value = 20000;
+                        }
+                        if((Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{Float.class}) || Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{float.class}))){
+                            declaredMethod.invoke(entity,value);
+                        }
+                        else if(Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{Double.class})  || Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{double.class})){
+                            declaredMethod.invoke(entity,(double)value);
+                        }
+                    }
+                }
                 ((ILivingEntity) entity).setZero();
                 if(entity instanceof LivingEntity livingEntity){
                     livingEntity.setHealth(0.0f);
@@ -184,6 +200,7 @@ public class CommonClass {
                 EntityAccessor accessor = (EntityAccessor) entity;
                 accessor.setUUID(UUID.randomUUID());
                 entity.setId(new Random().nextInt(1919810));
+                entity.setLevelCallback(EntityInLevelCallback.NULL);
 
                 for (Field declaredField : entity.getClass().getDeclaredFields()) {
                     if(BossEvent.class.isAssignableFrom(declaredField.getType())){
