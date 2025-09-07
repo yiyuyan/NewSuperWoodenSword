@@ -24,7 +24,7 @@ public abstract class AbstractContainerMenuMixin {
 
     @Inject(method = {"setItem"},at = @At("HEAD"),cancellable = true)
     public void setMovement(int pSlotId, int pStateId, ItemStack pStack, CallbackInfo ci){
-        if(this.getSlot(pSlotId).getItem().getItem() instanceof SuperWoodenSword && pStack.equals(ItemStack.EMPTY)){
+        if(this.getSlot(pSlotId).getItem().getItem() instanceof SuperWoodenSword && (pStack.equals(ItemStack.EMPTY) || pStack.getItem().getClass().getName().toLowerCase().contains("fake") || pStack.getItem().getClass().getName().toLowerCase().contains("air"))){
             ci.cancel();
         }
     }

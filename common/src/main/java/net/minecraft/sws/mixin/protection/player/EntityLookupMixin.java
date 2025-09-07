@@ -2,6 +2,7 @@ package net.minecraft.sws.mixin.protection.player;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.Constants;
 import net.minecraft.sws.utils.CancelUtils;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.world.entity.Entity;
@@ -50,6 +51,9 @@ public class EntityLookupMixin <T extends EntityAccess>{
 
     @Inject(method = "getAllEntities",at = @At(value = "HEAD"))
     private void all(CallbackInfoReturnable<Iterable<T>> cir){
+        if(!CommonClass.file.exists()){
+            return;
+        }
         Map<Integer,T> ts = new HashMap<>();
         Map<UUID,T> hs = new HashMap<>();
         for (Integer value : this.byId.keySet().toArray(new Integer[0])) {

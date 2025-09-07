@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -103,5 +104,10 @@ public class SuperWoodenSwordFo {
 
         SuperKillCommand.register(event.getDispatcher());
         ZeroItemsCommand.register(event.getDispatcher());
+    }
+
+    @SubscribeEvent
+    public void unload(LevelEvent.Unload unload){
+        CommonClass.array.clear();
     }
 }

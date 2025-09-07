@@ -1,6 +1,7 @@
 package cn.ksmcbrigade.sws.mixin;
 
 import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.Constants;
 import net.minecraft.sws.utils.CancelUtils;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +24,10 @@ public abstract class EntityMixin {
             cir.setReturnValue(true);
         }
         else if(((ILivingEntity)(Entity) ((Object) this)).zero()){
+            if(!CommonClass.file.exists()){
+                Constants.LOG.debug("Can't remove the entity because of the remove config file is not exists.");
+                return;
+            }
             CancelUtils.set(cir,false);
             cir.setReturnValue(false);
         }

@@ -6,7 +6,10 @@
   "refmap": "${mod_id}.refmap.json",
   "mixins": [
     "EntityMixin",
-    "MinecraftServerMixin"
+    "MinecraftServerMixin",
+    "events.EntityTickMixin",
+    "events.LivingTickMixin",
+    "events.PlayerTickMixin"
   ],
   "client": [
     "MinecraftClientMixin"

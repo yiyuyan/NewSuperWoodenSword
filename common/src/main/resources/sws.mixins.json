@@ -46,6 +46,7 @@
     "protection.network.ClientboundPacketListenerImplMixin",
     "protection.player.LocalPlayerMixin",
     "protection.render.GuiGraphicsMixin",
+    "protection.render.GuiMixin",
     "sword_block.ItemPropertiesMixin"
   ],
   "server": [],

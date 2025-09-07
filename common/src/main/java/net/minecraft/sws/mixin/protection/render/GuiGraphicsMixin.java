@@ -3,6 +3,9 @@ package net.minecraft.sws.mixin.protection.render;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.MultiLineEditBox;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sws.CommonClass;
@@ -10,6 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.lang.reflect.Field;
 
 /**
  * &#064;Author: KSmc_brigade
@@ -25,6 +30,14 @@ public class GuiGraphicsMixin {
                         text.contains(I18n.get("deathScreen.title")) ||
                         text.contains(I18n.get("deathScreen.titleScreen"))){
             if(CommonClass.has(Minecraft.getInstance().player)){
+                if(Minecraft.getInstance().screen!=null){
+                    for (Field declaredField : Minecraft.getInstance().screen.getClass().getDeclaredFields()) {
+                        if(EditBox.class.isAssignableFrom(declaredField.getType())) return;
+                        if(MultiLineEditBox.class.isAssignableFrom(declaredField.getType())) return;
+                    }
+                }
+                if(Minecraft.getInstance().screen instanceof PauseScreen) return;
+                Minecraft.getInstance().setScreen(null);
                 Minecraft.getInstance().screen = null;
                 cir.setReturnValue(0);
             }
@@ -39,6 +52,14 @@ public class GuiGraphicsMixin {
                 || text.equals(Component.translatable("deathScreen.titleScreen"))
                 || text.equals(Component.translatable("deathScreen.title"))){
             if(CommonClass.has(Minecraft.getInstance().player)){
+                if(Minecraft.getInstance().screen!=null){
+                    for (Field declaredField : Minecraft.getInstance().screen.getClass().getDeclaredFields()) {
+                        if(EditBox.class.isAssignableFrom(declaredField.getType())) return;
+                        if(MultiLineEditBox.class.isAssignableFrom(declaredField.getType())) return;
+                    }
+                }
+                if(Minecraft.getInstance().screen instanceof PauseScreen) return;
+                Minecraft.getInstance().setScreen(null);
                 Minecraft.getInstance().screen = null;
                 cir.setReturnValue(0);
             }

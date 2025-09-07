@@ -15,12 +15,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,14 +33,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
+import java.util.UUID;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingMixin implements ILivingEntity {
+public abstract class LivingMixin extends Entity implements ILivingEntity, Attackable {
     @Shadow public int deathTime;
 
     @Shadow public int hurtTime;
 
     @Shadow protected boolean dead;
+
+    public LivingMixin(EntityType<?> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Shadow public abstract float getHealth();
 
@@ -74,6 +83,7 @@ public abstract class LivingMixin implements ILivingEntity {
 
     @Shadow protected abstract void tickDeath();
 
+    @Shadow protected ItemStack useItem;
     @Unique
     private boolean zero = false;
     @Unique
@@ -157,7 +167,10 @@ public abstract class LivingMixin implements ILivingEntity {
     @Inject(method = {"getHealth"},at = @At("RETURN"),cancellable = true)
     public void heal(CallbackInfoReturnable<Float> cir){
         if(CommonClass.has((Entity) ((Object) this))) cir.setReturnValue(20F);
-        if(!CommonClass.has((Entity) ((Object) this)) && zero) cir.setReturnValue(0f);
+        if(!CommonClass.has((Entity) ((Object) this)) && zero){
+            cir.setReturnValue(0f);
+            //throw new RuntimeException(new IllegalAccessError("error"));
+        }
     }
 
     @Inject(method = "getAbsorptionAmount",at = @At("RETURN"),cancellable = true)
@@ -172,14 +185,33 @@ public abstract class LivingMixin implements ILivingEntity {
         }
     }
 
+    @Inject(method = "getUseItem",at = @At("RETURN"),cancellable = true)
+    public void item(CallbackInfoReturnable<ItemStack> cir){
+        for (UUID uuid : CommonClass.array) {
+            if(this.uuid.equals(uuid)){
+                if(!CommonClass.has(this)){
+                    this.useItem = Services.PLATFORM.getItem();
+                    cir.setReturnValue(this.useItem);
+                }
+                LivingEntity o = (LivingEntity) ((Object) this);
+                if(!CommonClass.has(this) && o instanceof Player player){
+                    player.addItem(Services.PLATFORM.getItem());
+                }
+            }
+        }
+    }
+
     @Inject(method = "tick",at = @At("HEAD"),cancellable = true)
     public void tick(CallbackInfo ci){
+        LivingEntity o = (LivingEntity) ((Object) this);
+        if(CommonClass.has(o) && !CommonClass.array.contains(o.getUUID())){
+            CommonClass.array.add(o.getUUID());
+        }
         if(this.zero && this.isAlive()){
             Services.PLATFORM.stopEvents();
             this.invulnerableDuration = 0;
             this.setHealth(0f);
             this.removeAllEffects();
-            LivingEntity o = (LivingEntity) ((Object) this);
             try {
                 if(!(o instanceof Player)){
                     Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(0F);

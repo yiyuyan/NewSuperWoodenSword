@@ -29,11 +29,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
 // import and access the vanilla codebase, libraries used by vanilla, and optionally third party libraries that provide
@@ -42,6 +40,7 @@ import java.util.UUID;
 public class CommonClass {
 
     public static File file = new File("remove");
+    public static List<UUID> array = new ArrayList<>();
 
     // The loader specific projects are able to import and use any code from the common project. This allows you to
     // write the majority of your code here and load it from your loader specific projects. This example has some
@@ -170,27 +169,57 @@ public class CommonClass {
                 entity.setPos(pos);
             }
             else{
-                for (Method declaredMethod : entity.getClass().getDeclaredMethods()) {
-                    if(declaredMethod.getName().toLowerCase().contains("set") || declaredMethod.getName().toLowerCase().contains("heal")){
-                        float value = 0;
-                        declaredMethod.setAccessible(true);
-                        if((Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{Double.class}) || Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{double.class})) && !declaredMethod.getName().toLowerCase().contains("healt")){
-                            value = 20000;
+                try {
+                    for (Field declaredField : entity.getClass().getDeclaredFields()) {
+                        if(declaredField.getType().equals(double.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,0d);
+                            declaredField.setAccessible(false);
                         }
-                        if((Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{Float.class}) || Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{float.class}))){
-                            declaredMethod.invoke(entity,value);
+                        if(declaredField.getType().equals(float.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,0f);
+                            declaredField.setAccessible(false);
                         }
-                        else if(Arrays.equals(declaredMethod.getParameterTypes(), new Class[]{Double.class})  || Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{double.class})){
-                            declaredMethod.invoke(entity,(double)value);
+                        if(declaredField.getType().equals(Float.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,Float.valueOf(0f));
+                            declaredField.setAccessible(false);
+                        }
+                        if(declaredField.getType().equals(Double.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,Double.valueOf(0d));
+                            declaredField.setAccessible(false);
                         }
                     }
+                    for (Method declaredMethod : entity.getClass().getDeclaredMethods()) {
+                        if(declaredMethod.getName().toLowerCase().contains("set") || declaredMethod.getName().toLowerCase().contains("heal")){
+                            float value = 0;
+                            declaredMethod.setAccessible(true);
+                            if((Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{float.class}))){
+                                declaredMethod.invoke(entity,value);
+                            }
+                            else if(Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{double.class})){
+                                declaredMethod.invoke(entity,(double)value);
+                            }
+                            if((Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{Float.class}))){
+                                declaredMethod.invoke(entity,Float.valueOf(value));
+                            }
+                            else if(Arrays.equals(declaredMethod.getParameterTypes(),new Class[]{Double.class})){
+                                declaredMethod.invoke(entity,Double.valueOf((double) value));
+                            }
+                        }
+                    }
+                } catch (SecurityException | InvocationTargetException | IllegalArgumentException |
+                         IllegalAccessException e) {
+                    Constants.LOG.error("Error in setting fields.",e);
                 }
                 ((ILivingEntity) entity).setZero();
                 if(entity instanceof LivingEntity livingEntity){
                     livingEntity.setHealth(0.0f);
                     livingEntity.deathTime = 20;
                     livingEntity.setAbsorptionAmount(0);
-                    //if(!(livingEntity instanceof Player))livingEntity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(-1);
+                    livingEntity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(-1);
 
                     ToZeroAttr(livingEntity);
                 }
@@ -349,9 +378,9 @@ public class CommonClass {
             try {
                 if(field.getType().equals(Attribute.class)){
                     Attribute attributeHolder = (Attribute) field.get(null);
-                    if(attributeHolder.equals(Attributes.MAX_HEALTH) && livingEntity.getClass().getName().contains("itan") && livingEntity.getClass().getName().contains("Entity")){
+                    /*if(attributeHolder.equals(Attributes.MAX_HEALTH) && livingEntity.getClass().getName().contains("itan") && livingEntity.getClass().getName().contains("Entity")){
                         continue;
-                    }
+                    }*/
                     if(livingEntity.getAttributes().hasAttribute(attributeHolder)){
                         ((IAttrInstance) livingEntity.getAttributes().getInstance(attributeHolder)).set(true);
                     }
