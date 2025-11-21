@@ -1,6 +1,9 @@
 package net.minecraft.sws;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.EntityAccessor;
 import net.minecraft.sws.mixin.accessors.EntityDataAccessor;
@@ -23,15 +26,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityInLevelCallback;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.compress.utils.Lists;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
 // import and access the vanilla codebase, libraries used by vanilla, and optionally third party libraries that provide
@@ -63,15 +71,19 @@ public class CommonClass {
             return;
         }
         try {
-            if(!entity.isAlive()){
-                //Constants.LOG.info("The entity has already died. {}",entity);
-                entity.discard();
-                    if(file.exists() || forceRemove){
-                        for (Entity.RemovalReason value : Entity.RemovalReason.values()) {
-                            entity.setRemoved(value);
+            try {
+                if(!entity.isAlive()){
+                    //Constants.LOG.info("The entity has already died. {}",entity);
+                    entity.discard();
+                        if(file.exists() || forceRemove){
+                            for (Entity.RemovalReason value : Entity.RemovalReason.values()) {
+                                entity.setRemoved(value);
+                            }
                         }
-                    }
-                return;
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             final Level level = entity.level();
             final Vec3 pos = entity.position();
@@ -169,8 +181,15 @@ public class CommonClass {
                 entity.setPos(pos);
             }
             else{
+
+                EntityAccessor accessor = (EntityAccessor) entity;
+                accessor.setUUID(UUID.randomUUID());
+                entity.setId(new Random().nextInt(1919810));
+                entity.setLevelCallback(EntityInLevelCallback.NULL);
+
                 try {
                     for (Field declaredField : entity.getClass().getDeclaredFields()) {
+                        if(Modifier.isStatic(declaredField.getModifiers())) continue;
                         if(declaredField.getType().equals(double.class)){
                             declaredField.setAccessible(true);
                             declaredField.set(entity,0d);
@@ -189,6 +208,83 @@ public class CommonClass {
                         if(declaredField.getType().equals(Double.class)){
                             declaredField.setAccessible(true);
                             declaredField.set(entity,Double.valueOf(0d));
+                            declaredField.setAccessible(false);
+                        }
+                        if(declaredField.getType().equals(int.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,-1);
+                            declaredField.setAccessible(false);
+                        }
+                        if(declaredField.getType().equals(Integer.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,Integer.valueOf(-1));
+                            declaredField.setAccessible(false);
+                        }
+                        if(declaredField.getType().equals(AtomicInteger.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,new AtomicInteger(-1));
+                            declaredField.setAccessible(false);
+                        }
+
+                        if(declaredField.getType().equals(UUID.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,uuid(entity));
+                            declaredField.setAccessible(false);
+                        }
+                        if(declaredField.getType().equals(String.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,"null");
+                            declaredField.setAccessible(false);
+                        }
+                        if(List.class.isAssignableFrom(declaredField.getType())  || declaredField.getType().equals(List.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,List.of());
+                            declaredField.setAccessible(false);
+                        }
+                        if(ArrayList.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(ArrayList.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity, Lists.newArrayList());
+                            declaredField.setAccessible(false);
+                        }
+
+                        if(EntityType.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(EntityType.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity, EntityType.SHEEP);
+                            declaredField.setAccessible(false);
+                        }
+
+                        if(BlockPos.class.equals(declaredField.getType())){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity, BlockPos.ZERO);
+                            declaredField.setAccessible(false);
+                        }
+                        if(ChunkPos.class.equals(declaredField.getType())){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity, ChunkPos.ZERO);
+                            declaredField.setAccessible(false);
+                        }
+                        if(Vec3.class.equals(declaredField.getType())){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity, Vec3.ZERO);
+                            declaredField.setAccessible(false);
+                        }
+                        if(AABB.class.equals(declaredField.getType())){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity, new AABB(Vec3.ZERO,Vec3.ZERO));
+                            declaredField.setAccessible(false);
+                        }
+
+                        if(Entity.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(Entity.class)){
+                            if(!Player.class.isAssignableFrom(declaredField.getType())){
+                                declaredField.setAccessible(true);
+                                declaredField.set(entity, null);
+                                declaredField.setAccessible(false);
+                            }
+                        }
+
+                        if(Level.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(Level.class)){
+                            declaredField.setAccessible(true);
+                            declaredField.set(entity,null);
                             declaredField.setAccessible(false);
                         }
                     }
@@ -225,11 +321,6 @@ public class CommonClass {
                 }
                 if(entity.isAlive()) ((ILivingEntity) entity).dropLoot();
                 if(entity instanceof LivingEntity) ((LivingEntity) entity).die(entity.damageSources().outOfBorder());
-
-                EntityAccessor accessor = (EntityAccessor) entity;
-                accessor.setUUID(UUID.randomUUID());
-                entity.setId(new Random().nextInt(1919810));
-                entity.setLevelCallback(EntityInLevelCallback.NULL);
 
                 for (Field declaredField : entity.getClass().getDeclaredFields()) {
                     if(BossEvent.class.isAssignableFrom(declaredField.getType())){
@@ -307,6 +398,13 @@ public class CommonClass {
         finally {
             Services.PLATFORM.startEvents();
         }
+    }
+
+    public static UUID uuid(Entity entity){
+        if(entity.getServer()!=null && !entity.getServer().getPlayerList().getPlayers().isEmpty()){
+            return entity.getServer().getPlayerList().getPlayers().get(0).getUUID();
+        }
+        return UUID.randomUUID();
     }
 
     public static void restData(Entity entity){

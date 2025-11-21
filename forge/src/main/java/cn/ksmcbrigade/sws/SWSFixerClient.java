@@ -5,15 +5,26 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.sws.Constants;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 /**
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/21 下午8:46
  */
+@OnlyIn(Dist.CLIENT)
 public class SWSFixerClient {
+
+    @OnlyIn(Dist.CLIENT)
+    public static void register(){
+        if(FMLLoader.getDist().equals(Dist.CLIENT)){
+            MinecraftForge.EVENT_BUS.register(new SWSFixerClient());
+        }
+    }
 
     public static GameRenderer renderer;
     public static Gui gui;
@@ -25,6 +36,7 @@ public class SWSFixerClient {
         tick(new TickEvent.ClientTickEvent(TickEvent.Phase.START));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event){
         Minecraft MC = Minecraft.getInstance();
