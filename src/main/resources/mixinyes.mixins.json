@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cn.ksmcbrigade.mixinyes.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mixinyes.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "MainMixin",
+    "PlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Agent-Class: cn.ksmcbrigade.mixinyes.NativeProtectorAgent
+Premain-Class: cn.ksmcbrigade.mixinyes.NativeProtectorAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Specification-Title: mixinyes
+Specification-Vendor: KSmc_brigade
+Specification-Version: 1
+Implementation-Title: mixinyes
+Implementation-Version: 1.0-slowly-linux_fix
+Implementation-Vendor: KSmc_brigade
+Implementation-Timestamp: 2025-11-23T09:47:27+0800
+MixinConfigs: mixinyes.mixins.json
+
