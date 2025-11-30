@@ -34,7 +34,6 @@
     "protection.network.ServerCommonPacketListenerImplMixin",
     "protection.player.PlayerMixin",
     "protection.player.ServerPlayerMixin",
-    "protection.player.entityManager.EntityGetterMixin",
     "protection.player.entityManager.EntityLookupMixin",
     "protection.player.entityManager.EntitySectionMixin",
     "protection.player.entityManager.LevelEntityGetterAdapterMixin",
