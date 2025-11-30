@@ -1,4 +1,4 @@
-name: Gradle Build
+name: DevMixinYes Gradle Build
 
 on:
   push:
