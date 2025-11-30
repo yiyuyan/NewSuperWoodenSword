@@ -29,6 +29,7 @@ public abstract class LevelEntityGetterAdapterMixin<T extends EntityAccess> impl
     private void get(UUID uuid, CallbackInfoReturnable<T> cir){
         if(cir.getReturnValue()==null) return;
         if(((ILivingEntity) cir.getReturnValue()).zero() && !CommonClass.has((Entity) cir.getReturnValue())){
+            this.visibleEntities.remove(cir.getReturnValue());
             cir.setReturnValue(null);
         }
     }
@@ -36,6 +37,7 @@ public abstract class LevelEntityGetterAdapterMixin<T extends EntityAccess> impl
     private void get(int id, CallbackInfoReturnable<T> cir){
         if(cir.getReturnValue()==null) return;
         if(((ILivingEntity) cir.getReturnValue()).zero() && !CommonClass.has((Entity) cir.getReturnValue())){
+            this.visibleEntities.remove(cir.getReturnValue());
             cir.setReturnValue(null);
         }
     }

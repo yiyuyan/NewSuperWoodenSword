@@ -5,6 +5,7 @@ import net.minecraft.sws.utils.CancelUtils;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.EntityAccess;
+import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraft.world.level.entity.PersistentEntitySectionManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +27,8 @@ public class PersistentEntitySectionManagerMixin <T extends EntityAccess> {
 
     @Shadow @Final
     Set<UUID> knownUuids;
+
+    @Shadow @Final private LevelEntityGetter<T> entityGetter;
 
     @Inject(method = {"addEntity"},at = @At("HEAD"),cancellable = true)
     public void add(T entity, boolean worldGenSpawned, CallbackInfoReturnable<Boolean> cir){
@@ -52,6 +55,28 @@ public class PersistentEntitySectionManagerMixin <T extends EntityAccess> {
         try {
             if(((ILivingEntity) entity).zero() && !CommonClass.has(((Entity) entity))) {
                 this.knownUuids.remove(entity.getUUID());
+                CancelUtils.set(cir,false);
+                cir.setReturnValue(false);
+            }
+        } catch (CancellationException e) {
+            try {
+                e.printStackTrace();
+                CancelUtils.set(cir,false);
+                cir.setReturnValue(false);
+            } catch (CancellationException ex) {
+                ex.printStackTrace();
+                cir.setReturnValue(false);
+            }
+        }
+    }
+
+    @Inject(method = {"isLoaded"},at = @At("HEAD"),cancellable = true)
+    public void add(UUID uuid, CallbackInfoReturnable<Boolean> cir){
+        try {
+            T t =  this.entityGetter.get(uuid);
+            if(t==null) return;
+            if(((ILivingEntity) t).zero() && !CommonClass.has(((Entity) t))) {
+                this.knownUuids.remove(uuid);
                 CancelUtils.set(cir,false);
                 cir.setReturnValue(false);
             }
