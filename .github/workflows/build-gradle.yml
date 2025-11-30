@@ -1,4 +1,4 @@
-name: Gradle Build
+name: SuperWoodenSword Gradle Build
 
 on:
   push:
