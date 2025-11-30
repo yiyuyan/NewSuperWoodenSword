@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.BooleanSupplier;
 
-@Mixin(MinecraftServer.class)
+@Mixin(priority = 2147483647,value = MinecraftServer.class)
 public abstract class MinecraftServerMixin {
 
     @Unique

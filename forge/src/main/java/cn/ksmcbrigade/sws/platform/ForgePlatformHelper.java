@@ -3,6 +3,7 @@ package cn.ksmcbrigade.sws.platform;
 import net.minecraft.sws.Constants;
 import cn.ksmcbrigade.sws.SuperWoodenSwordFo;
 import net.minecraft.sws.platform.services.IPlatformHelper;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,6 +61,13 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public void startEvents() {
         MinecraftForge.EVENT_BUS.start();
+    }
+
+    @Override
+    public void reviveEntity(LivingEntity entity) {
+        entity.revive();
+        entity.reviveCaps();
+        entity.invalidateCaps();
     }
 
 

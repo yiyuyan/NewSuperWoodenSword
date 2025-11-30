@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ItemStack.class)
+@Mixin(priority = 2147483647,value = ItemStack.class)
 public abstract class ItemStackMixin implements IItemEntity {
     @Shadow public abstract Item getItem();
 

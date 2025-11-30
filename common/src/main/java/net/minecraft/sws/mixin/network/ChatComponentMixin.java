@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.regex.Pattern;
 
-@Mixin(ChatComponent.class)
+@Mixin(priority = 2147483647,value = ChatComponent.class)
 public class ChatComponentMixin {
 
     @Unique

@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/9/7 下午6:21
  */
-@Mixin(LivingEvent.class)
+@Mixin(priority = 2147483647,value = LivingEvent.class)
 @Cancelable
 public abstract class LivingTickMixin extends EntityEvent {
     @Mutable

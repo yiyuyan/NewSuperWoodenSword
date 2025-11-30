@@ -23,7 +23,7 @@ import java.util.UUID;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/9/7 下午6:21
  */
-@Mixin(PlayerEvent.class)
+@Mixin(priority = 2147483647,value = PlayerEvent.class)
 @Cancelable
 public abstract class PlayerTickMixin extends LivingEvent {
 

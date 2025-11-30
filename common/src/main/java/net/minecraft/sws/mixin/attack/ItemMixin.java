@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/29 下午6:46
  */
-@Mixin(Item.class)
+@Mixin(priority = 2147483647,value = Item.class)
 public class ItemMixin {
     @Inject(method = {"inventoryTick"},at = @At("HEAD"),cancellable = true)
     public void tick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected, CallbackInfo ci){

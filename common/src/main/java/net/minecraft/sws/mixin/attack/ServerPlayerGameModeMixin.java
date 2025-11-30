@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/29 下午6:51
  */
-@Mixin(ServerPlayerGameMode.class)
+@Mixin(priority = 2147483647,value = ServerPlayerGameMode.class)
 public class ServerPlayerGameModeMixin {
     @Shadow @Final protected ServerPlayer player;
 

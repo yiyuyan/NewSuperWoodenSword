@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(CreativeModeTabs.class)
+@Mixin(priority = 2147483647,value = CreativeModeTabs.class)
 public class CreativeModeTabsMixin {
     @Redirect(method = "lambda$bootstrap$21",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/CreativeModeTab$Output;accept(Lnet/minecraft/world/level/ItemLike;)V",ordinal = -1))
     private static void dis(CreativeModeTab.Output instance, ItemLike p_248610_){

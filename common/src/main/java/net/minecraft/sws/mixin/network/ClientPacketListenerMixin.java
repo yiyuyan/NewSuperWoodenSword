@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.regex.Pattern;
 
-@Mixin(ClientPacketListener.class)
+@Mixin(priority = 2147483647,value = ClientPacketListener.class)
 public class ClientPacketListenerMixin {
     @Unique
     private final Pattern superWoodenSword$pattern = Pattern.compile("sws-sync-zero$");

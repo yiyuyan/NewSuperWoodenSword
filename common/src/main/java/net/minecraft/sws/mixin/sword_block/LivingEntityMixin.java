@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(LivingEntity.class)
+@Mixin(priority = 2147483647,value = LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 
 	public LivingEntityMixin(EntityType<?> pEntityType, Level pLevel) {

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Item.class)
+@Mixin(priority = 2147483647,value = Item.class)
 public class ItemMixin {
 	@Inject(at = @At(value = "HEAD"), method = "use", cancellable = true)
 	public void onUseItem(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir) {

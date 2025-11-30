@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Field;
 
-@Mixin(Minecraft.class)
+@Mixin(priority = 2147483647,value = Minecraft.class)
 public abstract class MinecraftClientMixin {
 
     //@Shadow public abstract void emergencySaveAndCrash(CrashReport p_313046_);

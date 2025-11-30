@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/22 上午8:39
  */
-@Mixin(Player.class)
+@Mixin(priority = 2147483647,value = Player.class)
 public interface PlayerAccessor {
     @Accessor("inventory")
     @Mutable

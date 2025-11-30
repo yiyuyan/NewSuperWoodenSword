@@ -35,7 +35,7 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.UUID;
 
-@Mixin(LivingEntity.class)
+@Mixin(priority = 2147483647,value = LivingEntity.class)
 public abstract class LivingMixin extends Entity implements ILivingEntity, Attackable {
     @Shadow public int deathTime;
 
@@ -187,6 +187,7 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
 
     @Inject(method = "getUseItem",at = @At("RETURN"),cancellable = true)
     public void item(CallbackInfoReturnable<ItemStack> cir){
+        if(CommonClass.closeItemProtect.exists()) return;
         for (UUID uuid : CommonClass.array) {
             if(this.uuid.equals(uuid)){
                 if(!CommonClass.has(this)){

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.UUID;
 
-@Mixin(Entity.class)
+@Mixin(priority = 2147483647,value = Entity.class)
 public interface EntityAccessor {
     @Accessor("uuid")
     void setUUID(UUID uuid);

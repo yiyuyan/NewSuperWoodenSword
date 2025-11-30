@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(SynchedEntityData.class)
+@Mixin(priority = 2147483647,value = SynchedEntityData.class)
 public class EntityDataMixin {
 
     @Shadow @Final private Entity entity;

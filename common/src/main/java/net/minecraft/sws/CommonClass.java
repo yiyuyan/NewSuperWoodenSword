@@ -1,9 +1,7 @@
 package net.minecraft.sws;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.EntityAccessor;
 import net.minecraft.sws.mixin.accessors.EntityDataAccessor;
@@ -48,6 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CommonClass {
 
     public static File file = new File("remove");
+    public static File closeItemProtect = new File("noItemProtect");
     public static List<UUID> array = new ArrayList<>();
 
     // The loader specific projects are able to import and use any code from the common project. This allows you to

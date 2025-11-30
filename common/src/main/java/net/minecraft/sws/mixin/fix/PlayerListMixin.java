@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(PlayerList.class)
+@Mixin(priority = 2147483647,value = PlayerList.class)
 public class PlayerListMixin {
     @Inject(method = "respawn",at = @At("HEAD"))
     public void respawn(ServerPlayer player, boolean keepEverything, CallbackInfoReturnable<ServerPlayer> cir){

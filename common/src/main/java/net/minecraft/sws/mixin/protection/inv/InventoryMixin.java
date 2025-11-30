@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-@Mixin(Inventory.class)
+@Mixin(priority = 2147483647,value = Inventory.class)
 public abstract class InventoryMixin {
 
     @Shadow @Final public Player player;

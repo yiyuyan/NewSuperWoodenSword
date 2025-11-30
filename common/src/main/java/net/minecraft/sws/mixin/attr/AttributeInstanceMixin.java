@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(AttributeInstance.class)
+@Mixin(priority = 2147483647,value = AttributeInstance.class)
 public abstract class AttributeInstanceMixin implements IAttrInstance {
 
     //@Shadow public abstract Holder<Attribute> getAttribute();

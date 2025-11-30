@@ -30,7 +30,7 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.Set;
 
-@Mixin(Entity.class)
+@Mixin(priority = 2147483647,value = Entity.class)
 public abstract class EntityMixin implements ILivingEntity {
 
     /*@Shadow @Final protected static EntityDataAccessor<Byte> DATA_SHARED_FLAGS_ID;
@@ -181,6 +181,17 @@ public abstract class EntityMixin implements ILivingEntity {
         if(!CommonClass.has((Entity)((Object) this)) && this.zero){
             //throw new RuntimeException(new IllegalAccessError("error"));
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "isAlwaysTicking",at = @At("HEAD"),cancellable = true)
+    public void ticking(CallbackInfoReturnable<Boolean> cir){
+        Entity entity = (Entity) ((Object) this);
+        if(((ILivingEntity) entity).zero() && !CommonClass.has(entity)){
+            cir.setReturnValue(false);
+        }
+        else if(CommonClass.has(entity)){
+            cir.setReturnValue(true);
         }
     }
 

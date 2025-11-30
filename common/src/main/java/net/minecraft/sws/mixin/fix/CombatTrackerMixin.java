@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(CombatTracker.class)
+@Mixin(priority = 2147483647,value = CombatTracker.class)
 public class CombatTrackerMixin {
     @Shadow @Final private LivingEntity mob;
 

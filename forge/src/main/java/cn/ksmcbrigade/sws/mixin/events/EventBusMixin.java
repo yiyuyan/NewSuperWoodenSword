@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/10/6 下午2:53
  */
-@Mixin(value = EventBus.class,remap = false)
+@Mixin(priority = 2147483647,value = EventBus.class,remap = false)
 public class EventBusMixin {
     @ModifyVariable(method = "post(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraftforge/eventbus/api/IEventBusInvokeDispatcher;)Z",ordinal = 0,at = @At("HEAD"),argsOnly = true)
     private Event post(Event value){

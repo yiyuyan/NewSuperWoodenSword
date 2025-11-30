@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(AbstractContainerMenu.class)
+@Mixin(priority = 2147483647,value = AbstractContainerMenu.class)
 public abstract class AbstractContainerMenuMixin {
 
     @Shadow public abstract Slot getSlot(int p_38854_);

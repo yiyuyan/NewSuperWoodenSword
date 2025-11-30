@@ -23,7 +23,7 @@ import java.net.Proxy;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/21 下午8:49
  */
-@Mixin(MinecraftServer.class)
+@Mixin(priority = 2147483647,value = MinecraftServer.class)
 public class MinecraftServerMixin {
 
     @Unique

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ClientPacketListener.class)
+@Mixin(priority = 2147483647,value = ClientPacketListener.class)
 public class ClientboundPacketListenerImplMixin {
     @Inject(method = "handlePlayerCombatKill",at = @At("HEAD"),cancellable = true)
     public void no_death(ClientboundPlayerCombatKillPacket pPacket, CallbackInfo ci){

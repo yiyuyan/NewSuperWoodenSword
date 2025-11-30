@@ -22,7 +22,7 @@ import static cn.ksmcbrigade.sws.SWSFixerClient.*;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/21 下午8:49
  */
-@Mixin(Minecraft.class)
+@Mixin(priority = 2147483647,value = Minecraft.class)
 public class MinecraftClientMixin {
 
     @Mutable

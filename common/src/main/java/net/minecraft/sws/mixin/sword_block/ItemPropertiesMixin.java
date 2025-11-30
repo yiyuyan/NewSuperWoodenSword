@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-@Mixin(ItemProperties.class)
+@Mixin(priority = 2147483647,value = ItemProperties.class)
 public abstract class ItemPropertiesMixin {
 
     @Shadow

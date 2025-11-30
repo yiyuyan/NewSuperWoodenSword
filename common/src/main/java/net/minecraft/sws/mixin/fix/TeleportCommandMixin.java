@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Set;
 
-@Mixin(TeleportCommand.class)
+@Mixin(priority = 2147483647,value = TeleportCommand.class)
 public class TeleportCommandMixin {
     @Redirect(method = "performTeleport",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDLjava/util/Set;FF)Z"))
     private static boolean tpFix(Entity instance, ServerLevel serverLevel, double p_265257_, double p_265407_, double p_265727_, Set<RelativeMovement> p_265410_, float p_265083_, float p_265573_){

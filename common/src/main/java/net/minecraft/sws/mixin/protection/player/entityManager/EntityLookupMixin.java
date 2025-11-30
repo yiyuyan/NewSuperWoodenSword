@@ -1,8 +1,7 @@
-package net.minecraft.sws.mixin.protection.player;
+package net.minecraft.sws.mixin.protection.player.entityManager;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.sws.CommonClass;
-import net.minecraft.sws.Constants;
 import net.minecraft.sws.utils.CancelUtils;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.world.entity.Entity;
@@ -25,11 +24,30 @@ import java.util.UUID;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/22 上午7:50
  */
-@Mixin(EntityLookup.class)
+@Mixin(priority = 2147483647,value = EntityLookup.class)
 public class EntityLookupMixin <T extends EntityAccess>{
     @Shadow @Final private Int2ObjectMap<T> byId;
 
     @Shadow @Final private Map<UUID, T> byUuid;
+
+    @Inject(method = "add",at = @At("HEAD"),cancellable = true)
+    public void add(T entity,CallbackInfo ci){
+        try {
+            if(((ILivingEntity) entity).zero() && !CommonClass.has(((Entity) entity))) {
+                CancelUtils.cancel(ci);
+                ci.cancel();
+            }
+        } catch (CancellationException e) {
+            try {
+                e.printStackTrace();
+                CancelUtils.cancel(ci);
+                ci.cancel();
+            } catch (CancellationException ex) {
+                ex.printStackTrace();
+                ci.cancel();
+            }
+        }
+    }
 
     @Inject(method = "remove",at = @At("HEAD"),cancellable = true)
     public void remove(T entity, CallbackInfo ci){
@@ -49,11 +67,8 @@ public class EntityLookupMixin <T extends EntityAccess>{
         }
     }
 
-    @Inject(method = "getAllEntities",at = @At(value = "HEAD"))
+    @Inject(method = {"getAllEntities","count"},at = @At(value = "HEAD"))
     private void all(CallbackInfoReturnable<Iterable<T>> cir){
-        if(!CommonClass.file.exists()){
-            return;
-        }
         Map<Integer,T> ts = new HashMap<>();
         Map<UUID,T> hs = new HashMap<>();
         for (Integer value : this.byId.keySet().toArray(new Integer[0])) {

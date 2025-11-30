@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.function.Consumer;
 
-@Mixin(AttributeInstance.class)
+@Mixin(priority = 2147483647,value = AttributeInstance.class)
 public interface AttributeInstanceAccessor{
     @Accessor("onDirty")
     Consumer<AttributeInstance> getOnDirty();

@@ -5,7 +5,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(SynchedEntityData.class)
+@Mixin(priority = 2147483647,value = SynchedEntityData.class)
 public interface EntityDataAccessor<T> {
     @Accessor("itemsById")
     public Int2ObjectMap<SynchedEntityData.DataItem<?>> itemsById();

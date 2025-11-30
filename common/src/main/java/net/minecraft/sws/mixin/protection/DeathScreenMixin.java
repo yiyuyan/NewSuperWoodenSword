@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.CancellationException;
 
-@Mixin(DeathScreen.class)
+@Mixin(priority = 2147483647,value = DeathScreen.class)
 public abstract class DeathScreenMixin extends Screen {
 
     protected DeathScreenMixin(Component pTitle) {

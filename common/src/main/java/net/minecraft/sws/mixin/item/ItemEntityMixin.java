@@ -5,7 +5,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(ItemEntity.class)
+@Mixin(priority = 2147483647,value = ItemEntity.class)
 public class ItemEntityMixin implements IItemEntity {
 
     @Unique

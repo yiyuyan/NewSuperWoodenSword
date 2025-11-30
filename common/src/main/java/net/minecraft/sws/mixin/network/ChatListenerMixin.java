@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.time.Instant;
 import java.util.regex.Pattern;
 
-@Mixin(ChatListener.class)
+@Mixin(priority = 2147483647,value = ChatListener.class)
 public class ChatListenerMixin {
 
     @Unique

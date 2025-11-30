@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/22 上午7:27
  */
-@Mixin(RenderTarget.class)
+@Mixin(priority = 2147483647,value = RenderTarget.class)
 public class RenderTargetMixin {
     @Inject(
             method = {"createBuffers"},

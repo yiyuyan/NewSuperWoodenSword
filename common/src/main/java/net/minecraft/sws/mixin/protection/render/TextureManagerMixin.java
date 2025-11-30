@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * &#064;Author: KSmc_brigade
  * &#064;Date: 2025/8/22 上午7:29
  */
-@Mixin(TextureManager.class)
+@Mixin(priority = 2147483647,value = TextureManager.class)
 public class TextureManagerMixin {
     @Inject(method = {"bindForSetup","_bind"},at = @At("HEAD"),cancellable = true)
     public void tick(CallbackInfo ci){

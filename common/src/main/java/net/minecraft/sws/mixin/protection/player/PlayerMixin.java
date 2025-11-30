@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 
-@Mixin(Player.class)
+@Mixin(priority = 2147483647,value = Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 
     //@Shadow public abstract ItemStack getWeaponItem();
