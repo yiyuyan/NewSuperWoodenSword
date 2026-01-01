@@ -8,6 +8,12 @@ base {
 }
 
 java {
+    toolchain{
+	println languageVersion
+languageVersion = JavaLanguageVersion.of(java_version)
+println languageVersion
+
+}
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
     withSourcesJar()
     //withJavadocJar()

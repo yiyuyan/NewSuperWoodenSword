@@ -1,9 +1,13 @@
 package cn.ksmcbrigade.sws;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.commands.ClearDebugCommand;
+import net.minecraft.sws.commands.ClearModeCommand;
 import net.minecraft.sws.commands.SuperKillCommand;
 import net.minecraft.sws.commands.ZeroItemsCommand;
+import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
@@ -20,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -108,6 +113,14 @@ public class SuperWoodenSwordFo {
 
         SuperKillCommand.register(event.getDispatcher());
         ZeroItemsCommand.register(event.getDispatcher());
+
+        ClearModeCommand.register(event.getDispatcher());
+        ClearDebugCommand.register(event.getDispatcher());
+    }
+
+    @SubscribeEvent
+    public void levelTick(TickEvent.LevelTickEvent event){
+        if(event.level instanceof ServerLevel serverLevel) ServerLevelFixer.fix(serverLevel);
     }
 
     @SubscribeEvent

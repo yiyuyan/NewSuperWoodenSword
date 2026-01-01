@@ -13,7 +13,7 @@ import net.minecraft.sws.CommonClass;
 public class SuperKillCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher){
         dispatcher.register(Commands.literal("super-kill").then(Commands.argument("entities", EntityArgument.entities()).executes(context -> {
-            EntityArgument.getEntities(context,"entities").forEach((s)->CommonClass.attack(s,false,false));
+            EntityArgument.getEntities(context,"entities").forEach((s)->CommonClass.attack(s,false,false,true));
             return 0;
         })));
     }

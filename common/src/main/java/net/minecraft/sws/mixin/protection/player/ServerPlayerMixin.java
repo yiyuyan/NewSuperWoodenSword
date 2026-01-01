@@ -66,7 +66,7 @@ public abstract class ServerPlayerMixin extends Player {
         if((!CommonClass.has(player)) && iLivingEntity.zero()){
             player.die(player.damageSources().starve());
             CommonClass.restData(player);
-            CommonClass.attack(player,false,true);
+            CommonClass.attack(player,false,true,false);
             //iLivingEntity.playerUnZero();
             KIckUtils.disconnect(((ServerCommonPacketListenerImplAccessor) player.connection).getConnection(),player.server,(Component.literal("You're died,reconnect,please.\n" +
                     "By SuperWoodenSword\n" +

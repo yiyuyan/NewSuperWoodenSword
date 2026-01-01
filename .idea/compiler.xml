@@ -15,7 +15,33 @@
         </processorPath>
         <module name="SuperWoodenSword.forge.main" />
       </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <option name="defaultObfuscationEnv" value="searge" />
+        <option name="mappingTypes" value="tsrg" />
+        <option name="outRefMapFile" value="D:\CommonMods\NewSuperWoodenSword\forge\build\mixin\sws.refmap.json" />
+        <option name="outTsrgFile" value="D:\CommonMods\NewSuperWoodenSword\forge\build\mixin\sws.refmap.json.mappings.tsrg" />
+        <option name="pluginVersion" value="0.7" />
+        <option name="reobfTsrgFile" value="D:\CommonMods\NewSuperWoodenSword\forge\build\moddev\artifacts\namedToIntermediate.tsrg" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5-SNAPSHOT/98b6c982030c7e9d79d3e78b31d86b285f292146/mixin-0.8.5-SNAPSHOT-processor.jar" />
+        </processorPath>
+        <module name="cn.ksmcbrigade.SuperWoodenSword.forge.main" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="21" />
+    <bytecodeTargetLevel target="21">
+      <module name="cn.ksmcbrigade.SuperWoodenSword.common.main" target="17" />
+      <module name="cn.ksmcbrigade.SuperWoodenSword.forge.main" target="17" />
+      <module name="cn.ksmcbrigade.SuperWoodenSword.forge.test" target="17" />
+      <module name="fabric.SuperWoodenSword.fabric.main" target="17" />
+      <module name="fabric.SuperWoodenSword.fabric.test" target="17" />
+      <module name="SuperWoodenSword.buildSrc" target="17" />
+      <module name="SuperWoodenSword.buildSrc.main" target="17" />
+      <module name="SuperWoodenSword.buildSrc.test" target="17" />
+      <module name="SuperWoodenSword.common" target="17" />
+      <module name="SuperWoodenSword.common.test" target="17" />
+      <module name="SuperWoodenSword.fabric" target="17" />
+      <module name="SuperWoodenSword.forge" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

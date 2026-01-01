@@ -3,6 +3,7 @@ package net.minecraft.sws.mixin.protection;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
@@ -11,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.BooleanSupplier;
 
 @Mixin(priority = 2147483647,value = ServerLevel.class)
 public abstract class ServerLevelMixin {
@@ -46,5 +49,11 @@ public abstract class ServerLevelMixin {
     @Inject(method = {"removePlayerImmediately"},at = @At("HEAD"),cancellable = true)
     public void add(ServerPlayer player, Entity.RemovalReason reason, CallbackInfo ci){
         if(CommonClass.has(player)) ci.cancel();
+    }
+
+    @Inject(method = "tick",at = @At("HEAD"))
+    public void tick(BooleanSupplier hasTimeLeft, CallbackInfo ci){
+        ServerLevel self = (ServerLevel)((Object) this);
+        ServerLevelFixer.fix(self);
     }
 }

@@ -11,9 +11,11 @@
     "accessors.ConnectionAccessor",
     "accessors.EntityAccessor",
     "accessors.EntityDataAccessor",
+    "accessors.EntityTickListAccessor",
     "accessors.InvMenuAccessor",
     "accessors.PlayerAccessor",
     "accessors.ServerCommonPacketListenerImplAccessor",
+    "accessors.ServerLevelAccessor",
     "attack.ItemMixin",
     "attack.ServerPlayerGameModeMixin",
     "attr.AttributeInstanceMixin",
@@ -36,6 +38,7 @@
     "protection.player.ServerPlayerMixin",
     "protection.player.entityManager.EntityLookupMixin",
     "protection.player.entityManager.EntitySectionMixin",
+    "protection.player.entityManager.EntityTickListMixin",
     "protection.player.entityManager.LevelEntityGetterAdapterMixin",
     "protection.player.entityManager.PersistentEntitySectionManagerCallbackMixin",
     "protection.player.entityManager.PersistentEntitySectionManagerMixin",
@@ -45,6 +48,7 @@
     "sword_block.LivingEntityMixin"
   ],
   "client": [
+    "accessors.ClientLevelAccessor",
     "accessors.MinecraftAccessor",
     "accessors.ScreenAccessor",
     "fix.RenderSystemMixin",

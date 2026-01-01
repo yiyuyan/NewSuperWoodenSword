@@ -2,14 +2,27 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SuperWoodenSword.iml" filepath="$PROJECT_DIR$/.idea/modules/SuperWoodenSword.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/SuperWoodenSword.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/SuperWoodenSword.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/SuperWoodenSword.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/SuperWoodenSword.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/buildSrc/SuperWoodenSword.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/buildSrc/SuperWoodenSword.buildSrc.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/SuperWoodenSword.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/SuperWoodenSword.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/SuperWoodenSword.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/SuperWoodenSword.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/SuperWoodenSword.common.test.iml" filepath="$PROJECT_DIR$/.idea/modules/common/SuperWoodenSword.common.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/SuperWoodenSword.fabric.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/SuperWoodenSword.fabric.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/SuperWoodenSword.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/SuperWoodenSword.fabric.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/SuperWoodenSword.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/SuperWoodenSword.fabric.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/SuperWoodenSword.forge.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/SuperWoodenSword.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/SuperWoodenSword.neoforge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/cn.ksmcbrigade.SuperWoodenSword.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/cn.ksmcbrigade.SuperWoodenSword.common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/cn.ksmcbrigade.SuperWoodenSword.fabric.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/cn.ksmcbrigade.SuperWoodenSword.forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/cn.ksmcbrigade.SuperWoodenSword.forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/cn.ksmcbrigade.SuperWoodenSword.forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/cn.ksmcbrigade.SuperWoodenSword.forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/fabric.SuperWoodenSword.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/fabric.SuperWoodenSword.fabric.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/fabric.SuperWoodenSword.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/fabric.SuperWoodenSword.fabric.test.iml" />
     </modules>
   </component>
 </project>

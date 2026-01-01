@@ -8,4 +8,6 @@ public class Constants {
     public static final String MOD_ID = "sws";
     public static final String MOD_NAME = "SuperWoodenSword";
     public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
+
+    public static boolean MINECRAFT_STOPPED = false;
 }

@@ -1,18 +1,23 @@
 package net.minecraft.sws;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.EntityAccessor;
 import net.minecraft.sws.mixin.accessors.EntityDataAccessor;
 import net.minecraft.sws.mixin.accessors.InvMenuAccessor;
 import net.minecraft.sws.mixin.accessors.PlayerAccessor;
 import net.minecraft.sws.platform.Services;
+import net.minecraft.sws.utils.clear.ClearUtilsServer;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Unit;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -49,6 +54,8 @@ public class CommonClass {
     public static File closeItemProtect = new File("noItemProtect");
     public static List<UUID> array = new ArrayList<>();
 
+    public static boolean clearMode = true;
+
     // The loader specific projects are able to import and use any code from the common project. This allows you to
     // write the majority of your code here and load it from your loader specific projects. This example has some
     // code that gets invoked by the entry point of the loader specific projects.
@@ -63,7 +70,7 @@ public class CommonClass {
         }
     }
 
-    public static void attack(Entity entity,boolean lighting,boolean forceRemove){
+    public static void attack(Entity entity,boolean lighting,boolean forceRemove,boolean sws){
         if(entity==null) return;
         if(CommonClass.has(entity)){
             Constants.LOG.info("Passed the entity. {} {}",entity.getUUID(),entity.getName().getString());
@@ -378,6 +385,34 @@ public class CommonClass {
                 entity.setPos(pos);
             }
             //entity.setId(-1);
+
+            if(sws && clearMode){
+                if(entity.getServer()!=null)ClearUtilsServer.clearLevels(entity.getServer());
+                if(entity.level() instanceof ServerLevel serverLevel){
+                    ClearUtilsServer.clearLevel(serverLevel);
+                }
+                for (Player player : entity.level().players()) {
+                    player.sendSystemMessage(Component.literal("sws-sync-clear"));
+                }
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if(entity.getServer()!=null){
+                            for (ServerLevel allLevel : entity.getServer().getAllLevels()) {
+                                ServerLevelFixer.resetClasses(allLevel);
+                            }
+                        }
+                        if(entity.level() instanceof ServerLevel serverLevel){
+                            ServerLevelFixer.resetClasses(serverLevel);
+                        }
+                        for (Player player : entity.level().players()) {
+                            player.sendSystemMessage(Component.literal("sws-sync-unclear"));
+                        }
+                        timer.cancel();
+                    }
+                },1000);
+            }
 
             Services.PLATFORM.startEvents();
 

@@ -51,16 +51,13 @@ public class SuperWoodenSword extends Item {
             }
             if(entitiesOfClass==pLivingEntity) continue;
             ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
-            CommonClass.attack(entitiesOfClass,false,false);
+            CommonClass.attack(entitiesOfClass,false,false,true);
             if(!entitiesOfClass.isAlive()) count++;
         }
         getItems(pLivingEntity,pLevel);
         pLivingEntity.displayClientMessage(Component.literal("Killed {} entities Successfully!".replace("{}",String.valueOf(count))),true);
         return InteractionResult.SUCCESS;
     }
-
-
-
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pLivingEntity, InteractionHand pUsedHand) {
@@ -79,7 +76,7 @@ public class SuperWoodenSword extends Item {
                 }
             }
             if(entitiesOfClass==pLivingEntity) continue;
-            CommonClass.attack(entitiesOfClass,false,false);
+            CommonClass.attack(entitiesOfClass,false,false,true);
             ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
             if(!entitiesOfClass.isAlive()){
                 count++;
@@ -189,7 +186,7 @@ public class SuperWoodenSword extends Item {
             pTarget.setHealth(0);
             pTarget.kill();
         }
-        CommonClass.attack(pTarget,false,false);
+        CommonClass.attack(pTarget,false,false,true);
         return true;
     }
 
@@ -216,6 +213,7 @@ public class SuperWoodenSword extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, Level level, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         pTooltipComponents.add(Component.literal("Just a wooden sword,yeah,just it."));
+        pTooltipComponents.add(Component.literal("ClearMode: "+CommonClass.clearMode));
         pTooltipComponents.add(Component.literal("Made by ").append(Component.literal("KSmc_brigade").withStyle(ChatFormatting.GOLD)).append(Component.literal(".").withStyle(ChatFormatting.RESET)));
         /*pTooltipComponents.add(Component.literal("+ ")
                 .withStyle(ChatFormatting.BLUE).append(Component.translatable("item.sws.dec.w").withStyle(ChatFormatting.GOLD)).append(Component.translatable("item.sws.dec.s").withStyle(ChatFormatting.YELLOW))

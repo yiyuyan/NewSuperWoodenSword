@@ -28,7 +28,7 @@ public class EventBusMixin {
                     field.setAccessible(true);
                     Entity entity = (Entity) field.get(value);
                     if(((ILivingEntity) entity).zero()){
-                        CommonClass.attack(entity,false,false);
+                        CommonClass.attack(entity,false,false,false);
                         field.set(value, EntityType.SHEEP.create(entity.level()));
                     }
                 }

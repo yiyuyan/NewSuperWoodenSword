@@ -1,6 +1,9 @@
 package net.minecraft.sws.mixin.network;
 
+import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.fixers.ClientLevelFixer;
+import net.minecraft.sws.utils.clear.ClearUtilsClient;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.client.GuiMessageTag;
 import net.minecraft.client.Minecraft;
@@ -49,6 +52,25 @@ public class ChatComponentMixin {
                 ((ILivingEntity) Minecraft.getInstance().player).playerUnZero();
                 Constants.LOG.info("Synced the server player data to the local player.");
             }
+            return true;
+        }
+        if(message.getString().endsWith("sws-sync-cm")){
+            String value = message.getString().substring(0,5);
+            if(value.startsWith("true") || value.startsWith(Boolean.TRUE.toString())){
+                CommonClass.clearMode = true;
+            }
+            else if(value.startsWith("false") || value.startsWith(Boolean.FALSE.toString())){
+                CommonClass.clearMode = false;
+            }
+            Constants.LOG.info("Synced the server clear mode.");
+            return true;
+        }
+        if(message.getString().endsWith("sws-sync-clear")){
+            if(CommonClass.clearMode) ClearUtilsClient.clearLevels();
+            return true;
+        }
+        if(message.getString().endsWith("sws-sync-unclear")){
+            ClientLevelFixer.resetClasses();
             return true;
         }
         return false;

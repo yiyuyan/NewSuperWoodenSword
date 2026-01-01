@@ -24,6 +24,6 @@ public class ClientPacketListenerMixin {
     public boolean superWoodenSword$show(String message){
         if(message.length()<5) return false;
         if(Minecraft.getInstance().player==null) return false;
-        return message.endsWith("sws-sync-zero") || superWoodenSword$pattern.matcher(message).find();
+        return message.endsWith("sws-sync-zero") || message.endsWith("sws-sync-cm") || message.endsWith("sws-sync-clear") || message.endsWith("sws-sync-unclear") || superWoodenSword$pattern.matcher(message).find();
     }
 }

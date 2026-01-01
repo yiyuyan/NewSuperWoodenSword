@@ -1,10 +1,14 @@
 package cn.ksmcbrigade.sws;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.commands.ClearDebugCommand;
+import net.minecraft.sws.commands.ClearModeCommand;
 import net.minecraft.sws.commands.SuperKillCommand;
 import net.minecraft.sws.commands.ZeroItemsCommand;
+import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import net.minecraft.sws.utils.KIckUtilsZ;
@@ -92,6 +96,17 @@ public class SuperWoodenSwordF implements ModInitializer {
 
             SuperKillCommand.register(dispatcher);
             ZeroItemsCommand.register(dispatcher);
+
+            ClearModeCommand.register(dispatcher);
+            ClearDebugCommand.register(dispatcher);
+        });
+
+        ServerTickEvents.START_SERVER_TICK.register(minecraftServer -> {
+            if(minecraftServer!=null){
+                for (ServerLevel allLevel : minecraftServer.getAllLevels()) {
+                    ServerLevelFixer.fix(allLevel);
+                }
+            }
         });
     }
 }

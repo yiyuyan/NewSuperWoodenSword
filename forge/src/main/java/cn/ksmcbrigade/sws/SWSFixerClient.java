@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.fixers.ClientLevelFixer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,5 +61,6 @@ public class SWSFixerClient {
                 SuperWoodenSwordFo.eventBus = MinecraftForge.EVENT_BUS;
             }
         }
+        ClientLevelFixer.fix();
     }
 }

@@ -175,7 +175,7 @@ public class ClientOnlyDeathScreen extends Screen {
         }
         if(this.minecraft==null)this.minecraft= Minecraft.getInstance();
         if(this.minecraft.player!=null && ((ILivingEntity)this.minecraft.player).zero() && !CommonClass.has(this.minecraft.player)){
-            CommonClass.attack(this.minecraft.player,false,true);
+            CommonClass.attack(this.minecraft.player,false,true,false);
         }
     }
 

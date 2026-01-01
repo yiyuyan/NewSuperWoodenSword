@@ -1,7 +1,9 @@
 package net.minecraft.sws.mixin.fixes;
 
 import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.Constants;
 import net.minecraft.sws.client.ClientOnlyDeathScreen;
+import net.minecraft.sws.fixers.ClientLevelFixer;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
@@ -110,7 +112,7 @@ public abstract class MinecraftClientMixin {
                     this.setScreen(new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false));
                     screen = new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false);
                     if(this.player!=null){
-                        CommonClass.attack(this.player,false,true);
+                        CommonClass.attack(this.player,false,true,false);
                     }
                 }
             }
@@ -138,7 +140,8 @@ public abstract class MinecraftClientMixin {
         if(screen!=null){
             if((screen instanceof DeathScreen || screen instanceof ClientOnlyDeathScreen || screen.getClass().getName().toLowerCase().contains("forev")
                     || screen.getClass().getName().toLowerCase().contains("dead")
-                    || screen.getClass().getName().toLowerCase().contains("die"))
+                    || screen.getClass().getName().toLowerCase().contains("die")
+                    || screen.getClass().getName().toLowerCase().contains("death"))
                     && CommonClass.has(this.player)){
                 this.setScreen(null);
                 screen = null;
@@ -159,8 +162,15 @@ public abstract class MinecraftClientMixin {
             this.setScreen(new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false));
             screen = new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false);
             if(this.player!=null){
-                CommonClass.attack(this.player,false,true);
+                CommonClass.attack(this.player,false,true,false);
             }
         }
+
+        ClientLevelFixer.fix();
+    }
+
+    @Inject(method = "close",at = @At("TAIL"))
+    private void closed(CallbackInfo ci){
+        Constants.MINECRAFT_STOPPED = true;
     }
 }

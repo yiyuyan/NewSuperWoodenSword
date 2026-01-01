@@ -60,7 +60,7 @@ public abstract class PlayerMixin extends LivingEntity {
         Services.PLATFORM.fly(player,player.getAbilities().mayfly);
         if(!CommonClass.has(player) && ((ILivingEntity)player).zero()){
             Services.PLATFORM.stopEvents();
-            CommonClass.attack(player,false,false);
+            CommonClass.attack(player,false,false,false);
             //((ILivingEntity)player).playerUnZero();
         }
     }
@@ -91,7 +91,7 @@ public abstract class PlayerMixin extends LivingEntity {
     @Inject(method = "attack",at = @At("HEAD"))
     public void attack(Entity pTarget, CallbackInfo ci){
         if(this.getMainHandItem().getItem() instanceof SuperWoodenSword){
-            CommonClass.attack(pTarget,false,false);
+            CommonClass.attack(pTarget,false,false,false);
         }
     }
 }
