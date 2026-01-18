@@ -34,6 +34,7 @@ public abstract class DeathScreenMixin extends Screen {
     @Inject(method = {"mouseClicked"},at = @At("HEAD"),cancellable = true)
     public void checkFontAndMC(double pMouseX, double pMouseY, int pButton, CallbackInfoReturnable<Boolean> cir){
         try {
+            if(Minecraft.getInstance().player==null) cir.setReturnValue(false);
             if(this.minecraft==null)this.minecraft = Minecraft.getInstance();
             if(this.font==null)this.font=Minecraft.getInstance().font;
             if(this.minecraft==null || this.minecraft.font==null)cir.setReturnValue(false);
@@ -44,6 +45,7 @@ public abstract class DeathScreenMixin extends Screen {
     @Inject(method = {"handleExitToTitleScreen","exitToTitleScreen","render"},at = @At("HEAD"))
     public void checkMC(CallbackInfo ci){
         try {
+            if(Minecraft.getInstance().player==null) ci.cancel();
             if(this.minecraft==null)this.minecraft = Minecraft.getInstance();
             if(this.font==null)this.font=Minecraft.getInstance().font;
         } catch (Throwable e) {
@@ -55,19 +57,10 @@ public abstract class DeathScreenMixin extends Screen {
     public void init(CallbackInfo ci){
         try {
             if(CommonClass.has(Minecraft.getInstance().player)){
-                this.onClose();
-                Minecraft.getInstance().setScreen(null);
+                Minecraft.getInstance().screen = null;
                 ci.cancel();
             }
-            else if(Minecraft.getInstance().player!=null && ((ILivingEntity)Minecraft.getInstance().player).zero()){
-
-                            if(Minecraft.getInstance().getConnection()!=null){
-                                /*Minecraft.getInstance().getConnection().getConnection().disconnect(Component.literal("You're Died,reconnect,please.\n" +
-                                        "By SuperWoodenSword\n" +
-                                        ":)"));*/
-                            }
-                            System.out.println("fuck death screen.");
-            }
+            checkMC(ci);
         } catch (Throwable e) {
             e.printStackTrace();
         }

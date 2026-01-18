@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CreativeModeTabs.class)
 public class CreativeTabMixin {
-    @Inject(method = "method_51319",at = @At(value = "HEAD"))
+    @Inject(method = "method_51322",at = @At(value = "HEAD"))
     private static void accept(CreativeModeTab.Output output, HolderLookup.RegistryLookup registryLookup, CallbackInfo ci){
         output.accept(Services.PLATFORM.getItem());
     }
