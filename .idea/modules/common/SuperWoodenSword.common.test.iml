@@ -7,6 +7,8 @@
     <orderEntry type="jdk" jdkName="temurin-17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cn.ksmcbrigade.SuperWoodenSword.common.main" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:9.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:9.7" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.1" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="SuperWoodenSword.common.main" />

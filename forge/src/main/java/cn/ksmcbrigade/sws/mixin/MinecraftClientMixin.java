@@ -114,7 +114,6 @@ public class MinecraftClientMixin {
             if(!defaultLocalPlayerClazz.isEmpty() && !this.player.getClass().getName().equals(defaultLocalPlayerClazz)){
                 Constants.LOG.error(" player {}",this.player.getClass().getName());
                 this.player = localPlayer;
-                ClearUtilsCommon.setClass(this.player,localPlayer.getClass());
                 Constants.LOG.debug("Fixed the l player.");
             }
         }

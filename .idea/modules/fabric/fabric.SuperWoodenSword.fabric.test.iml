@@ -72,7 +72,7 @@
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-tinyfd:3.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.3.1" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:2.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraft:minecraft-merged-15e4af1882:1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraft:minecraft-merged-f9d724294f:1.20.1-loom.mappings.1_20_1.layered+hash.1899487486-v2" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-transport-native-epoll:linux-aarch_64:4.1.82.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.netty:netty-transport-native-epoll:linux-x86_64:4.1.82.Final" level="project" />
     <orderEntry type="library" name="Gradle: net.fabricmc:fabric-loader:0.16.9" level="project" />
