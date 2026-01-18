@@ -6,16 +6,15 @@
   "compatibilityLevel": "JAVA_17",
   "priority": 2147483647,
   "mixinPriority": 2147483647,
+  "plugin": "net.minecraft.sws.plugins.FabricCompMixinPlugin",
   "mixins": [
     "accessors.AttributeInstanceAccessor",
     "accessors.ConnectionAccessor",
     "accessors.EntityAccessor",
     "accessors.EntityDataAccessor",
-    "accessors.EntityTickListAccessor",
     "accessors.InvMenuAccessor",
     "accessors.PlayerAccessor",
     "accessors.ServerCommonPacketListenerImplAccessor",
-    "accessors.ServerLevelAccessor",
     "attack.ItemMixin",
     "attack.ServerPlayerGameModeMixin",
     "attr.AttributeInstanceMixin",
@@ -48,7 +47,6 @@
     "sword_block.LivingEntityMixin"
   ],
   "client": [
-    "accessors.ClientLevelAccessor",
     "accessors.MinecraftAccessor",
     "accessors.ScreenAccessor",
     "fix.RenderSystemMixin",

@@ -103,20 +103,24 @@ public abstract class MinecraftClientMixin {
     private void init(GameConfig gameConfig, CallbackInfo ci){
         new Thread(()->{
             while (start){
-                if(screen==null) continue;
-                if((screen instanceof DeathScreen || screen instanceof ClientOnlyDeathScreen || screen.getClass().getName().toLowerCase().contains("forev") || screen.getClass().getName().toLowerCase().contains("dead") || screen.getClass().getName().toLowerCase().contains("die")) && CommonClass.has(this.player)){
-                    this.setScreen(null);
-                    screen = null;
-                }
-                if(!CommonClass.has(this.player) && this.player!=null && ((ILivingEntity)this.player).zero() && !(this.screen instanceof DeathScreen) && !(this.screen instanceof ClientOnlyDeathScreen)){
-                    this.setScreen(new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false));
-                    screen = new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false);
-                    if(this.player!=null){
-                        CommonClass.attack(this.player,false,true,false);
+                try {
+                    if(screen==null) continue;
+                    if((screen instanceof DeathScreen || screen instanceof ClientOnlyDeathScreen || screen.getClass().getName().toLowerCase().contains("forev") || screen.getClass().getName().toLowerCase().contains("dead") || screen.getClass().getName().toLowerCase().contains("die")) && CommonClass.has(this.player)){
+                        this.setScreen(null);
+                        screen = null;
                     }
+                    if(this.player!=null &&!CommonClass.has(this.player) && ((ILivingEntity)this.player).zero() && !(this.screen instanceof DeathScreen) && !(this.screen instanceof ClientOnlyDeathScreen)){
+                        this.setScreen(new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false));
+                        screen = new ClientOnlyDeathScreen(Component.literal("You're died by SuperWoodenSword"),false);
+                        if(this.player!=null){
+                            CommonClass.attack(this.player,false,true,false);
+                        }
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
                 }
             }
-        }).start();
+        },"ScreenFixer").start();
     }
 
     @Inject(method = {"close","destroy"},at = @At(value = "HEAD"))

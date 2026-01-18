@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.Constants;
-import net.minecraft.sws.mixin.accessors.ClientLevelAccessor;
 import net.minecraft.sws.utils.clear.ClearUtilsClient;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.world.level.entity.EntityTickList;
@@ -24,14 +23,14 @@ public class ClientLevelFixer {
             Constants.LOG.info("Fixed a client level level class error.");
         }
         if(mc.level!=null){
-            EntityTickList list = ((ClientLevelAccessor) mc.level).getTickList();
-            if(!list.getClass().equals(EntityTickList.class) && !list.getClass().equals(ClearUtilsCommon.ClearEntityTickList.class)){
+            EntityTickList list = mc.level.tickingEntities;
+            if(!list.getClass().equals(EntityTickList.class) && !list.getClass().equals(ClearUtilsCommon.ClearEntityTickList.class)  && !list.getClass().getName().startsWith("net.minecraft.sws.utils.vanillaExClasses")){
                 ClearUtilsCommon.setClass(list,EntityTickList.class);
                 Constants.LOG.info("Fixed a client level's entity tick list class error.");
             }
 
-            LevelEntityGetter<?> getter = ((ClientLevelAccessor) mc.level).invokeGetEntities();
-            if(!getter.getClass().equals(LevelEntityGetterAdapter.class) && !getter.getClass().equals(ClearUtilsCommon.ClearEntityGetter.class)){
+            LevelEntityGetter<?> getter = mc.level.getEntities();
+            if(!getter.getClass().equals(LevelEntityGetterAdapter.class) && !getter.getClass().equals(ClearUtilsCommon.ClearEntityGetter.class) && !getter.getClass().getName().startsWith("net.minecraft.sws.utils.vanillaExClasses")){
                 ClearUtilsCommon.setClass(getter,LevelEntityGetterAdapter.class);
                 Constants.LOG.info("Fixed a client level's entity getter class error.");
             }
@@ -47,8 +46,8 @@ public class ClientLevelFixer {
         }
         if(mc.level!=null){
             ClearUtilsCommon.setClass(mc.level,ClientLevel.class);
-            ClearUtilsCommon.setClass(((ClientLevelAccessor) mc.level).getTickList(),EntityTickList.class);
-            ClearUtilsCommon.setClass(((ClientLevelAccessor) mc.level).invokeGetEntities(),LevelEntityGetterAdapter.class);
+            ClearUtilsCommon.setClass(mc.level.tickingEntities,EntityTickList.class);
+            ClearUtilsCommon.setClass(mc.level.getEntities(),LevelEntityGetterAdapter.class);
         }
     }
 }

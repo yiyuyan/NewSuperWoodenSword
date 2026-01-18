@@ -16,22 +16,17 @@ import org.spongepowered.asm.mixin.injection.callback.CancellationException;
 @Mixin(priority = 2147483647,value = DeathScreen.class)
 public abstract class DeathScreenMixin extends Screen {
 
-    protected DeathScreenMixin(Component pTitle) {
-        super(pTitle);
+    protected DeathScreenMixin(Component title) {
+        super(title);
     }
 
     @Inject(method = "<init>",at = @At("TAIL"))
-    private void init(Component pCauseOfDeath, boolean pHardcore, CallbackInfo ci){
+    private void init(Component causeOfDeath, boolean hardcore, CallbackInfo ci){
         try {
-            if(!CommonClass.has(Minecraft.getInstance().player) && Minecraft.getInstance().player!=null && ((ILivingEntity)Minecraft.getInstance().player).zero()){
-                if(Minecraft.getInstance().getConnection()!=null){
-                    /*Minecraft.getInstance().getConnection().getConnection().disconnect(Component.literal("You're Died,reconnect,please.\n" +
-                            "By SuperWoodenSword\n" +
-                            ":)"));*/
-                }
-                System.out.println("fuck death screen.");
+            if(CommonClass.has(Minecraft.getInstance().player)){
+                Minecraft.getInstance().screen = null;
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -42,7 +37,7 @@ public abstract class DeathScreenMixin extends Screen {
             if(this.minecraft==null)this.minecraft = Minecraft.getInstance();
             if(this.font==null)this.font=Minecraft.getInstance().font;
             if(this.minecraft==null || this.minecraft.font==null)cir.setReturnValue(false);
-        } catch (CancellationException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -51,7 +46,7 @@ public abstract class DeathScreenMixin extends Screen {
         try {
             if(this.minecraft==null)this.minecraft = Minecraft.getInstance();
             if(this.font==null)this.font=Minecraft.getInstance().font;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -73,7 +68,7 @@ public abstract class DeathScreenMixin extends Screen {
                             }
                             System.out.println("fuck death screen.");
             }
-        } catch (CancellationException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }

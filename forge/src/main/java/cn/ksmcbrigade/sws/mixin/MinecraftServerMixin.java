@@ -39,7 +39,7 @@ public class MinecraftServerMixin {
                 e.printStackTrace();
             }
             checkAndFix();
-        }).start();
+        },"MCFixer-2").start();
     }
 
     @Inject(method = "tickServer",at = @At("HEAD"))

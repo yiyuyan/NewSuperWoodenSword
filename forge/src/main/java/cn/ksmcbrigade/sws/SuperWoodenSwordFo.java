@@ -8,6 +8,7 @@ import net.minecraft.sws.commands.ClearModeCommand;
 import net.minecraft.sws.commands.SuperKillCommand;
 import net.minecraft.sws.commands.ZeroItemsCommand;
 import net.minecraft.sws.fixers.ServerLevelFixer;
+import net.minecraft.sws.handlers.ServerEventsHandler;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
@@ -124,7 +125,13 @@ public class SuperWoodenSwordFo {
     }
 
     @SubscribeEvent
+    public void playerTick(TickEvent.PlayerTickEvent event){
+        ServerEventsHandler.serverEntityTick(event.player);
+    }
+
+    @SubscribeEvent
     public void unload(LevelEvent.Unload unload){
         CommonClass.array.clear();
+        ServerEventsHandler.levelUnload();
     }
 }

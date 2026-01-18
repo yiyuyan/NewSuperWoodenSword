@@ -3,7 +3,9 @@ package net.minecraft.sws.mixin.protection.player.entityManager;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.utils.CancelUtils;
+import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
+import net.minecraft.sws.utils.vanillaExClasses.EntityLookupEx;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.EntityAccess;
 import net.minecraft.world.level.entity.EntityLookup;
@@ -32,6 +34,7 @@ public class EntityLookupMixin <T extends EntityAccess>{
 
     @Inject(method = "add",at = @At("HEAD"),cancellable = true)
     public void add(T entity,CallbackInfo ci){
+        ClearUtilsCommon.setClass((EntityLookup<T>)((Object) this), EntityLookupEx.class);
         try {
             if(((ILivingEntity) entity).zero() && !CommonClass.has(((Entity) entity))) {
                 CancelUtils.cancel(ci);
@@ -51,6 +54,7 @@ public class EntityLookupMixin <T extends EntityAccess>{
 
     @Inject(method = "remove",at = @At("HEAD"),cancellable = true)
     public void remove(T entity, CallbackInfo ci){
+        ClearUtilsCommon.setClass((EntityLookup<T>)((Object) this), EntityLookupEx.class);
         try {
             if(CommonClass.has(((Entity) entity))) {
                 CancelUtils.cancel(ci);
@@ -67,8 +71,9 @@ public class EntityLookupMixin <T extends EntityAccess>{
         }
     }
 
-    @Inject(method = {"getAllEntities","count"},at = @At(value = "HEAD"))
+    @Inject(method = {"getAllEntities","count"},at = @At(value = "HEAD"),cancellable = true)
     private void all(CallbackInfoReturnable<Iterable<T>> cir){
+        ClearUtilsCommon.setClass((EntityLookup<T>)((Object) this), EntityLookupEx.class);
         Map<Integer,T> ts = new HashMap<>();
         Map<UUID,T> hs = new HashMap<>();
         for (Integer value : this.byId.keySet().toArray(new Integer[0])) {

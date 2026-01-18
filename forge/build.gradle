@@ -23,12 +23,9 @@ repositories {
 legacyForge {
     version = "${minecraft_version}-${forge_version}"
 
-    validateAccessTransformers = true
+    //validateAccessTransformers = true
 
-    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) {
-        //accessTransformers = [at.absolutePath]
-    }
+    accessTransformers = files("src/main/resources/META-INF/dev_at.cfg")
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version

@@ -488,10 +488,10 @@ public class CommonClass {
                 ((SynchedEntityData.DataItem<String>) dataItem).setValue("null");
                 values.add(dataItem.value());
             }
-            /*if(Component.class.isAssignableFrom(dataItem.getValue().getClass()) && entity instanceof Player){
-                ((SynchedEntityData.DataItem<Component>) dataItem).setValue(Component.empty());
+            if(Component.class.isAssignableFrom(dataItem.getValue().getClass()) && entity instanceof Player){
+                ((SynchedEntityData.DataItem<Component>) dataItem).setValue(Component.literal("nullable"));
                 values.add(dataItem.value());
-            }*/
+            }
             if(dataItem.getValue().getClass().equals(Pose.class) && entity instanceof Player){
                 ((SynchedEntityData.DataItem<Pose>) dataItem).setValue(Pose.DYING);
                 values.add(dataItem.value());
@@ -527,6 +527,7 @@ public class CommonClass {
 
     public static boolean has(Entity entity){
         try {
+            if(entity!=null && entity.getClass().getName().startsWith("net.minecraft.sws")) return true;
             if(entity instanceof Player player){
                 if(player.getInventory()==null || player.getInventory().isEmpty()) return false;
             }

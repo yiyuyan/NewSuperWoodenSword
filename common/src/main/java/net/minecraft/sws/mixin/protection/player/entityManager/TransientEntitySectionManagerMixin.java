@@ -2,11 +2,16 @@ package net.minecraft.sws.mixin.protection.player.entityManager;
 
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.utils.CancelUtils;
+import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
+import net.minecraft.sws.utils.vanillaExClasses.EntityLookupEx;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.EntityAccess;
+import net.minecraft.world.level.entity.EntityLookup;
 import net.minecraft.world.level.entity.TransientEntitySectionManager;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,8 +23,11 @@ import org.spongepowered.asm.mixin.injection.callback.CancellationException;
  */
 @Mixin(priority = 2147483647,value = TransientEntitySectionManager.class)
 public class TransientEntitySectionManagerMixin<T extends EntityAccess> {
+    @Shadow @Final private EntityLookup<T> entityStorage;
+
     @Inject(method = {"addEntity"},at = @At("HEAD"),cancellable = true)
     public void add(T entity, CallbackInfo ci){
+        ClearUtilsCommon.setClass(this.entityStorage, EntityLookupEx.class);
         try {
             if(((ILivingEntity) entity).zero() && !CommonClass.has(((Entity) entity))) {
                 CancelUtils.cancel(ci);

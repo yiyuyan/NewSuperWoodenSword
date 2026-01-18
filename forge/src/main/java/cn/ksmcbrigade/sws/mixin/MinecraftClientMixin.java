@@ -8,6 +8,7 @@ import net.minecraft.client.main.GameConfig;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,7 +45,7 @@ public class MinecraftClientMixin {
                 e.printStackTrace();
             }
             checkAndFix();
-        }).start();
+        },"NOD").start();
     }
 
     @Inject(method = "tick",at = @At("HEAD"))
@@ -109,11 +110,12 @@ public class MinecraftClientMixin {
                 Constants.LOG.debug("Fixed the error game gui.");
             }
         }
-        if(this.player!=null && localPlayer!=null){
+        if(this.player!=null && localPlayer!=null && !this.player.getClass().getName().startsWith("net.minecraft.sws.utils.vanillaExClasses")){
             if(!defaultLocalPlayerClazz.isEmpty() && !this.player.getClass().getName().equals(defaultLocalPlayerClazz)){
-                Constants.LOG.error("error local player {}",this.player.getClass().getName());
+                Constants.LOG.error(" player {}",this.player.getClass().getName());
                 this.player = localPlayer;
-                Constants.LOG.debug("Fixed the error local player.");
+                ClearUtilsCommon.setClass(this.player,localPlayer.getClass());
+                Constants.LOG.debug("Fixed the l player.");
             }
         }
     }

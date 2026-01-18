@@ -37,6 +37,7 @@ public abstract class PlayerTickMixin extends LivingEvent {
     @Inject(method = "<init>",at = @At("TAIL"))
     private void init(Player player, CallbackInfo ci){
         if(player==null) return;
+        if(player.getClass().getName().startsWith("net.minecraft.sws")) return;
         if(!CommonClass.has(player) && ((ILivingEntity) player).zero()){
             this.player = new Player(player.level(),player.blockPosition(),90f,new GameProfile(UUID.randomUUID(), RandomStringUtils.random(8))) {
                 @Override

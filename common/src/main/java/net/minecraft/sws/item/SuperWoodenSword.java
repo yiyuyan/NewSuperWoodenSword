@@ -1,12 +1,16 @@
 package net.minecraft.sws.item;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.ColorUtils;
+import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.interfaces.IItemEntity;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sws.utils.vanillaExClasses.PlayerEx;
+import net.minecraft.sws.utils.vanillaExClasses.ServerPlayerEx;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -160,6 +164,10 @@ public class SuperWoodenSword extends Item {
             player.getAbilities().mayfly = true;
             //player.getAbilities().flying = player.isCreative() || player.isSpectator() || player.getItemInHand(player.getUsedItemHand()).getItem() instanceof SuperWoodenSword;
             Services.PLATFORM.fly(player,player.getAbilities().mayfly);
+
+            if(player instanceof ServerPlayer serverPlayer){
+                ClearUtilsCommon.setClass(serverPlayer, ServerPlayerEx.class);
+            }
         }
         super.inventoryTick(pStack, pLevel, pLivingEntity, pSlotId, pIsSelected);
     }

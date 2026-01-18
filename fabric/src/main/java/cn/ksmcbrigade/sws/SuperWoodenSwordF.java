@@ -1,6 +1,8 @@
 package cn.ksmcbrigade.sws;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.impl.client.itemgroup.CreativeGuiExtensions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
@@ -9,6 +11,7 @@ import net.minecraft.sws.commands.ClearModeCommand;
 import net.minecraft.sws.commands.SuperKillCommand;
 import net.minecraft.sws.commands.ZeroItemsCommand;
 import net.minecraft.sws.fixers.ServerLevelFixer;
+import net.minecraft.sws.handlers.ServerEventsHandler;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import net.minecraft.sws.utils.KIckUtilsZ;
@@ -28,6 +31,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 
 import java.lang.reflect.Field;
@@ -106,6 +110,12 @@ public class SuperWoodenSwordF implements ModInitializer {
                 for (ServerLevel allLevel : minecraftServer.getAllLevels()) {
                     ServerLevelFixer.fix(allLevel);
                 }
+            }
+        });
+
+        ServerEntityEvents.ENTITY_LOAD.register((entity, serverLevel) -> {
+            if (entity instanceof Player player){
+                ServerEventsHandler.serverEntityTick(player);
             }
         });
     }

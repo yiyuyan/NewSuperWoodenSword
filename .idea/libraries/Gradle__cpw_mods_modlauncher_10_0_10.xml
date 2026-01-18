@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: cpw.mods:modlauncher:10.0.10" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="cpw.mods" artifactId="modlauncher" version="10.0.10" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../.gradle/caches/modules-2/files-2.1/cpw.mods/modlauncher/10.0.10/669e5b6e61e84eee06bfd5822c91800a2c9f5c0f/modlauncher-10.0.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

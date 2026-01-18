@@ -6,10 +6,12 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.fixers.ClientLevelFixer;
+import net.minecraft.sws.handlers.ClientEventsHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -41,6 +43,7 @@ public class SWSFixerClient {
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event){
         Minecraft MC = Minecraft.getInstance();
+        ClientEventsHandler.clientTick();
         if((defaultGuiClazz==null || defaultGuiClazz.isEmpty()) && MC.gui!=null){
             gui = MC.gui;
             defaultGuiClazz = MC.gui.getClass().getName();
@@ -62,5 +65,11 @@ public class SWSFixerClient {
             }
         }
         ClientLevelFixer.fix();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void unload(LevelEvent.Unload unload){
+        ClientEventsHandler.levelUnload();
     }
 }

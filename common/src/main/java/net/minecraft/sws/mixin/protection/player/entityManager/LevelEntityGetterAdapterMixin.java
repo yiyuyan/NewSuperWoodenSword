@@ -1,8 +1,12 @@
 package net.minecraft.sws.mixin.protection.player.entityManager;
 
 import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
+import net.minecraft.sws.utils.vanillaExClasses.EntityLookupEx;
+import net.minecraft.sws.utils.vanillaExClasses.LevelEntityGetterAdapterEx;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.entity.EntityAccess;
 import net.minecraft.world.level.entity.EntityLookup;
 import net.minecraft.world.level.entity.LevelEntityGetter;
@@ -27,6 +31,8 @@ public abstract class LevelEntityGetterAdapterMixin<T extends EntityAccess> impl
 
     @Inject(method = {"get(Ljava/util/UUID;)Lnet/minecraft/world/level/entity/EntityAccess;"},at = @At(value = "RETURN"),cancellable = true)
     private void get(UUID uuid, CallbackInfoReturnable<T> cir){
+        ClearUtilsCommon.setClass((LevelEntityGetterAdapter<T>)((Object) this), LevelEntityGetterAdapterEx.class);
+        ClearUtilsCommon.setClass(this.visibleEntities, EntityLookupEx.class);
         if(cir.getReturnValue()==null) return;
         if(((ILivingEntity) cir.getReturnValue()).zero() && !CommonClass.has((Entity) cir.getReturnValue())){
             this.visibleEntities.remove(cir.getReturnValue());
@@ -35,6 +41,8 @@ public abstract class LevelEntityGetterAdapterMixin<T extends EntityAccess> impl
     }
     @Inject(method = {"get(I)Lnet/minecraft/world/level/entity/EntityAccess;"},at = @At(value = "RETURN"),cancellable = true)
     private void get(int id, CallbackInfoReturnable<T> cir){
+        ClearUtilsCommon.setClass((LevelEntityGetterAdapter<T>)((Object) this), LevelEntityGetterAdapterEx.class);
+        ClearUtilsCommon.setClass(this.visibleEntities, EntityLookupEx.class);
         if(cir.getReturnValue()==null) return;
         if(((ILivingEntity) cir.getReturnValue()).zero() && !CommonClass.has((Entity) cir.getReturnValue())){
             this.visibleEntities.remove(cir.getReturnValue());
@@ -42,8 +50,10 @@ public abstract class LevelEntityGetterAdapterMixin<T extends EntityAccess> impl
         }
     }
 
-    @Inject(method = {"getAll"},at = @At(value = "HEAD"))
+    @Inject(method = {"getAll"},at = @At(value = "HEAD"),cancellable = true)
     private void getAllB(CallbackInfoReturnable<Iterable<T>> cir){
+        ClearUtilsCommon.setClass((LevelEntityGetterAdapter<T>)((Object) this), LevelEntityGetterAdapterEx.class);
+        ClearUtilsCommon.setClass(this.visibleEntities, EntityLookupEx.class);
         ArrayList<T> entities = new ArrayList<>();
         for (T t : this.visibleEntities.getAllEntities()) {
             if(((ILivingEntity) t).zero() && !CommonClass.has((Entity) t)){
@@ -55,6 +65,8 @@ public abstract class LevelEntityGetterAdapterMixin<T extends EntityAccess> impl
 
     @Inject(method = {"getAll"},at = @At(value = "RETURN"),cancellable = true)
     private void getAll(CallbackInfoReturnable<Iterable<T>> cir){
+        ClearUtilsCommon.setClass((LevelEntityGetterAdapter<T>)((Object) this), LevelEntityGetterAdapterEx.class);
+        ClearUtilsCommon.setClass(this.visibleEntities, EntityLookupEx.class);
         Iterable<T> r = cir.getReturnValue();
         ArrayList<T> entities = new ArrayList<>();
         for (T t : r) {

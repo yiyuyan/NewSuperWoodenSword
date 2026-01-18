@@ -2,7 +2,6 @@ package net.minecraft.sws.utils.clear;
 
 import com.google.common.collect.Iterables;
 import net.minecraft.sws.CommonClass;
-import net.minecraft.sws.mixin.accessors.EntityTickListAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.*;
 
@@ -43,8 +42,10 @@ public class ClearUtilsCommon {
         @Override
         public void forEach(Consumer<Entity> p_entity) {
             try {
-                for (Entity value : ((EntityTickListAccessor) this).getActives().values()) {
-                    if(CommonClass.has(value)) p_entity.accept(value);
+                for (Entity value : this.active.values()) {
+                    if(CommonClass.has(value)){
+                        p_entity.accept(value);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

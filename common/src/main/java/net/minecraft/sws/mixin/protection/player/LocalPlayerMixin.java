@@ -1,5 +1,7 @@
 package net.minecraft.sws.mixin.protection.player;
 
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.client.ClientOnlyDeathScreen;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
@@ -20,9 +22,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(priority = 2147483647,value = LocalPlayer.class)
-public abstract class LocalPlayerMixin extends Player {
-    public LocalPlayerMixin(Level pLevel, BlockPos pPos, float pYRot, GameProfile pGameProfile) {
-        super(pLevel, pPos, pYRot, pGameProfile);
+public abstract class LocalPlayerMixin extends AbstractClientPlayer {
+
+    public LocalPlayerMixin(ClientLevel clientLevel, GameProfile gameProfile) {
+        super(clientLevel, gameProfile);
     }
 
     @Redirect(method = "handleNetherPortalClient",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))

@@ -2,3 +2,11 @@ accessWidener   v1  named
 accessible class net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback
 accessible class net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback
 accessible class net/minecraft/client/multiplayer/ClientLevel
+accessible field net/minecraft/world/level/entity/EntityLookup byId Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+accessible field net/minecraft/world/level/entity/EntityLookup byUuid Ljava/util/Map;
+accessible field net/minecraft/world/level/entity/LevelEntityGetterAdapter visibleEntities Lnet/minecraft/world/level/entity/EntityLookup;
+accessible field net/minecraft/world/level/entity/EntityTickList active Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+accessible field net/minecraft/server/level/ServerLevel entityTickList Lnet/minecraft/world/level/entity/EntityTickList;
+accessible field net/minecraft/client/multiplayer/ClientLevel tickingEntities Lnet/minecraft/world/level/entity/EntityTickList;
+accessible method net/minecraft/server/level/ServerLevel getEntities ()Lnet/minecraft/world/level/entity/LevelEntityGetter;
+accessible method net/minecraft/client/multiplayer/ClientLevel getEntities ()Lnet/minecraft/world/level/entity/LevelEntityGetter;

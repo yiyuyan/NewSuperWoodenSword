@@ -39,6 +39,6 @@ public class RenderSystemMixin {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        },"MCFixer").start();
     }
 }

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":buildSrc:main" external.linked.project.path="$MODULE_DIR$/../../../buildSrc" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/../../../buildSrc/out/production/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../buildSrc/build/groovy-dsl-plugins/output/adapter-src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../buildSrc/build/groovy-dsl-plugins/output/adapter-src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../buildSrc/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../../buildSrc/src/main/groovy" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/caches/8.11/generated-gradle-jars/gradle-api-8.11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-ant-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-astbuilder-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-console-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-datetime-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-dateutil-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-groovydoc-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-json-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-nio-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-sql-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-templates-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-test-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/groovy-xml-3.0.22.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/javaparser-core-3.17.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/kotlin-stdlib-2.0.20.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/kotlin-reflect-2.0.20.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../.gradle/wrapper/dists/gradle-8.11-bin/768rnf9r53edhnr2jqm0p09d2/gradle-8.11/lib/gradle-installation-beacon-8.11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../buildSrc/build/groovy-dsl-plugins/output/plugin-classes" />
+          <root url="file://$MODULE_DIR$/../../../buildSrc/build/groovy-dsl-plugins/output/plugin-requests-staging" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <excluded>
+          <root url="file://$MODULE_DIR$/../../../buildSrc/build/groovy-dsl-plugins/output/plugin-classes" />
+          <root url="file://$MODULE_DIR$/../../../buildSrc/build/groovy-dsl-plugins/output/plugin-requests-staging" />
+        </excluded>
+      </library>
+    </orderEntry>
+  </component>
+</module>

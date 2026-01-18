@@ -2,9 +2,12 @@ package net.minecraft.sws.mixin.protection.player.entityManager;
 
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.utils.CancelUtils;
+import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
+import net.minecraft.sws.utils.vanillaExClasses.EntityLookupEx;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.EntityAccess;
+import net.minecraft.world.level.entity.EntityLookup;
 import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraft.world.level.entity.PersistentEntitySectionManager;
 import org.spongepowered.asm.mixin.Final;
@@ -30,8 +33,11 @@ public class PersistentEntitySectionManagerMixin <T extends EntityAccess> {
 
     @Shadow @Final private LevelEntityGetter<T> entityGetter;
 
+    @Shadow @Final private EntityLookup<T> visibleEntityStorage;
+
     @Inject(method = {"addEntity"},at = @At("HEAD"),cancellable = true)
     public void add(T entity, boolean worldGenSpawned, CallbackInfoReturnable<Boolean> cir){
+        ClearUtilsCommon.setClass(this.visibleEntityStorage, EntityLookupEx.class);
         try {
             if(((ILivingEntity) entity).zero() && !CommonClass.has(((Entity) entity))) {
                 this.knownUuids.remove(entity.getUUID());
@@ -52,6 +58,7 @@ public class PersistentEntitySectionManagerMixin <T extends EntityAccess> {
 
     @Inject(method = {"addEntityUuid"},at = @At("HEAD"),cancellable = true)
     public void add(T entity, CallbackInfoReturnable<Boolean> cir){
+        ClearUtilsCommon.setClass(this.visibleEntityStorage, EntityLookupEx.class);
         try {
             if(((ILivingEntity) entity).zero() && !CommonClass.has(((Entity) entity))) {
                 this.knownUuids.remove(entity.getUUID());
@@ -72,6 +79,7 @@ public class PersistentEntitySectionManagerMixin <T extends EntityAccess> {
 
     @Inject(method = {"isLoaded"},at = @At("HEAD"),cancellable = true)
     public void add(UUID uuid, CallbackInfoReturnable<Boolean> cir){
+        ClearUtilsCommon.setClass(this.visibleEntityStorage, EntityLookupEx.class);
         try {
             T t =  this.entityGetter.get(uuid);
             if(t==null) return;

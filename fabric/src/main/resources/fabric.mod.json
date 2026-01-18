@@ -16,7 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "cn.ksmcbrigade.sws.SuperWoodenSword"
+      "cn.ksmcbrigade.sws.SuperWoodenSwordF"
+    ],
+    "client": [
+      "cn.ksmcbrigade.sws.SWSFabricClient"
     ]
   },
   "mixins": [

@@ -6,7 +6,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.progress.ChunkProgressListener;
 import net.minecraft.sws.CommonClass;
-import net.minecraft.sws.mixin.accessors.ServerLevelAccessor;
 import net.minecraft.world.RandomSequences;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.CustomSpawner;
@@ -31,8 +30,8 @@ public class ClearUtilsServer {
 
     public static void clearLevel(ServerLevel level){
         setClass(level, ClearServerLevel.class);
-        setClass(((ServerLevelAccessor) level).invokeGetEntities(), ClearUtilsCommon.ClearEntityGetter.class);
-        setClass(((ServerLevelAccessor) level).getTickList(), ClearUtilsCommon.ClearEntityTickList.class);
+        setClass(level.getEntities(), ClearUtilsCommon.ClearEntityGetter.class);
+        setClass(level.entityTickList, ClearUtilsCommon.ClearEntityTickList.class);
     }
 
     public static class ClearServerLevel extends ServerLevel{

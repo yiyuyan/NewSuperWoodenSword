@@ -9,7 +9,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
-import net.minecraft.sws.mixin.accessors.ClientLevelAccessor;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -33,8 +32,8 @@ public class ClearUtilsClient {
 
     public static void clearLevel(ClientLevel level){
         setClass(level, ClearClientLevel.class);
-        setClass(((ClientLevelAccessor) level).invokeGetEntities(),ClearUtilsCommon.ClearEntityGetter.class);
-        setClass(((ClientLevelAccessor) level).getTickList(), ClearUtilsCommon.ClearEntityTickList.class);
+        setClass(level.getEntities(),ClearUtilsCommon.ClearEntityGetter.class);
+        setClass(level.tickingEntities, ClearUtilsCommon.ClearEntityTickList.class);
     }
 
     public static class ClearClientLevel extends ClientLevel {
