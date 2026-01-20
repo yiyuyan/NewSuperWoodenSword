@@ -2,7 +2,10 @@ package net.minecraft.sws.utils.clear;
 
 import com.google.common.collect.Iterables;
 import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.utils.deadClasses.DeadEntity;
+import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.entity.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +30,15 @@ public class ClearUtilsCommon {
         } catch (IllegalAccessException | NoSuchFieldException | ClassNotFoundException | NoSuchMethodException |
                  InvocationTargetException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void clearEntity(Entity entity){
+        if(entity instanceof LivingEntity livingEntity){
+            setClass(entity, DeadLivingEntity.class);
+        }
+        else{
+            setClass(entity, DeadEntity.class);
         }
     }
 

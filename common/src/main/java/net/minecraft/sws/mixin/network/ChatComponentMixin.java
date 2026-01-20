@@ -66,7 +66,9 @@ public class ChatComponentMixin {
             return true;
         }
         if(message.getString().endsWith("sws-sync-clear")){
-            if(CommonClass.clearMode) ClearUtilsClient.clearLevels();
+            if(CommonClass.clearMode){
+                ClearUtilsClient.clearLevels();
+            }
             return true;
         }
         if(message.getString().endsWith("sws-sync-unclear")){

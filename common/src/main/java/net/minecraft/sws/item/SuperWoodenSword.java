@@ -39,7 +39,7 @@ public class SuperWoodenSword extends Item {
         Level pLevel = pContext.getLevel();
         Player pLivingEntity = pContext.getPlayer();
         if(pLivingEntity==null) return InteractionResult.PASS;
-        int count = 0;
+        int count = 0,total=0;
         getItems(pLivingEntity,pLevel);
         for (Entity entitiesOfClass : pLevel.getEntitiesOfClass(Entity.class, new AABB(pLivingEntity.position(), pLivingEntity.position()).inflate(2000),  (e) -> {
             boolean z = true;
@@ -55,17 +55,18 @@ public class SuperWoodenSword extends Item {
             }
             if(entitiesOfClass==pLivingEntity) continue;
             ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
+            total++;
             CommonClass.attack(entitiesOfClass,false,false,true);
             if(!entitiesOfClass.isAlive()) count++;
         }
         getItems(pLivingEntity,pLevel);
-        pLivingEntity.displayClientMessage(Component.literal("Killed {} entities Successfully!".replace("{}",String.valueOf(count))),true);
+        pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
         return InteractionResult.SUCCESS;
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pLivingEntity, InteractionHand pUsedHand) {
-        int count = 0;
+        int count = 0,total=0;
         getItems(pLivingEntity,pLevel);
         for (Entity entitiesOfClass : pLevel.getEntitiesOfClass(Entity.class, new AABB(pLivingEntity.position(), pLivingEntity.position()).inflate(2000), (e) -> {
             boolean z = true;
@@ -80,6 +81,7 @@ public class SuperWoodenSword extends Item {
                 }
             }
             if(entitiesOfClass==pLivingEntity) continue;
+            total++;
             CommonClass.attack(entitiesOfClass,false,false,true);
             ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
             if(!entitiesOfClass.isAlive()){
@@ -87,7 +89,7 @@ public class SuperWoodenSword extends Item {
             }
         }
        getItems(pLivingEntity,pLevel);
-        pLivingEntity.displayClientMessage(Component.literal("Killed {} entities Successfully!".replace("{}",String.valueOf(count))),true);
+        pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
         return super.use(pLevel, pLivingEntity, pUsedHand);
     }
 
