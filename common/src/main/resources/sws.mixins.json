@@ -49,6 +49,7 @@
   "client": [
     "accessors.MinecraftAccessor",
     "accessors.ScreenAccessor",
+    "fix.CrashFixer",
     "fix.RenderSystemMixin",
     "fixes.LevelRendererMixin",
     "fixes.MinecraftClientMixin",

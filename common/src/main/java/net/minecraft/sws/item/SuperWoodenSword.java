@@ -190,14 +190,9 @@ public class SuperWoodenSword extends Item {
             //do nothing for the draconic guardian
         }
         else if(!CommonClass.has(pTarget)){
-            ((ILivingEntity) pTarget).setZero();
-            CommonClass.ToZeroAttr(pTarget);
-            CommonClass.restData(pTarget);
-            pTarget.setHealth(0);
-            pTarget.kill();
+            CommonClass.attack(pTarget,false,false,true);
         }
-        CommonClass.attack(pTarget,false,false,true);
-        return true;
+        return false;
     }
 
     @Override

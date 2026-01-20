@@ -10,6 +10,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
+import org.spongepowered.asm.mixin.injection.callback.CancellationException;
 
 
 @Mixin(priority = 2147483647,value = Player.class)
@@ -88,8 +89,22 @@ public abstract class PlayerMixin extends LivingEntity {
         }*/
     }
 
-    @Inject(method = "attack",at = @At("HEAD"))
+    @Inject(method = "attack",at = @At("HEAD"),cancellable = true)
     public void attack(Entity pTarget, CallbackInfo ci){
+        try {
+            Entity e = (Entity) ((Object) this);
+            if(e.getClass().getName().startsWith("net.minecraft.sws.utils.deadClasses") || !this.canAttackType(pTarget.getType())){
+                ci.cancel();
+                return;
+            }
+            if(pTarget!=null && ((ILivingEntity) pTarget).zero() && !CommonClass.has(pTarget)){
+                ci.cancel();
+                return;
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
         if(this.getMainHandItem().getItem() instanceof SuperWoodenSword){
             CommonClass.attack(pTarget,false,false,false);
         }

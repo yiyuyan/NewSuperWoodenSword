@@ -35,7 +35,7 @@ public class ClearUtilsCommon {
 
     public static void clearEntity(Entity entity){
         if(entity instanceof LivingEntity livingEntity){
-            setClass(entity, DeadLivingEntity.class);
+            setClass(livingEntity, DeadLivingEntity.class);
         }
         else{
             setClass(entity, DeadEntity.class);

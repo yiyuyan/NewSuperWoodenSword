@@ -65,6 +65,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     compileOnly project(":common")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    implementation(files("super-steve-1.v3.7.1.1.jar"))
 }
 
 jar {

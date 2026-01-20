@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CancellationException;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -140,6 +141,19 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
         if((CommonClass.has((Entity) ((Object) this)))){
             cir.setReturnValue(false);
             cir.cancel();
+        }
+    }
+
+    @Inject(method = {"canAttack(Lnet/minecraft/world/entity/LivingEntity;)Z","canAttackType","canAttack(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;)Z"},at = @At("HEAD"), cancellable = true)
+    public void deadZero(CallbackInfoReturnable<Boolean> cir){
+        Entity self = (Entity) ((Object) this);
+        try {
+            if(((ILivingEntity) self).zero() && !CommonClass.has(self)){
+                cir.setReturnValue(false);
+                cir.cancel();
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
@@ -290,7 +304,11 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
     @Unique
     @Override
     public void tickDeathHandle(){
-        this.tickDeath();
+        try {
+            this.tickDeath();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

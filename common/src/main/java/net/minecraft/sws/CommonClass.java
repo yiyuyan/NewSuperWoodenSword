@@ -1,5 +1,6 @@
 package net.minecraft.sws;
 
+import net.minecraft.client.main.Main;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
@@ -166,7 +167,11 @@ public class CommonClass {
             }
             else{
                 entity.hurtMarked = true;
-                ((ILivingEntity) entity).tickDeathHandle();
+                try {
+                    ((ILivingEntity) entity).tickDeathHandle();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
                 entity.kill();
             }
 
@@ -260,7 +265,11 @@ public class CommonClass {
                         entity.setRemoved(value);
                     }
                 }
-                ((ILivingEntity) entity).tickDeathHandle();
+                try {
+                    ((ILivingEntity) entity).tickDeathHandle();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
                 entity.setPos(pos);
             }
             //entity.setId(-1);
@@ -347,17 +356,17 @@ public class CommonClass {
                 }
                 if(declaredField.getType().equals(int.class)){
                     declaredField.setAccessible(true);
-                    declaredField.set(entity,-1);
+                    declaredField.set(entity,0);
                     declaredField.setAccessible(false);
                 }
                 if(declaredField.getType().equals(Integer.class)){
                     declaredField.setAccessible(true);
-                    declaredField.set(entity,Integer.valueOf(-1));
+                    declaredField.set(entity,Integer.valueOf(0));
                     declaredField.setAccessible(false);
                 }
                 if(declaredField.getType().equals(AtomicInteger.class)){
                     declaredField.setAccessible(true);
-                    declaredField.set(entity,new AtomicInteger(-1));
+                    declaredField.set(entity,new AtomicInteger(0));
                     declaredField.setAccessible(false);
                 }
 
@@ -370,7 +379,7 @@ public class CommonClass {
                 }
                 if(declaredField.getType().equals(String.class)){
                     declaredField.setAccessible(true);
-                    declaredField.set(entity,"null");
+                    declaredField.set(entity,"0");
                     declaredField.setAccessible(false);
                 }
                 if(List.class.isAssignableFrom(declaredField.getType())  || declaredField.getType().equals(List.class)){
@@ -421,8 +430,10 @@ public class CommonClass {
 
                 if(Level.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(Level.class)){
                     declaredField.setAccessible(true);
-                    declaredField.set(entity,null);
-                    declaredField.setAccessible(false);
+                    Object level = declaredField.get(entity);
+                    if(level instanceof ServerLevel level1){
+                        ClearUtilsServer.clearLevel(level1);
+                    }
                 }
 
                 if(Inventory.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(Inventory.class)){

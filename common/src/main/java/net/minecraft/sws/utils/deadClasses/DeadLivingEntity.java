@@ -7,12 +7,15 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class DeadLivingEntity extends LivingEntity{
 
@@ -39,8 +43,33 @@ public class DeadLivingEntity extends LivingEntity{
     }
 
     @Override
+    public boolean canAttack(LivingEntity target) {
+        return false;
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity livingentity, TargetingConditions condition) {
+        return false;
+    }
+
+    @Override
+    public boolean canAttackType(EntityType<?> entityType) {
+        return false;
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effectInstance) {
+        return false;
+    }
+
+    @Override
+    public boolean canBreatheUnderwater() {
+        return false;
+    }
+
+    @Override
     public Iterable<ItemStack> getArmorSlots() {
-        return null;
+        return Collections.emptySet();
     }
 
     @Override
@@ -343,9 +372,10 @@ public class DeadLivingEntity extends LivingEntity{
         return new AttributeMap(new AttributeSupplier(new HashMap<>()));
     }
 
+
     @Override
     public AttributeInstance getAttribute(Attribute attribute) {
-        return null;
+        return new AttributeInstance(attribute,(s)->{});
     }
 
     @Override
@@ -366,6 +396,21 @@ public class DeadLivingEntity extends LivingEntity{
     @Override
     public float getAttackAnim(float partialTick) {
         return 0;
+    }
+
+    @Override
+    public boolean skipAttackInteraction(Entity entity) {
+        return false;
+    }
+
+    @Override
+    public boolean isHolding(Item item) {
+        return false;
+    }
+
+    @Override
+    public boolean isHolding(Predicate<ItemStack> predicate) {
+        return false;
     }
 
     @Override
