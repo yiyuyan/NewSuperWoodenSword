@@ -107,6 +107,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
         if(this.getMainHandItem().getItem() instanceof SuperWoodenSword){
             CommonClass.attack(pTarget,false,false,false);
+            ci.cancel();
         }
     }
 }
