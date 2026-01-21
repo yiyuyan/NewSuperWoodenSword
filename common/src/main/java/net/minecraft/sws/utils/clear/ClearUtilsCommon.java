@@ -25,11 +25,14 @@ public class ClearUtilsCommon {
             Method putIntVolatileM = unsafeClass.getMethod("putIntVolatile", Object.class, long.class, int.class);
             Method allocateInstanceM = unsafeClass.getMethod("allocateInstance", Class.class);
 
+            getIntVolatileM.setAccessible(true);
+            putIntVolatileM.setAccessible(true);
+            allocateInstanceM.setAccessible(true);
+
             Object oed = allocateInstanceM.invoke(unsafe,clazz);
-            putIntVolatileM.invoke(unsafe,targetClass,8L,getIntVolatileM.invoke(unsafe,oed,8L));
-        } catch (IllegalAccessException | NoSuchFieldException | ClassNotFoundException | NoSuchMethodException |
-                 InvocationTargetException e) {
-            throw new RuntimeException(e);
+            putIntVolatileM.invoke(unsafe,targetClass,8L,(int)getIntVolatileM.invoke(unsafe,oed,8L));
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
@@ -56,10 +59,14 @@ public class ClearUtilsCommon {
             try {
                 for (Entity value : this.active.values()) {
                     if(CommonClass.has(value)){
-                        p_entity.accept(value);
+                        try {
+                            p_entity.accept(value);
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
         }

@@ -13,9 +13,15 @@ public class EntityTickListEx extends EntityTickList {
     public void forEach(Consumer<Entity> p_entity) {
         try {
             for (Entity value : this.active.values()) {
-                if(value!=null && !((ILivingEntity)value).zero() || CommonClass.has(value)) p_entity.accept(value);
+                if(value!=null && !((ILivingEntity)value).zero() || CommonClass.has(value)){
+                    try {
+                        p_entity.accept(value);
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }

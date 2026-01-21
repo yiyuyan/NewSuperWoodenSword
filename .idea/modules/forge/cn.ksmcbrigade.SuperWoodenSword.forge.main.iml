@@ -31,7 +31,7 @@
           <root url="jar://$APPLICATION_PLUGINS_DIR$/Minecraft Development/lib/resources/externalAnnotations.jar!/" />
         </ANNOTATIONS>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../forge/build/moddev/artifacts/forge-1.20.1-47.2.30-merged.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../forge/build/moddev/artifacts/forge-1.20.1-47.4.13-merged.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -48,18 +48,18 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Gradle: cpw.mods:securejarhandler:2.1.10" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:fmlloader:1.20.1-47.2.30" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:coremods:5.1.6" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:fmlloader:1.20.1-47.4.13" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:coremods:5.2.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: cpw.mods:modlauncher:10.0.9" level="project" />
-    <orderEntry type="library" name="Gradle: org.openjdk.nashorn:nashorn-core:15.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:9.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-util:9.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-analysis:9.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:9.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:9.7" level="project" />
+    <orderEntry type="library" name="Gradle: org.openjdk.nashorn:nashorn-core:15.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:9.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-util:9.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-analysis:9.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:9.8" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:9.8" level="project" />
     <orderEntry type="library" name="Gradle: net.minecraftforge:accesstransformers:8.0.4" level="project" />
     <orderEntry type="library" name="Gradle: org.antlr:antlr4-runtime:4.9.1" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:fmlcore:1.20.1-47.2.30" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:fmlcore:1.20.1-47.4.13" level="project" />
     <orderEntry type="library" name="Gradle: net.minecraftforge:eventbus:6.0.5" level="project" />
     <orderEntry type="library" name="Gradle: net.minecraftforge:forgespi:7.0.1" level="project" />
     <orderEntry type="library" name="Gradle: net.minecraftforge:unsafe:0.2.0" level="project" />
@@ -77,10 +77,10 @@
     <orderEntry type="library" name="Gradle: org.spongepowered:mixin:0.8.5" level="project" />
     <orderEntry type="library" name="Gradle: cpw.mods:bootstraplauncher:1.1.2" level="project" />
     <orderEntry type="library" name="Gradle: net.minecraftforge:JarJarFileSystems:0.3.19" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:fmlearlydisplay:1.20.1-47.2.30" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:javafmllanguage:1.20.1-47.2.30" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:lowcodelanguage:1.20.1-47.2.30" level="project" />
-    <orderEntry type="library" name="Gradle: net.minecraftforge:mclanguage:1.20.1-47.2.30" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:fmlearlydisplay:1.20.1-47.4.13" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:javafmllanguage:1.20.1-47.4.13" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:lowcodelanguage:1.20.1-47.4.13" level="project" />
+    <orderEntry type="library" name="Gradle: net.minecraftforge:mclanguage:1.20.1-47.4.13" level="project" />
     <orderEntry type="library" name="Gradle: de.oceanlabs.mcp:mcp_config:zip:1.20.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.12.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.10" level="project" />
@@ -141,7 +141,7 @@
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../forge/build/moddev/artifacts/client-extra-1.20.1-47.2.30.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../forge/build/moddev/artifacts/client-extra-1.20.1-47.4.13.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

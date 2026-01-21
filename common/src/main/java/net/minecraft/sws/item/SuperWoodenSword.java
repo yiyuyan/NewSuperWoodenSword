@@ -2,6 +2,7 @@ package net.minecraft.sws.item;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.Constants;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.ColorUtils;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
@@ -14,6 +15,7 @@ import net.minecraft.sws.utils.vanillaExClasses.ServerPlayerEx;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,61 +38,71 @@ public class SuperWoodenSword extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
-        Level pLevel = pContext.getLevel();
-        Player pLivingEntity = pContext.getPlayer();
-        if(pLivingEntity==null) return InteractionResult.PASS;
-        int count = 0,total=0;
-        getItems(pLivingEntity,pLevel);
-        for (Entity entitiesOfClass : pLevel.getEntitiesOfClass(Entity.class, new AABB(pLivingEntity.position(), pLivingEntity.position()).inflate(2000),  (e) -> {
-            boolean z = true;
-            if(e instanceof LivingEntity livingEntity){
-                z = !(livingEntity.getItemInHand(livingEntity.getUsedItemHand()).getItem() instanceof SuperWoodenSword);
-            }
-            return e!=pLivingEntity && z;
-        })) {
-            if(!(entitiesOfClass instanceof LivingEntity)){
-                if(entitiesOfClass instanceof ItemEntity itemEntity && !((IItemEntity)itemEntity).canBeKilled()){
-                    continue;
+        try {
+            Level pLevel = pContext.getLevel();
+            Player pLivingEntity = pContext.getPlayer();
+            if(pLivingEntity==null) return InteractionResult.PASS;
+            int count = 0,total=0;
+            getItems(pLivingEntity,pLevel);
+            for (Entity entitiesOfClass : pLevel.getEntitiesOfClass(Entity.class, new AABB(pLivingEntity.position(), pLivingEntity.position()).inflate(2000),  (e) -> {
+                boolean z = true;
+                if(e instanceof LivingEntity livingEntity){
+                    z = !(livingEntity.getItemInHand(livingEntity.getUsedItemHand()).getItem() instanceof SuperWoodenSword);
                 }
+                return e!=pLivingEntity && z;
+            })) {
+                if(!(entitiesOfClass instanceof LivingEntity)){
+                    if(entitiesOfClass instanceof ItemEntity itemEntity && !((IItemEntity)itemEntity).canBeKilled()){
+                        continue;
+                    }
+                }
+                if(entitiesOfClass==pLivingEntity) continue;
+                ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
+                total++;
+                CommonClass.attack(entitiesOfClass,false,false,true);
+                if(!entitiesOfClass.isAlive()) count++;
             }
-            if(entitiesOfClass==pLivingEntity) continue;
-            ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
-            total++;
-            CommonClass.attack(entitiesOfClass,false,false,true);
-            if(!entitiesOfClass.isAlive()) count++;
+            getItems(pLivingEntity,pLevel);
+            pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
+            return InteractionResult.SUCCESS;
+        } catch (Throwable e) {
+            Constants.LOG.error("error in the sword item: {}",e.getMessage(),e);
+            return InteractionResult.FAIL;
         }
-        getItems(pLivingEntity,pLevel);
-        pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
-        return InteractionResult.SUCCESS;
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pLivingEntity, InteractionHand pUsedHand) {
-        int count = 0,total=0;
-        getItems(pLivingEntity,pLevel);
-        for (Entity entitiesOfClass : pLevel.getEntitiesOfClass(Entity.class, new AABB(pLivingEntity.position(), pLivingEntity.position()).inflate(2000), (e) -> {
-            boolean z = true;
-            if(e instanceof LivingEntity livingEntity){
-                z = !(livingEntity.getItemInHand(livingEntity.getUsedItemHand()).getItem() instanceof SuperWoodenSword);
-            }
-            return e!=pLivingEntity && z;
-        })) {
-            if(!(entitiesOfClass instanceof LivingEntity)){
-                if(entitiesOfClass instanceof ItemEntity itemEntity && !((IItemEntity)itemEntity).canBeKilled()){
-                    continue;
+        try {
+            int count = 0,total=0;
+            getItems(pLivingEntity,pLevel);
+            for (Entity entitiesOfClass : pLevel.getEntitiesOfClass(Entity.class, new AABB(pLivingEntity.position(), pLivingEntity.position()).inflate(2000), (e) -> {
+                boolean z = true;
+                if(e instanceof LivingEntity livingEntity){
+                    z = !(livingEntity.getItemInHand(livingEntity.getUsedItemHand()).getItem() instanceof SuperWoodenSword);
+                }
+                return e!=pLivingEntity && z;
+            })) {
+                if(!(entitiesOfClass instanceof LivingEntity)){
+                    if(entitiesOfClass instanceof ItemEntity itemEntity && !((IItemEntity)itemEntity).canBeKilled()){
+                        continue;
+                    }
+                }
+                if(entitiesOfClass==pLivingEntity) continue;
+                total++;
+                CommonClass.attack(entitiesOfClass,false,false,true);
+                ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
+                if(!entitiesOfClass.isAlive()){
+                    count++;
                 }
             }
-            if(entitiesOfClass==pLivingEntity) continue;
-            total++;
-            CommonClass.attack(entitiesOfClass,false,false,true);
-            ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
-            if(!entitiesOfClass.isAlive()){
-                count++;
-            }
+            getItems(pLivingEntity,pLevel);
+            pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
+            return super.use(pLevel, pLivingEntity, pUsedHand);
+        } catch (Throwable e) {
+            Constants.LOG.error("error in the sword item: {}",e.getMessage(),e);
+            return super.use(pLevel, pLivingEntity, pUsedHand);
         }
-       getItems(pLivingEntity,pLevel);
-        pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
-        return super.use(pLevel, pLivingEntity, pUsedHand);
     }
 
     public void getItems(Player pLivingEntity,Level pLevel){
@@ -186,11 +198,9 @@ public class SuperWoodenSword extends Item {
 
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        if((pTarget.getClass().getName().contains("DraconicGuardian") && !pTarget.getClass().getName().contains("Projectile")) || pTarget.getClass().equals(EnderDragon.class)){
-            //do nothing for the draconic guardian
-        }
-        else if(!CommonClass.has(pTarget)){
+        if(!CommonClass.has(pTarget)){
             CommonClass.attack(pTarget,false,false,true);
+            return true;
         }
         return false;
     }

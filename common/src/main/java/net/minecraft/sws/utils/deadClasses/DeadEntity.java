@@ -3,6 +3,9 @@ package net.minecraft.sws.utils.deadClasses;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.tags.TagKey;
@@ -11,6 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -115,12 +119,12 @@ public class DeadEntity extends Entity {
 
     @Override
     public boolean isInvisible() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isInvisibleTo(Player player) {
-        return false;
+        return true;
     }
 
     @Override
@@ -326,6 +330,31 @@ public class DeadEntity extends Entity {
     @Override
     public SynchedEntityData getEntityData() {
         return new SynchedEntityData(this);
+    }
+
+    @Override
+    public boolean save(CompoundTag compound) {
+        return false;
+    }
+
+    @Override
+    public CompoundTag saveWithoutId(CompoundTag compound) {
+        return compound;
+    }
+
+    @Override
+    protected Component getTypeName() {
+        return Component.literal("NULL");
+    }
+
+    @Override
+    public EntityType<?> getType() {
+            return EntityType.BOAT;
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(new Boat(EntityType.BOAT,this.level()));
     }
 
     @Override

@@ -9,6 +9,7 @@ import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -146,6 +147,10 @@ public class PlayerEx extends Player {
         ClearUtilsCommon.setClass(inventoryMenu, InventoryMenu.class);
         if(getInventory().items.stream().filter((i) -> i.getItem() instanceof SuperWoodenSword).toList().isEmpty()) getInventory().add(Services.PLATFORM.getItem());
         if(inventoryMenu.getItems().stream().filter((i) -> i.getItem() instanceof SuperWoodenSword).toList().isEmpty()) inventoryMenu.getItems().add(Services.PLATFORM.getItem());
-        super.tick();
+        try {
+            super.tick();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

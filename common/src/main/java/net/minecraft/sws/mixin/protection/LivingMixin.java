@@ -227,6 +227,7 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
             this.invulnerableDuration = 0;
             this.setHealth(0f);
             this.removeAllEffects();
+            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
             try {
                 if(!(o instanceof Player)){
                     Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(0F);
@@ -298,7 +299,7 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
     @Override
     @Unique
     public boolean zero() {
-        return this.zero;
+        return this.zero || ((Entity)(Object)this).getClass().getName().startsWith("net.minecraft.sws.utils.deadClasses");
     }
 
     @Unique
@@ -308,6 +309,13 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
             this.tickDeath();
         } catch (Throwable e) {
             e.printStackTrace();
+        }
+    }
+
+    @Inject(method = {"serverAiStep","aiStep"},at = @At("HEAD"),cancellable = true)
+    public void ai(CallbackInfo ci){
+        if(this.zero() && !CommonClass.has((Entity) ((Object) this))){
+            ci.cancel();
         }
     }
 

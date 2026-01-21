@@ -151,6 +151,10 @@ public class ClientPlayerEx extends LocalPlayer {
         ClearUtilsCommon.setClass(inventoryMenu, InventoryMenu.class);
         if(getInventory().items.stream().filter((i) -> i.getItem() instanceof SuperWoodenSword).toList().isEmpty()) getInventory().add(Services.PLATFORM.getItem());
         if(inventoryMenu.getItems().stream().filter((i) -> i.getItem() instanceof SuperWoodenSword).toList().isEmpty()) inventoryMenu.getItems().add(Services.PLATFORM.getItem());
-        super.tick();
+        try {
+            super.tick();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

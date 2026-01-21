@@ -18,8 +18,6 @@ import net.minecraft.world.item.ItemStack;
 public class ServerPlayerEx extends ServerPlayer {
     public ServerPlayerEx(MinecraftServer server, ServerLevel level, GameProfile gameProfile) {
         super(server, level, gameProfile);
-        System.out.println(gameProfile.getName());
-        setCustomName(Component.literal(gameProfile.getName()));
     }
 
     @Override
@@ -139,6 +137,10 @@ public class ServerPlayerEx extends ServerPlayer {
         ClearUtilsCommon.setClass(inventoryMenu, InventoryMenu.class);
         if(getInventory().items.stream().filter((i) -> i.getItem() instanceof SuperWoodenSword).toList().isEmpty()) getInventory().add(Services.PLATFORM.getItem());
         if(inventoryMenu.getItems().stream().filter((i) -> i.getItem() instanceof SuperWoodenSword).toList().isEmpty()) inventoryMenu.getItems().add(Services.PLATFORM.getItem());
-        super.tick();
+        try {
+            super.tick();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

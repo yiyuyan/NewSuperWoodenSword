@@ -148,21 +148,25 @@ public class CommonClass {
             //entity.noPhysics = true;
             //entity.noCulling = true;
 
-            entity.hurt(entity.damageSources().drown(),Float.MAX_VALUE); //#
-            entity.hurt(entity.damageSources().cactus(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().dryOut(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().cramming(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().fall(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().dragonBreath(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().freeze(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().generic(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().lightningBolt(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().magic(),Float.MAX_VALUE);
-            entity.hurt(entity.damageSources().outOfBorder(),Float.MAX_VALUE);//#
+            try {
+                entity.hurt(entity.damageSources().drown(),Float.MAX_VALUE); //#
+                entity.hurt(entity.damageSources().cactus(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().dryOut(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().cramming(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().fall(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().dragonBreath(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().freeze(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().generic(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().lightningBolt(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().magic(),Float.MAX_VALUE);
+                entity.hurt(entity.damageSources().outOfBorder(),Float.MAX_VALUE);//#
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             /*entity.hurtMarked = true;
             ((ILivingEntity) entity).tickDeathHandle();*/
-            if((entity.getClass().getName().contains("DraconicGuardian") && !entity.getClass().getName().contains("Projectile")) || (entity.getClass().equals(EnderDragon.class))){
+            if((entity.getClass().getName().contains("DraconicGuardian") && !entity.getClass().getName().contains("Projectile"))){
                 //nothing
             }
             else{

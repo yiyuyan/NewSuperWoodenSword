@@ -148,10 +148,10 @@ public abstract class EntityMixin implements ILivingEntity {
     public void setShared(CallbackInfoReturnable<Boolean> cir){
         if(!CommonClass.has((Entity) ((Object) this)) && this.zero){
             Entity entity = (Entity) ((Object) this);
-            if(!CommonClass.file.exists()){
+            /*if(!CommonClass.file.exists()){
                 Constants.LOG.debug("Can't remove the entity because of the remove config file is not exists.");
                 return;
-            }
+            }*/
             if(entity.getClass().getName().contains("DraconicGuardian") && !entity.getClass().getName().contains("Projectile")){
                 //DO NOTHING
             }

@@ -2,7 +2,11 @@ package net.minecraft.sws.utils.deadClasses;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.tags.TagKey;
@@ -14,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -60,6 +65,52 @@ public class DeadLivingEntity extends LivingEntity{
     @Override
     public boolean canBeAffected(MobEffectInstance effectInstance) {
         return false;
+    }
+
+    @Override
+    public boolean save(CompoundTag compound) {
+        return false;
+    }
+
+    @Override
+    public CompoundTag saveWithoutId(CompoundTag compound) {
+        return compound;
+    }
+
+    @Override
+    protected Component getTypeName() {
+        return Component.literal("NULL");
+    }
+
+    @Override
+    public EntityType<?> getType() {
+        return EntityType.SILVERFISH;
+    }
+
+
+    @Override
+    public boolean saveAsPassenger(CompoundTag compound) {
+        return false;
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+
+    }
+
+    @Override
+    public boolean addTag(String tag) {
+        return false;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(new Silverfish(EntityType.SILVERFISH,this.level()));
     }
 
     @Override
@@ -164,12 +215,17 @@ public class DeadLivingEntity extends LivingEntity{
 
     @Override
     public boolean isInvisible() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isInvisibleTo(Player player) {
-        return false;
+        return true;
+    }
+
+    @Override
+    public void aiStep() {
+
     }
 
     @Override
