@@ -4,6 +4,8 @@ import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import net.minecraft.sws.platform.Services;
+import net.minecraft.sws.utils.deadClasses.DeadEntity;
+import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.sws.utils.KIckUtils;
@@ -299,7 +301,7 @@ public abstract class LivingMixin extends Entity implements ILivingEntity, Attac
     @Override
     @Unique
     public boolean zero() {
-        return this.zero || ((Entity)(Object)this).getClass().getName().startsWith("net.minecraft.sws.utils.deadClasses");
+        return this.zero;
     }
 
     @Unique

@@ -53,6 +53,7 @@
     "accessors.ScreenAccessor",
     "fix.CrashFixer",
     "fix.RenderSystemMixin",
+    "fixes.ClientLevelMixin",
     "fixes.EntityRenderDispatcherMixin",
     "fixes.LevelRendererMixin",
     "fixes.MinecraftClientMixin",

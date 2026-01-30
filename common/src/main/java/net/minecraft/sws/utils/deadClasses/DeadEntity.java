@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
-public class DeadEntity extends Entity {
+public class DeadEntity extends Entity{
     public DeadEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
@@ -323,45 +323,12 @@ public class DeadEntity extends Entity {
     }
 
     @Override
-    public Set<String> getTags() {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public SynchedEntityData getEntityData() {
-        return new SynchedEntityData(this);
-    }
-
-    @Override
-    public boolean save(CompoundTag compound) {
-        return false;
-    }
-
-    @Override
-    public CompoundTag saveWithoutId(CompoundTag compound) {
-        return compound;
-    }
-
-    @Override
     protected Component getTypeName() {
         return Component.literal("NULL");
     }
 
     @Override
-    public EntityType<?> getType() {
-            return EntityType.BOAT;
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(new Boat(EntityType.BOAT,this.level()));
-    }
-
-    @Override
-    public void tick() {
-        CommonClass.restData(this);
-        CommonClass.noneFields(this);
-    }
+    public void tick() {}
 
     @Override
     public void baseTick() {
@@ -386,5 +353,9 @@ public class DeadEntity extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
 
+    }
+
+    public boolean zero(){
+        return true;
     }
 }

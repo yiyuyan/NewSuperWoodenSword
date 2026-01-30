@@ -68,34 +68,8 @@ public class DeadLivingEntity extends LivingEntity{
     }
 
     @Override
-    public boolean save(CompoundTag compound) {
-        return false;
-    }
-
-    @Override
-    public CompoundTag saveWithoutId(CompoundTag compound) {
-        return compound;
-    }
-
-    @Override
     protected Component getTypeName() {
         return Component.literal("NULL");
-    }
-
-    @Override
-    public EntityType<?> getType() {
-        return EntityType.SILVERFISH;
-    }
-
-
-    @Override
-    public boolean saveAsPassenger(CompoundTag compound) {
-        return false;
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-
     }
 
     @Override
@@ -106,11 +80,6 @@ public class DeadLivingEntity extends LivingEntity{
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
 
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(new Silverfish(EntityType.SILVERFISH,this.level()));
     }
 
     @Override
@@ -495,21 +464,7 @@ public class DeadLivingEntity extends LivingEntity{
     }
 
     @Override
-    public Set<String> getTags() {
-        return Collections.emptySet();
-    }
-
-    @Override
-    public SynchedEntityData getEntityData() {
-        return new SynchedEntityData(this);
-    }
-
-    @Override
-    public void tick() {
-        CommonClass.restData(this);
-        CommonClass.ToZeroAttr(this);
-        CommonClass.noneFields(this);
-    }
+    public void tick() {}
 
     @Override
     public void baseTick() {
@@ -524,6 +479,10 @@ public class DeadLivingEntity extends LivingEntity{
     @Override
     protected void defineSynchedData() {
 
+    }
+
+    public boolean zero(){
+        return true;
     }
 
     @Override

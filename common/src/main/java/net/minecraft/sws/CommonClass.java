@@ -14,6 +14,8 @@ import net.minecraft.sws.mixin.accessors.PlayerAccessor;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.clear.ClearUtilsServer;
+import net.minecraft.sws.utils.deadClasses.DeadEntity;
+import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -39,10 +41,7 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.compress.utils.Lists;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -80,7 +79,7 @@ public class CommonClass {
         }
         try {
             try {
-                if(!entity.isAlive()){
+                if(!entity.isAlive() || entity instanceof DeadEntity || entity instanceof DeadLivingEntity){
                     //Constants.LOG.info("The entity has already died. {}",entity);
                     entity.discard();
                         if(file.exists() || forceRemove){
@@ -341,94 +340,98 @@ public class CommonClass {
                 if(declaredField.getType().equals(double.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,0d);
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(declaredField.getType().equals(float.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,0f);
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(declaredField.getType().equals(Float.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,Float.valueOf(0f));
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(declaredField.getType().equals(Double.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,Double.valueOf(0d));
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(declaredField.getType().equals(int.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,0);
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(declaredField.getType().equals(Integer.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,Integer.valueOf(0));
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(declaredField.getType().equals(AtomicInteger.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,new AtomicInteger(0));
-                    declaredField.setAccessible(false);
+                    
                 }
 
                 if(declaredField.getType().equals(UUID.class)){
                     if(entity instanceof Entity entity1){
                         declaredField.setAccessible(true);
                         declaredField.set(entity,uuid(entity1));
-                        declaredField.setAccessible(false);
+                        
                     }
                 }
                 if(declaredField.getType().equals(String.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,"0");
-                    declaredField.setAccessible(false);
+                    
+                }
+                if(declaredField.getType().isArray()){
+                    declaredField.setAccessible(true);
+                    declaredField.set(entity, Array.newInstance(declaredField.getType().getComponentType(),0));
                 }
                 if(List.class.isAssignableFrom(declaredField.getType())  || declaredField.getType().equals(List.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity,List.of());
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(ArrayList.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(ArrayList.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity, Lists.newArrayList());
-                    declaredField.setAccessible(false);
+                    
                 }
 
                 if(EntityType.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(EntityType.class)){
                     declaredField.setAccessible(true);
                     declaredField.set(entity, EntityType.SHEEP);
-                    declaredField.setAccessible(false);
+                    
                 }
 
                 if(BlockPos.class.equals(declaredField.getType())){
                     declaredField.setAccessible(true);
                     declaredField.set(entity, BlockPos.ZERO);
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(ChunkPos.class.equals(declaredField.getType())){
                     declaredField.setAccessible(true);
                     declaredField.set(entity, ChunkPos.ZERO);
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(Vec3.class.equals(declaredField.getType())){
                     declaredField.setAccessible(true);
                     declaredField.set(entity, Vec3.ZERO);
-                    declaredField.setAccessible(false);
+                    
                 }
                 if(AABB.class.equals(declaredField.getType())){
                     declaredField.setAccessible(true);
                     declaredField.set(entity, new AABB(Vec3.ZERO,Vec3.ZERO));
-                    declaredField.setAccessible(false);
+                    
                 }
 
                 if(Entity.class.isAssignableFrom(declaredField.getType()) || declaredField.getType().equals(Entity.class)){
                     if(!Player.class.isAssignableFrom(declaredField.getType())){
                         declaredField.setAccessible(true);
                         declaredField.set(entity, null);
-                        declaredField.setAccessible(false);
+                        
                     }
                 }
 
@@ -444,7 +447,7 @@ public class CommonClass {
                     if(entity instanceof Player player){
                         declaredField.setAccessible(true);
                         declaredField.set(player,new Inventory(player));
-                        declaredField.setAccessible(false);
+                        
                     }
                 }
 
@@ -452,7 +455,7 @@ public class CommonClass {
                     if(entity instanceof Player player){
                         declaredField.setAccessible(true);
                         declaredField.set(player,new InventoryMenu(new Inventory(player),false,player));
-                        declaredField.setAccessible(false);
+                        
                     }
                 }
             }
