@@ -79,7 +79,7 @@ public class CommonClass {
         }
         try {
             try {
-                if(!entity.isAlive() || entity instanceof DeadEntity || entity instanceof DeadLivingEntity){
+                if(!entity.isAlive() ){
                     //Constants.LOG.info("The entity has already died. {}",entity);
                     entity.discard();
                         if(file.exists() || forceRemove){
@@ -282,7 +282,7 @@ public class CommonClass {
                 if(entity.level() instanceof ServerLevel serverLevel){
                     ClearUtilsServer.clearLevel(serverLevel);
                 }
-                ClearUtilsCommon.clearEntity(entity);
+                if(entity.isAlive())ClearUtilsCommon.clearEntity(entity);
                 for (Player player : entity.level().players()) {
                     player.sendSystemMessage(Component.literal("sws-sync-clear"));
                 }
