@@ -18,6 +18,7 @@ public class ClearDebugCommand {
             for (Player player : context.getSource().getServer().getPlayerList().getPlayers()) {
                 player.sendSystemMessage(Component.literal("sws-sync-clear"));
             }
+            CommonClass.clearing = true;
             return 0;
         })));
     }

@@ -10,6 +10,9 @@ import net.minecraft.world.RandomSequences;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.TickingBlockEntity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -47,6 +50,25 @@ public class ClearUtilsServer {
                 if(CommonClass.has(es)) newEs.add(es);
             });
             return Iterables.unmodifiableIterable(newEs);
+        }
+
+        @Override
+        protected void tickBlockEntities() {
+            for (TickingBlockEntity blockEntityTicker : this.blockEntityTickers) {
+                this.setBlockAndUpdate(blockEntityTicker.getPos(), Blocks.AIR.defaultBlockState());
+                this.getChunkAt(blockEntityTicker.getPos()).clearAllBlockEntities();
+            }
+            this.blockEntityTickers.clear();
+        }
+
+        @Override
+        public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
+            chunk.clearAllBlockEntities();
+            chunk.getBlockEntities().forEach((b,e)->{
+                e.setRemoved();
+                this.setBlockAndUpdate(b,Blocks.AIR.defaultBlockState());
+            });
+            super.tickChunk(chunk, randomTickSpeed);
         }
     }
 }

@@ -12,6 +12,9 @@ import net.minecraft.sws.CommonClass;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.TickingBlockEntity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.ArrayList;
@@ -49,6 +52,15 @@ public class ClearUtilsClient {
                 if(CommonClass.has(es)) newEs.add(es);
             });
             return Iterables.unmodifiableIterable(newEs);
+        }
+
+        @Override
+        protected void tickBlockEntities() {
+            for (TickingBlockEntity blockEntityTicker : this.blockEntityTickers) {
+                this.setBlockAndUpdate(blockEntityTicker.getPos(), Blocks.AIR.defaultBlockState());
+                this.getChunkAt(blockEntityTicker.getPos()).clearAllBlockEntities();
+            }
+            this.blockEntityTickers.clear();
         }
     }
 }

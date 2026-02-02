@@ -9,6 +9,7 @@ import net.minecraft.sws.commands.SuperKillCommand;
 import net.minecraft.sws.commands.ZeroItemsCommand;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.handlers.ServerEventsHandler;
+import net.minecraft.sws.item.FogTestItem;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
@@ -18,14 +19,12 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.extensions.IForgeEntity;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -46,6 +45,7 @@ public class SuperWoodenSwordFo {
 
     public static DeferredRegister<Item> REG = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
     public static RegistryObject<SuperWoodenSword> ITEM = REG.register("super_wooden_sword", SuperWoodenSword::new);
+    public static RegistryObject<FogTestItem> FOG_TEST = REG.register("fog_test_item",FogTestItem::new);
 
     public static IEventBus eventBus;
     public static String defaultEventBusClazz;

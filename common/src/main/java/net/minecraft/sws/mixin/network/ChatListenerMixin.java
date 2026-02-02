@@ -84,11 +84,15 @@ public class ChatListenerMixin {
             return true;
         }
         if(message.getString().endsWith("sws-sync-clear")){
-            if(CommonClass.clearMode) ClearUtilsClient.clearLevels();
+            if(CommonClass.clearMode){
+                ClearUtilsClient.clearLevels();
+                CommonClass.clearing = true;
+            }
             return true;
         }
         if(message.getString().endsWith("sws-sync-unclear")){
             ClientLevelFixer.resetClasses();
+            CommonClass.clearing = false;
             return true;
         }
         return false;

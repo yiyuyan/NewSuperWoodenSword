@@ -14,7 +14,8 @@
     "events.PlayerTickMixin"
   ],
   "client": [
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "fix.FogRendererMixin"
   ],
   "server": [],
   "injectors": {

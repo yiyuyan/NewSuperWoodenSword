@@ -5,10 +5,12 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.commands.client.FogSetCommand;
 import net.minecraft.sws.fixers.ClientLevelFixer;
 import net.minecraft.sws.handlers.ClientEventsHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -71,5 +73,11 @@ public class SWSFixerClient {
     @SubscribeEvent
     public void unload(LevelEvent.Unload unload){
         ClientEventsHandler.levelUnload();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void command(RegisterClientCommandsEvent event){
+        FogSetCommand.register(event.getDispatcher());
     }
 }

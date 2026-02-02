@@ -2,7 +2,6 @@ package cn.ksmcbrigade.sws;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.impl.client.itemgroup.CreativeGuiExtensions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
@@ -12,6 +11,7 @@ import net.minecraft.sws.commands.SuperKillCommand;
 import net.minecraft.sws.commands.ZeroItemsCommand;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.handlers.ServerEventsHandler;
+import net.minecraft.sws.item.FogTestItem;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import net.minecraft.sws.utils.KIckUtilsZ;
@@ -31,7 +31,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 
 import java.lang.reflect.Field;
@@ -39,7 +38,7 @@ import java.util.Objects;
 
 public class SuperWoodenSwordF implements ModInitializer {
 
-    public static Holder.Reference<Item> ITEM;
+    public static Holder.Reference<Item> ITEM,FOG_TEST;
 
     @Override
     public void onInitialize() {
@@ -52,6 +51,7 @@ public class SuperWoodenSwordF implements ModInitializer {
         Constants.LOG.info("Hello Fabric world!");
         CommonClass.init();
         ITEM = Registry.registerForHolder(BuiltInRegistries.ITEM, Objects.requireNonNull(ResourceLocation.tryBuild(Constants.MOD_ID, "super_wooden_sword")),new SuperWoodenSword());
+        FOG_TEST = Registry.registerForHolder(BuiltInRegistries.ITEM,Objects.requireNonNull(ResourceLocation.tryBuild(Constants.MOD_ID,"fog_test_item")),new FogTestItem());
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             dispatcher.register(Commands.literal("un-zero").requires(s->s.hasPermission(4) && s.isPlayer()).executes(context -> {
                 ((ILivingEntity) Objects.requireNonNull(context.getSource().getPlayer())).playerUnZero();

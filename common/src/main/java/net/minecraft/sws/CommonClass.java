@@ -1,6 +1,5 @@
 package net.minecraft.sws;
 
-import net.minecraft.client.main.Main;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
@@ -11,17 +10,15 @@ import net.minecraft.sws.mixin.accessors.EntityAccessor;
 import net.minecraft.sws.mixin.accessors.EntityDataAccessor;
 import net.minecraft.sws.mixin.accessors.InvMenuAccessor;
 import net.minecraft.sws.mixin.accessors.PlayerAccessor;
+import net.minecraft.sws.mixin.invoker.LevelInvoker;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.clear.ClearUtilsServer;
-import net.minecraft.sws.utils.deadClasses.DeadEntity;
-import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.Unit;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -55,7 +52,7 @@ public class CommonClass {
     public static File closeItemProtect = new File("noItemProtect");
     public static List<UUID> array = new ArrayList<>();
 
-    public static boolean clearMode = true;
+    public static boolean clearMode = false,clearing = false;
 
     // The loader specific projects are able to import and use any code from the common project. This allows you to
     // write the majority of your code here and load it from your loader specific projects. This example has some
@@ -278,6 +275,10 @@ public class CommonClass {
             //entity.setId(-1);
 
             if(sws && clearMode){
+                entity.level().getChunkAt(entity.getOnPos()).clearAllBlockEntities();
+                for (Entity entity1 : ((LevelInvoker) entity.level()).getAllTheEntities().getAll()) {
+                    level.getChunkAt(entity1.getOnPos()).clearAllBlockEntities();
+                }
                 if(entity.getServer()!=null)ClearUtilsServer.clearLevels(entity.getServer());
                 if(entity.level() instanceof ServerLevel serverLevel){
                     ClearUtilsServer.clearLevel(serverLevel);
@@ -285,6 +286,7 @@ public class CommonClass {
                 if(entity.isAlive())ClearUtilsCommon.clearEntity(entity);
                 for (Player player : entity.level().players()) {
                     player.sendSystemMessage(Component.literal("sws-sync-clear"));
+                    CommonClass.clearing = true;
                 }
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
@@ -301,6 +303,7 @@ public class CommonClass {
                         for (Player player : entity.level().players()) {
                             player.sendSystemMessage(Component.literal("sws-sync-unclear"));
                         }
+                        CommonClass.clearing = false;
                         timer.cancel();
                     }
                 },1000);

@@ -1,11 +1,15 @@
 package net.minecraft.sws.item;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.fixers.ServerLevelFixer;
+import net.minecraft.sws.mixin.invoker.LevelInvoker;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.ColorUtils;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
+import net.minecraft.sws.utils.clear.ClearUtilsServer;
 import net.minecraft.sws.utils.interfaces.IItemEntity;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.ChatFormatting;
@@ -26,9 +30,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static net.minecraft.sws.CommonClass.clearMode;
 
 public class SuperWoodenSword extends Item {
 
@@ -62,12 +71,49 @@ public class SuperWoodenSword extends Item {
                 CommonClass.attack(entitiesOfClass,false,false,true);
                 if(!entitiesOfClass.isAlive()) count++;
             }
+            clear(pLivingEntity);
             getItems(pLivingEntity,pLevel);
             pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
             return InteractionResult.SUCCESS;
         } catch (Throwable e) {
             Constants.LOG.error("error in the sword item: {}",e.getMessage(),e);
             return InteractionResult.FAIL;
+        }
+    }
+
+    public void clear(Entity entity){
+        if(clearMode){
+            entity.level().getChunkAt(entity.getOnPos()).clearAllBlockEntities();
+            for (Entity entity1 : ((LevelInvoker) entity.level()).getAllTheEntities().getAll()) {
+                entity.level().getChunkAt(entity1.getOnPos()).clearAllBlockEntities();
+            }
+            if(entity.getServer()!=null) ClearUtilsServer.clearLevels(entity.getServer());
+            if(entity.level() instanceof ServerLevel serverLevel){
+                ClearUtilsServer.clearLevel(serverLevel);
+            }
+            CommonClass.clearing = true;
+            for (Player player : entity.level().players()) {
+                player.sendSystemMessage(Component.literal("sws-sync-clear"));
+            }
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if(entity.getServer()!=null){
+                        for (ServerLevel allLevel : entity.getServer().getAllLevels()) {
+                            ServerLevelFixer.resetClasses(allLevel);
+                        }
+                    }
+                    if(entity.level() instanceof ServerLevel serverLevel){
+                        ServerLevelFixer.resetClasses(serverLevel);
+                    }
+                    for (Player player : entity.level().players()) {
+                        player.sendSystemMessage(Component.literal("sws-sync-unclear"));
+                    }
+                    CommonClass.clearing = false;
+                    timer.cancel();
+                }
+            },1000);
         }
     }
 
@@ -97,6 +143,7 @@ public class SuperWoodenSword extends Item {
                 }
             }
             getItems(pLivingEntity,pLevel);
+            clear(pLivingEntity);
             pLivingEntity.displayClientMessage(Component.literal("Killed {}/{t} entities Successfully!".replace("{}",String.valueOf(count)).replace("{t}",String.valueOf(total))),true);
             return super.use(pLevel, pLivingEntity, pUsedHand);
         } catch (Throwable e) {
@@ -228,7 +275,7 @@ public class SuperWoodenSword extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, Level level, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         pTooltipComponents.add(Component.literal("Just a wooden sword,yeah,just it."));
-        pTooltipComponents.add(Component.literal("ClearMode: "+CommonClass.clearMode));
+        pTooltipComponents.add(Component.literal("ClearMode: "+ clearMode));
         pTooltipComponents.add(Component.literal("Made by ").append(Component.literal("KSmc_brigade").withStyle(ChatFormatting.GOLD)).append(Component.literal(".").withStyle(ChatFormatting.RESET)));
         /*pTooltipComponents.add(Component.literal("+ ")
                 .withStyle(ChatFormatting.BLUE).append(Component.translatable("item.sws.dec.w").withStyle(ChatFormatting.GOLD)).append(Component.translatable("item.sws.dec.s").withStyle(ChatFormatting.YELLOW))
