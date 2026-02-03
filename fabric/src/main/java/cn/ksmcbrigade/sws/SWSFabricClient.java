@@ -1,5 +1,7 @@
 package cn.ksmcbrigade.sws;
 
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ClientModInitializer;
@@ -10,6 +12,9 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sws.ClientCongratulations;
 import net.minecraft.sws.handlers.ClientEventsHandler;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 public class SWSFabricClient implements ClientModInitializer {
     @Override
@@ -43,6 +48,51 @@ public class SWSFabricClient implements ClientModInitializer {
                 commandContext.getSource().sendFeedback(Component.literal("Set Timer: "+ClientCongratulations.TIMER));
                 return 0;
             })));
+
+            Command<FabricClientCommandSource> output = commandContext -> {
+                for (Field itemHue : Arrays.stream(ClientCongratulations.class.getFields()).filter(f -> f.getName().startsWith("item_hue_")).toList()) {
+                    try {
+                        itemHue.setAccessible(true);
+                        commandContext.getSource().sendFeedback(Component.literal(itemHue.getName()+": "+itemHue.get(null)));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return 0;
+            };
+
+            LiteralArgumentBuilder<FabricClientCommandSource> baseCommand = ClientCommandManager.literal("sws-item-hue").executes(output);
+
+            for (Field itemHue : Arrays.stream(ClientCongratulations.class.getFields()).filter(f -> f.getName().startsWith("item_hue_")).toList()) {
+                itemHue.setAccessible(true);
+                String name = itemHue.getName();
+
+                if(itemHue.getType().equals(boolean.class)){
+                    baseCommand.then(ClientCommandManager.literal(name).then(ClientCommandManager.argument(name, BoolArgumentType.bool()).executes(commandContext -> {
+                        try {
+                            itemHue.set(null,BoolArgumentType.getBool(commandContext,name));
+                            return output.run(commandContext);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                            return 1;
+                        }
+                    })));
+                }
+
+                if(itemHue.getType().equals(float.class)){
+                    baseCommand.then(ClientCommandManager.literal(name).then(ClientCommandManager.argument(name,FloatArgumentType.floatArg()).executes(commandContext -> {
+                        try {
+                            itemHue.set(null,FloatArgumentType.getFloat(commandContext,name));
+                            return output.run(commandContext);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                            return 1;
+                        }
+                    })));
+                }
+            }
+
+            commandDispatcher.register(baseCommand);
         });
     }
 }

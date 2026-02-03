@@ -5,10 +5,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
-import net.minecraft.sws.commands.ClearDebugCommand;
-import net.minecraft.sws.commands.ClearModeCommand;
-import net.minecraft.sws.commands.SuperKillCommand;
-import net.minecraft.sws.commands.ZeroItemsCommand;
+import net.minecraft.sws.commands.*;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.handlers.ServerEventsHandler;
 import net.minecraft.sws.item.FogTestItem;
@@ -103,6 +100,7 @@ public class SuperWoodenSwordF implements ModInitializer {
 
             ClearModeCommand.register(dispatcher);
             ClearDebugCommand.register(dispatcher);
+            RainbowLightningCommand.register(dispatcher);
         });
 
         ServerTickEvents.START_SERVER_TICK.register(minecraftServer -> {

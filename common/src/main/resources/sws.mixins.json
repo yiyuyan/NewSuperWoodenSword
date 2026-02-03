@@ -52,6 +52,7 @@
     "sword_block.LivingEntityMixin"
   ],
   "client": [
+    "accessors.FontAccessor",
     "accessors.MinecraftAccessor",
     "accessors.ScreenAccessor",
     "fix.CrashFixer",
@@ -60,7 +61,10 @@
     "fixes.EntityRenderDispatcherMixin",
     "fixes.LevelRendererMixin",
     "fixes.MinecraftClientMixin",
+    "misc.AbstractContainerScreenMixin",
     "misc.FogRendererMixin",
+    "misc.GuiMixin",
+    "misc.LightningBoltRendererMixin",
     "network.ChatComponentMixin",
     "network.ChatListenerMixin",
     "network.ClientPacketListenerMixin",

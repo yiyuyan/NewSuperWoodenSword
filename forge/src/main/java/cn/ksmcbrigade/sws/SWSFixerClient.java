@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.sws.Constants;
+import net.minecraft.sws.commands.ItemHueCommand;
 import net.minecraft.sws.commands.client.FogSetCommand;
 import net.minecraft.sws.fixers.ClientLevelFixer;
 import net.minecraft.sws.handlers.ClientEventsHandler;
@@ -79,5 +80,6 @@ public class SWSFixerClient {
     @SubscribeEvent
     public void command(RegisterClientCommandsEvent event){
         FogSetCommand.register(event.getDispatcher());
+        ItemHueCommand.register(event.getDispatcher());
     }
 }

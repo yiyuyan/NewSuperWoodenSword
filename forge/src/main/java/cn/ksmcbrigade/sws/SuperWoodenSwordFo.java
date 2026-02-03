@@ -3,10 +3,7 @@ package cn.ksmcbrigade.sws;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
-import net.minecraft.sws.commands.ClearDebugCommand;
-import net.minecraft.sws.commands.ClearModeCommand;
-import net.minecraft.sws.commands.SuperKillCommand;
-import net.minecraft.sws.commands.ZeroItemsCommand;
+import net.minecraft.sws.commands.*;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.handlers.ServerEventsHandler;
 import net.minecraft.sws.item.FogTestItem;
@@ -119,6 +116,8 @@ public class SuperWoodenSwordFo {
 
         ClearModeCommand.register(event.getDispatcher());
         ClearDebugCommand.register(event.getDispatcher());
+
+        RainbowLightningCommand.register(event.getDispatcher());
     }
 
     @SubscribeEvent

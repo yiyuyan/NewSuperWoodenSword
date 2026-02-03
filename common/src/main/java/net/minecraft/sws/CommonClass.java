@@ -315,6 +315,7 @@ public class CommonClass {
                 LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT,level);
                 lightningBolt.setPos(pos);
                 lightningBolt.setVisualOnly(true);
+                if(ClientCongratulations.rainbow_lighting)lightningBolt.setCustomName(Component.literal("sws-rainbow"));
                 level.addFreshEntity(lightningBolt);
             }
         } catch (Exception e) {

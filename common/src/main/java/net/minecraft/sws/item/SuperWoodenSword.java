@@ -2,6 +2,7 @@ package net.minecraft.sws.item;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sws.ClientCongratulations;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.fixers.ServerLevelFixer;
@@ -14,23 +15,19 @@ import net.minecraft.sws.utils.interfaces.IItemEntity;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sws.utils.vanillaExClasses.PlayerEx;
 import net.minecraft.sws.utils.vanillaExClasses.ServerPlayerEx;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
@@ -68,7 +65,7 @@ public class SuperWoodenSword extends Item {
                 if(entitiesOfClass==pLivingEntity) continue;
                 ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
                 total++;
-                CommonClass.attack(entitiesOfClass,false,false,true);
+                CommonClass.attack(entitiesOfClass,ClientCongratulations.sword_lighting,false,true);
                 if(!entitiesOfClass.isAlive()) count++;
             }
             clear(pLivingEntity);
@@ -136,7 +133,7 @@ public class SuperWoodenSword extends Item {
                 }
                 if(entitiesOfClass==pLivingEntity) continue;
                 total++;
-                CommonClass.attack(entitiesOfClass,false,false,true);
+                CommonClass.attack(entitiesOfClass, ClientCongratulations.sword_lighting,false,true);
                 ((ILivingEntity) entitiesOfClass).setAttacker(pLivingEntity);
                 if(!entitiesOfClass.isAlive()){
                     count++;
@@ -246,7 +243,7 @@ public class SuperWoodenSword extends Item {
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
         if(!CommonClass.has(pTarget)){
-            CommonClass.attack(pTarget,false,false,true);
+            CommonClass.attack(pTarget,ClientCongratulations.sword_lighting,false,true);
             return true;
         }
         return false;

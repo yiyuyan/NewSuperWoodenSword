@@ -1,7 +1,10 @@
 accessWidener   v1  named
+
 accessible class net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback
 accessible class net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback
 accessible class net/minecraft/client/multiplayer/ClientLevel
+accessible class net/minecraft/client/gui/Font$StringRenderOutput
+
 accessible field net/minecraft/world/level/entity/EntityLookup byId Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
 accessible field net/minecraft/world/level/entity/EntityLookup byUuid Ljava/util/Map;
 accessible field net/minecraft/world/level/entity/LevelEntityGetterAdapter visibleEntities Lnet/minecraft/world/level/entity/EntityLookup;
@@ -10,3 +13,6 @@ accessible field net/minecraft/server/level/ServerLevel entityTickList Lnet/mine
 accessible field net/minecraft/client/multiplayer/ClientLevel tickingEntities Lnet/minecraft/world/level/entity/EntityTickList;
 accessible method net/minecraft/server/level/ServerLevel getEntities ()Lnet/minecraft/world/level/entity/LevelEntityGetter;
 accessible method net/minecraft/client/multiplayer/ClientLevel getEntities ()Lnet/minecraft/world/level/entity/LevelEntityGetter;
+
+accessible method net/minecraft/client/gui/Font renderText (Lnet/minecraft/util/FormattedCharSequence;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F
+accessible method net/minecraft/client/gui/Font renderChar (Lnet/minecraft/client/gui/font/glyphs/BakedGlyph;ZZFFFLorg/joml/Matrix4f;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFI)V
