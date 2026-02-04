@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 import net.minecraft.sws.Constants;
 import net.minecraft.world.entity.LightningBolt;
 import org.joml.Matrix4f;
@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
-import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Random;
 

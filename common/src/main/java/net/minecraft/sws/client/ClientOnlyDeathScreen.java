@@ -1,6 +1,6 @@
 package net.minecraft.sws.client;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.booleans.BooleanConsumer;

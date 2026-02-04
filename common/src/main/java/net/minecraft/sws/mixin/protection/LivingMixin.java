@@ -1,11 +1,9 @@
 package net.minecraft.sws.mixin.protection;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import net.minecraft.sws.platform.Services;
-import net.minecraft.sws.utils.deadClasses.DeadEntity;
-import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.sws.utils.KIckUtils;
@@ -32,7 +30,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.CancellationException;
 
 import java.lang.reflect.Field;
 import java.util.Objects;

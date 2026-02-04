@@ -1,14 +1,13 @@
 package net.minecraft.sws.utils.clear;
 
 import com.google.common.collect.Iterables;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.deadClasses.DeadEntity;
 import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.entity.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 
 public class ClearModeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher){

@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 
 /**
  * &#064;Author: KSmc_brigade

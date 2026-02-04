@@ -1,7 +1,7 @@
 package net.minecraft.sws.mixin.protection;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.world.damagesource.DamageSource;

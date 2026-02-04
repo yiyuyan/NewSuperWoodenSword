@@ -3,7 +3,7 @@ package net.minecraft.sws.mixin.misc;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.utils.RainbowFont;
 import net.minecraft.world.inventory.Slot;

@@ -1,7 +1,7 @@
 package cn.ksmcbrigade.sws.mixin.events;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

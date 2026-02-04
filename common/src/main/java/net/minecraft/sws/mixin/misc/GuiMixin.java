@@ -5,7 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.utils.RainbowFont;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;

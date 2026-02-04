@@ -1,10 +1,8 @@
 package net.minecraft.sws.mixin.protection;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
-import net.minecraft.sws.utils.deadClasses.DeadEntity;
-import net.minecraft.sws.utils.deadClasses.DeadLivingEntity;
 import net.minecraft.sws.utils.interfaces.IAttrInstance;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.sws.utils.KIckUtils;

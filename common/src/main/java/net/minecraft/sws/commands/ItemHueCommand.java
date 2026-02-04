@@ -8,7 +8,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

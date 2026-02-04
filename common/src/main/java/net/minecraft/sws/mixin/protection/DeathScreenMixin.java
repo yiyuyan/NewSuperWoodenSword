@@ -1,7 +1,6 @@
 package net.minecraft.sws.mixin.protection;
 
-import net.minecraft.sws.CommonClass;
-import net.minecraft.sws.utils.interfaces.ILivingEntity;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.CancellationException;
 
 @Mixin(priority = 2147483647,value = DeathScreen.class)
 public abstract class DeathScreenMixin extends Screen {

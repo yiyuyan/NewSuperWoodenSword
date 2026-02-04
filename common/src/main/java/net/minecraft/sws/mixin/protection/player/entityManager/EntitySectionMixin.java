@@ -1,6 +1,6 @@
 package net.minecraft.sws.mixin.protection.player.entityManager;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.CancelUtils;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.util.ClassInstanceMultiMap;

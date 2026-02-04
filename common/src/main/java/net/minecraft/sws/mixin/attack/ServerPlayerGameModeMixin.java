@@ -2,7 +2,7 @@ package net.minecraft.sws.mixin.attack;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.ItemUtils;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.world.InteractionHand;

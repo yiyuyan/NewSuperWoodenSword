@@ -9,18 +9,12 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 import net.minecraft.sws.handlers.ClientEventsHandler;
-import net.minecraft.sws.mixin.accessors.MinecraftAccessor;
-import net.minecraft.sws.mixin.accessors.font.FontManagerAccessor;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Map;
 
 public class SWSFabricClient implements ClientModInitializer {
     @Override

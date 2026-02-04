@@ -1,22 +1,17 @@
 package net.minecraft.sws.mixin.fixes;
 
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sws.ClientCongratulations;
-import net.minecraft.sws.ClientFontConstants;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.config.ClientFontConstants;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.client.ClientOnlyDeathScreen;
 import net.minecraft.sws.fixers.ClientLevelFixer;
 import net.minecraft.sws.mixin.accessors.FontAccessor;
-import net.minecraft.sws.mixin.accessors.MinecraftAccessor;
 import net.minecraft.sws.mixin.accessors.font.FontManagerAccessor;
-import net.minecraft.sws.utils.RainbowFont;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
@@ -30,8 +25,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 

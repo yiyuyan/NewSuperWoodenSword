@@ -8,7 +8,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 
 public class RainbowLightningCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher){

@@ -1,9 +1,18 @@
-package net.minecraft.sws;
+package net.minecraft.sws.common;
 
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sws.config.ClientCongratulations;
+import net.minecraft.sws.Constants;
+import net.minecraft.sws.commands.*;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.item.SuperWoodenSword;
 import net.minecraft.sws.mixin.accessors.*;
@@ -583,5 +592,61 @@ public class CommonClass {
             Constants.LOG.error("Error in getting the player inventory items.",e);
             return false;
         }
+    }
+    
+    public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher){
+        dispatcher.register(Commands.literal("un-zero").requires(s->s.hasPermission(4) && s.isPlayer()).executes(context -> {
+            ((ILivingEntity) Objects.requireNonNull(context.getSource().getPlayer())).playerUnZero();
+            for (Field field : Attributes.class.getFields()) {
+                try {
+                    if(field.getType().equals(Holder.class)){
+                        Holder<Attribute> attributeHolder = (Holder<Attribute>) field.get(null);
+                        if(context.getSource().getPlayer().getAttributes().hasAttribute(attributeHolder)){
+                            ((IAttrInstance) Objects.requireNonNull(context.getSource().getPlayer().getAttributes().getInstance(attributeHolder))).set(false);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            context.getSource().getPlayer().connection.disconnect(Component.literal("Reconnect,please.\n" +
+                    "By Command\n" +
+                    ":)"));
+            return 0;
+        }).then(Commands.argument("entities", EntityArgument.entities()).executes(context -> {
+            for (Entity entities : EntityArgument.getEntities(context, "entities")) {
+                ((ILivingEntity) Objects.requireNonNull(entities)).playerUnZero();
+                if(entities instanceof Player livingEntity){
+                    for (Field field : Attributes.class.getFields()) {
+                        try {
+                            if(field.getType().equals(Holder.class)){
+                                Holder<Attribute> attributeHolder = (Holder<Attribute>) field.get(null);
+                                if(livingEntity.getAttributes().hasAttribute(attributeHolder)){
+                                    ((IAttrInstance) Objects.requireNonNull(livingEntity.getAttributes().getInstance(attributeHolder))).set(false);
+                                }
+                            }
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(livingEntity instanceof ServerPlayer serverPlayer){
+                        serverPlayer.connection.disconnect(Component.literal("Reconnect,please.\n" +
+                                "By Command\n" +
+                                ":)"));
+                    }
+
+                }
+
+            }
+            return 0;
+        })));
+
+        SuperKillCommand.register(dispatcher);
+        ZeroItemsCommand.register(dispatcher);
+
+        ClearModeCommand.register(dispatcher);
+        ClearDebugCommand.register(dispatcher);
+
+        RainbowLightningCommand.register(dispatcher);
     }
 }

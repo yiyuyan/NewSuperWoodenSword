@@ -1,6 +1,6 @@
 package net.minecraft.sws.mixin.protection.inv;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import org.spongepowered.asm.mixin.Final;

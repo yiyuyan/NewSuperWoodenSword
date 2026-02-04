@@ -2,7 +2,7 @@ package net.minecraft.sws.item;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.config.ClientCongratulations;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
 

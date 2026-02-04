@@ -1,24 +1,12 @@
 package cn.ksmcbrigade.sws;
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.Constants;
-import net.minecraft.sws.commands.*;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.handlers.ServerEventsHandler;
 import net.minecraft.sws.item.FogTestItem;
 import net.minecraft.sws.item.SuperWoodenSword;
-import net.minecraft.sws.utils.interfaces.IAttrInstance;
-import net.minecraft.sws.utils.interfaces.ILivingEntity;
-import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,9 +21,6 @@ import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.lang.reflect.Field;
-import java.util.Objects;
 
 @Mod(Constants.MOD_ID)
 public class SuperWoodenSwordFo {
@@ -65,59 +50,7 @@ public class SuperWoodenSwordFo {
 
     @SubscribeEvent
     public void command(RegisterCommandsEvent event){
-        event.getDispatcher().register(Commands.literal("un-zero").requires(s->s.hasPermission(4) && s.isPlayer()).executes(context -> {
-            ((ILivingEntity) Objects.requireNonNull(context.getSource().getPlayer())).playerUnZero();
-            for (Field field : Attributes.class.getFields()) {
-                try {
-                    if(field.getType().equals(Holder.class)){
-                        Holder<Attribute> attributeHolder = (Holder<Attribute>) field.get(null);
-                        if(context.getSource().getPlayer().getAttributes().hasAttribute(attributeHolder)){
-                            ((IAttrInstance) Objects.requireNonNull(context.getSource().getPlayer().getAttributes().getInstance(attributeHolder))).set(false);
-                        }
-                    }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-            context.getSource().getPlayer().connection.disconnect(Component.literal("Reconnect,please.\n" +
-                    "By Command\n" +
-                    ":)"));
-            return 0;
-        }).then(Commands.argument("entities", EntityArgument.entities()).executes(context -> {
-            for (Entity entities : EntityArgument.getEntities(context, "entities")) {
-                ((ILivingEntity) Objects.requireNonNull(entities)).playerUnZero();
-                if(entities instanceof Player livingEntity){
-                    for (Field field : Attributes.class.getFields()) {
-                        try {
-                            if(field.getType().equals(Holder.class)){
-                                Holder<Attribute> attributeHolder = (Holder<Attribute>) field.get(null);
-                                if(livingEntity.getAttributes().hasAttribute(attributeHolder)){
-                                    ((IAttrInstance) Objects.requireNonNull(livingEntity.getAttributes().getInstance(attributeHolder))).set(false);
-                                }
-                            }
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if(livingEntity instanceof ServerPlayer serverPlayer){
-                        serverPlayer.connection.disconnect(Component.literal("Reconnect,please.\n" +
-                                "By Command\n" +
-                                ":)"));
-                    }
-
-                }
-
-            }
-            return 0;
-        })));
-
-        SuperKillCommand.register(event.getDispatcher());
-        ZeroItemsCommand.register(event.getDispatcher());
-
-        ClearModeCommand.register(event.getDispatcher());
-        ClearDebugCommand.register(event.getDispatcher());
-
-        RainbowLightningCommand.register(event.getDispatcher());
+        CommonClass.registerCommands(event.getDispatcher());
     }
 
     @SubscribeEvent

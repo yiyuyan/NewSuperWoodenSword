@@ -1,4 +1,4 @@
-package net.minecraft.sws;
+package net.minecraft.sws.config;
 
 public class ClientCongratulations {
     public enum FogMode{

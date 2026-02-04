@@ -1,6 +1,6 @@
 package net.minecraft.sws.mixin.network;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.fixers.ClientLevelFixer;
 import net.minecraft.sws.utils.clear.ClearUtilsClient;

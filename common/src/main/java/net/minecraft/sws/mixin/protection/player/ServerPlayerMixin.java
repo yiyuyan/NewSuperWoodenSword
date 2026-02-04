@@ -1,6 +1,6 @@
 package net.minecraft.sws.mixin.protection.player;
 
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.mixin.accessors.ServerCommonPacketListenerImplAccessor;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.ItemUtils;

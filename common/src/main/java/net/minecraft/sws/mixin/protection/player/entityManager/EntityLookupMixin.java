@@ -1,7 +1,7 @@
 package net.minecraft.sws.mixin.protection.player.entityManager;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.CancelUtils;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;

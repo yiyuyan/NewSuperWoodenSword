@@ -2,7 +2,7 @@ package net.minecraft.sws.mixin.protection.render;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import net.minecraft.client.Minecraft;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

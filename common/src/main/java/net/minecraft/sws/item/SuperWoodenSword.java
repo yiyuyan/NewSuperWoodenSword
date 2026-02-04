@@ -2,8 +2,8 @@ package net.minecraft.sws.item;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sws.ClientCongratulations;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.config.ClientCongratulations;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.mixin.invoker.LevelInvoker;
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static net.minecraft.sws.CommonClass.clearMode;
+import static net.minecraft.sws.common.CommonClass.clearMode;
 
 public class SuperWoodenSword extends Item {
 

@@ -1,7 +1,7 @@
 package net.minecraft.sws.handlers;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sws.CommonClass;
+import net.minecraft.sws.common.CommonClass;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
 import net.minecraft.sws.utils.vanillaExClasses.ServerPlayerEx;
 import net.minecraft.world.entity.player.Player;
