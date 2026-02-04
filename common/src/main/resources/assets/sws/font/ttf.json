@@ -1,0 +1,10 @@
+{
+    "providers": [
+        {
+            "type": "ttf",
+            "file": "sws:ttf/xyt.ttf",
+            "size": 12.0,
+            "oversample": 12.0
+        }
+    ]
+}

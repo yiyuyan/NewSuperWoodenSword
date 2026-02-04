@@ -15,6 +15,7 @@
     "accessors.InvMenuAccessor",
     "accessors.PlayerAccessor",
     "accessors.ServerCommonPacketListenerImplAccessor",
+    "accessors.font.FontManagerAccessor",
     "attack.BlockEntityMixin",
     "attack.ItemMixin",
     "attack.LevelMixin",

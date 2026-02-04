@@ -8,6 +8,7 @@ import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.ClientFontConstants;
 import net.minecraft.sws.mixin.accessors.FontAccessor;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -22,7 +23,7 @@ public class RainbowFont extends Font {
     }
     
     public static RainbowFont getFont() {
-        return new RainbowFont(((FontAccessor) mc.font).getFonts(), true);
+        return new RainbowFont(((FontAccessor) ClientFontConstants.XYT_FONT).getFonts(), true);
     }
 
     @Override
@@ -35,14 +36,14 @@ public class RainbowFont extends Font {
         String text = ChatFormatting.stripFormatting(stringBuilder.toString());
         
         float baseHue = (float) Util.getMillis() / ((int)ClientCongratulations.item_hue_base) % ClientCongratulations.item_hue_base;
-        float hueStep = ClientCongratulations.item_hue_step;
+        float hueStep = ClientCongratulations.item_hue_step+0;
 
         if (text != null) {
             for (int index = 0; index < text.length(); index++) {
                 String s = String.valueOf(text.charAt(index));
                 
                 float time = Util.getMillis() / 1000.0F;
-                float waveOffsetX = (float) Math.cos(time * 2.0 + index * ClientCongratulations.item_hue_offsetX) * 2.0F; // 调整振幅和频率
+                float waveOffsetX = (float) Math.cos(time * 2.0 + index * ClientCongratulations.item_hue_offsetX) * 2.0F;
                 float waveOffsetY = (float) Math.sin(time * 2.0 + index * ClientCongratulations.item_hue_offsetY) * 2.0F;
                 
                 float hue = (baseHue + index * hueStep) % 1.0F;

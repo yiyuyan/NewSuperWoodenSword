@@ -271,7 +271,6 @@ public class SuperWoodenSword extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, Level level, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        pTooltipComponents.add(Component.literal("Just a wooden sword,yeah,just it."));
         pTooltipComponents.add(Component.literal("ClearMode: "+ clearMode));
         pTooltipComponents.add(Component.literal("Made by ").append(Component.literal("KSmc_brigade").withStyle(ChatFormatting.GOLD)).append(Component.literal(".").withStyle(ChatFormatting.RESET)));
         /*pTooltipComponents.add(Component.literal("+ ")

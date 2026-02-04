@@ -1,9 +1,22 @@
 package net.minecraft.sws.mixin.fixes;
 
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.Util;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.font.FontManager;
+import net.minecraft.client.gui.font.FontSet;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sws.ClientCongratulations;
+import net.minecraft.sws.ClientFontConstants;
 import net.minecraft.sws.CommonClass;
 import net.minecraft.sws.Constants;
 import net.minecraft.sws.client.ClientOnlyDeathScreen;
 import net.minecraft.sws.fixers.ClientLevelFixer;
+import net.minecraft.sws.mixin.accessors.FontAccessor;
+import net.minecraft.sws.mixin.accessors.MinecraftAccessor;
+import net.minecraft.sws.mixin.accessors.font.FontManagerAccessor;
+import net.minecraft.sws.utils.RainbowFont;
 import net.minecraft.sws.utils.interfaces.ILivingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
@@ -11,14 +24,16 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.main.GameConfig;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Mixin(priority = 2147483647,value = Minecraft.class)
 public abstract class MinecraftClientMixin {
@@ -34,6 +49,13 @@ public abstract class MinecraftClientMixin {
     @Shadow  public Screen screen;
 
     @Shadow public abstract void setScreen( Screen p_91153_);
+
+    @Shadow @Final private FontManager fontManager;
+    @Shadow @Final private TextureManager textureManager;
+    @Mutable
+    @Shadow @Final public Font font;
+
+    @Shadow public abstract CompletableFuture<Void> reloadResourcePacks();
 
     @Unique
     public boolean d = false;
@@ -176,5 +198,19 @@ public abstract class MinecraftClientMixin {
     @Inject(method = "close",at = @At("TAIL"))
     private void closed(CallbackInfo ci){
         Constants.MINECRAFT_STOPPED = true;
+    }
+
+
+
+    @Inject(method = "onGameLoadFinished",at = @At("TAIL"))
+    private void finsish(CallbackInfo ci){
+        FontManager manager = fontManager;
+        FontManagerAccessor fontManagerAccessor = ((FontManagerAccessor) manager);
+        FontAccessor fontAccessor = ((FontAccessor) font);
+        Map<ResourceLocation, FontSet> fontSets = fontManagerAccessor.getFontSets();
+        ResourceLocation resourceLocation = new ResourceLocation("sws","ttf");
+        ClientFontConstants.XYT_FONT = new Font((f)->{
+            return fontSets.getOrDefault(resourceLocation,fontManagerAccessor.getMissingFontSet());
+        },fontAccessor.isFilterFishyGlyphs());
     }
 }

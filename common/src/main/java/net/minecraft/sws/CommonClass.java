@@ -6,10 +6,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sws.fixers.ServerLevelFixer;
 import net.minecraft.sws.item.SuperWoodenSword;
-import net.minecraft.sws.mixin.accessors.EntityAccessor;
-import net.minecraft.sws.mixin.accessors.EntityDataAccessor;
-import net.minecraft.sws.mixin.accessors.InvMenuAccessor;
-import net.minecraft.sws.mixin.accessors.PlayerAccessor;
+import net.minecraft.sws.mixin.accessors.*;
 import net.minecraft.sws.mixin.invoker.LevelInvoker;
 import net.minecraft.sws.platform.Services;
 import net.minecraft.sws.utils.clear.ClearUtilsCommon;
@@ -66,6 +63,7 @@ public class CommonClass {
         if (Services.PLATFORM.isModLoaded("sws")) {
             Constants.LOG.info("Hello to sws");
         }
+
     }
 
     public static void attack(Entity entity,boolean lighting,boolean forceRemove,boolean sws){
