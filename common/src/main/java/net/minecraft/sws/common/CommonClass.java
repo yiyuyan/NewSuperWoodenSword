@@ -318,7 +318,7 @@ public class CommonClass {
 
             Services.PLATFORM.startEvents();
 
-            if(lighting){
+            if(lighting && !clearMode){
                 LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT,level);
                 lightningBolt.setPos(pos);
                 lightningBolt.setVisualOnly(true);

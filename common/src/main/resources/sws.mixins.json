@@ -62,7 +62,6 @@
     "fixes.EntityRenderDispatcherMixin",
     "fixes.LevelRendererMixin",
     "fixes.MinecraftClientMixin",
-    "misc.AbstractContainerScreenMixin",
     "misc.FogRendererMixin",
     "misc.GuiMixin",
     "misc.LightningBoltRendererMixin",
